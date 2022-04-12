@@ -7,35 +7,74 @@ import {
     Flex,
     Spacer,
 } from '@chakra-ui/react';
+import { useFormik } from "formik";
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 
 const LoginBox: FC = () => {
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+            remember: true,
+        },
+        onSubmit: (values) => {
+            alert(JSON.stringify(values, null, 2))
+        },
+    });
+
     return (
         <Box
             width="100%"
             maxWidth="450px"
             color="foreground.muted"
         >
-            <VStack>
-                <Heading width="100%" color="foreground.default" as="h1" size="2xl">Entrar</Heading>
+            <form onSubmit={formik.handleSubmit}>
+                <VStack>
+                    <Heading width="100%" color="foreground.default" as="h1" size="2xl">Entrar</Heading>
 
-                <Box pb="20px">
-                    <Text>Gerenciar seus e-mails de redirecionamentos e acesso simplificado para e-mails.</Text>
-                </Box>
+                    <Box pb="20px">
+                        <Text>Gerenciar seus e-mails de redirecionamentos e acesso simplificado para e-mails.</Text>
+                    </Box>
 
-                <Input id="email" label="E-mail" placeholder="exemplo@exemplo.com.br" />
-                <Input id="password" label="Senha" placeholder="Digite sua senha" />
+                    <Input
+                        id="email"
+                        label="E-mail"
+                        placeholder="exemplo@exemplo.com.br"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                    />
+                    <Input
+                        id="password"
+                        label="Senha"
+                        placeholder="Digite sua senha"
+                        type="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                    />
 
-                <Flex width="100%" pb="20px">
-                    <Checkbox defaultChecked>Mantenha-me logado</Checkbox>
-                    <Spacer />
-                    <Text>Esqueceu sua senha?</Text>
-                </Flex>
+                    <Flex width="100%" pb="20px">
+                        <Checkbox
+                            id="remember"
+                            isChecked={formik.values.remember}
+                            onChange={formik.handleChange}
+                        >
+                            Mantenha-me logado
+                        </Checkbox>
+                        <Spacer />
+                        <Text>Esqueceu sua senha?</Text>
+                    </Flex>
 
-                <Button width="100%" variant="primary-rounded">Entrar</Button>
-            </VStack>
+                    <Button
+                        width="100%"
+                        variant="primary-rounded"
+                        type="submit"
+                    >
+                        Entrar
+                    </Button>
+                </VStack>
+            </form>
         </Box>
     );
 };
