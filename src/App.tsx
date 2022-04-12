@@ -1,12 +1,13 @@
-import { PlanItem } from './components/plans/PlanItem/PlanItem'
 import { PlanType } from './entities/Plan'
 import { messaging } from './config/firebase';
 import { onMessage, getToken } from 'firebase/messaging';
 //import { onBackgroundMessage } from 'firebase/messaging/sw';
 import { useEffect } from 'react';
+import Login from './pages/Login';
 
 function App() {
   useEffect(() => {
+    /*
     onMessage(messaging, (payload) => {
       console.log('Message received. ', payload);
       // ...
@@ -14,6 +15,7 @@ function App() {
     getToken(messaging).then((currentToken) => {
       console.log(currentToken);
     });
+    */
     /*
     onBackgroundMessage(messaging, (payload) => {
       console.log('Message received. ', payload);
@@ -22,23 +24,7 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <PlanItem
-        item={{
-          description: 'Para conhecer a ferramenta.',
-          display_features: [
-            {
-              enabled: true,
-              name: 'Um e-mail'
-            }
-          ],
-          id: 1,
-          monthly_price: 0,
-          name: 'Gratuíto',
-          plan_type: PlanType.Free,
-        }}
-      />
-    </div>
+    <Login />
   )
 }
 
