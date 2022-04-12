@@ -8,20 +8,20 @@ import {
     Spacer,
 } from '@chakra-ui/react';
 import { useFormik } from "formik";
+import { useAuth } from '../../../contexts/auth';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import Checkbox from '../../../components/Checkbox';
 
 const LoginBox: FC = () => {
+    const auth = useAuth();
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             remember: true,
         },
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2))
-        },
+        onSubmit: ({ email, password, remember }) => auth.login(email, password, remember),
     });
 
     return (
