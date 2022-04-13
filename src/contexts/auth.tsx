@@ -3,6 +3,7 @@ import { useToast } from "@chakra-ui/react";
 import { getErrorMessages } from "../utils/errors";
 import { loginSchema } from "../schemas/auth";
 import { User } from "../entities/User";
+import { useLoading } from "../contexts/loading";
 import api from "../services/api";
 import * as authServices from "../services/auth";
 
@@ -18,6 +19,7 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: FC = ({ children }) => {
   const toast = useToast();
+  const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export const AuthProvider: FC = ({ children }) => {
       if (!token) {
         return;
       }
+      pushLoading();
       try {
         const response = await authServices.refresh(token);
         setUserData(response.user);
@@ -41,12 +44,14 @@ export const AuthProvider: FC = ({ children }) => {
         localStorage.removeItem("@TUNELATOR_REFRESH");
         sessionStorage.removeItem("@TUNELATOR_REFRESH");
       }
+      popLoading();
     }
 
     checkStoredCredentials();
   }, []);
 
   async function login(email: string, password: string, remember: boolean) {
+    pushLoading();
     try {
       const validatedData = loginSchema.validateSync({
         email,
@@ -85,6 +90,7 @@ export const AuthProvider: FC = ({ children }) => {
         });
       });
     }
+    popLoading();
   }
 
   return (
