@@ -11,6 +11,7 @@ export interface AuthContextData {
   loggedIn: boolean;
   userData: User | null;
   login: (email: string, password: string, remember: boolean) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -49,6 +50,16 @@ export const AuthProvider: FC = ({ children }) => {
 
     checkStoredCredentials();
   }, []);
+
+  async function logout() {
+    pushLoading();
+
+    localStorage.removeItem("@TUNELATOR_REFRESH");
+    sessionStorage.removeItem("@TUNELATOR_REFRESH");
+    api.defaults.headers.common["Authorization"] = "";
+
+    popLoading();
+  }
 
   async function login(email: string, password: string, remember: boolean) {
     pushLoading();
@@ -99,6 +110,7 @@ export const AuthProvider: FC = ({ children }) => {
         loggedIn: !!userData,
         userData,
         login,
+        logout,
       }}
     >
       {children}
