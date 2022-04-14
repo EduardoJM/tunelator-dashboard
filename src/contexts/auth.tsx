@@ -57,6 +57,7 @@ export const AuthProvider: FC = ({ children }) => {
     localStorage.removeItem("@TUNELATOR_REFRESH");
     sessionStorage.removeItem("@TUNELATOR_REFRESH");
     api.defaults.headers.common["Authorization"] = "";
+    setUserData(null);
 
     popLoading();
   }
