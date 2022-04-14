@@ -37,10 +37,12 @@ export const AuthProvider: FC = ({ children }) => {
       pushLoading();
       try {
         const response = await authServices.refresh(token);
-        setUserData(response.user);
+
         api.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${response.access}`;
+
+        setUserData(response.user);
       } catch {
         localStorage.removeItem("@TUNELATOR_REFRESH");
         sessionStorage.removeItem("@TUNELATOR_REFRESH");
@@ -75,10 +77,11 @@ export const AuthProvider: FC = ({ children }) => {
         validatedData.password
       );
 
-      setUserData(response.user);
       api.defaults.headers.common[
         "Authorization"
       ] = `Bearer ${response.access}`;
+
+      setUserData(response.user);
       if (remember) {
         localStorage.setItem("@TUNELATOR_REFRESH", response.refresh);
       } else {

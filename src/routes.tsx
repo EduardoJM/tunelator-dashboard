@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useAuth } from "./contexts/auth";
 import LoginPage from "./pages/Login";
 import Dashboard from "./layouts/Dashboard";
+import Home from "./pages/Home";
 
 const AppRoutes: FC = () => {
   const { loggedIn } = useAuth();
@@ -11,7 +12,9 @@ const AppRoutes: FC = () => {
     <>
       {loggedIn ? (
         <Dashboard>
-          <></>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
         </Dashboard>
       ) : (
         <Routes>
