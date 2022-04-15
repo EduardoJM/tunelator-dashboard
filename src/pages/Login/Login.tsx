@@ -12,11 +12,19 @@ const Login: FC = () => {
           flexDirection="column"
           alignItems="center"
           justifyContent="center"
+          p="10px"
         >
           <LoginBox />
         </Flex>
       </Box>
-      <Box backgroundColor="brand.500" flex="1"></Box>
+      <Box
+        backgroundColor="brand.500"
+        flex="1"
+        display={{
+          base: 'none',
+          lg: 'block',
+        }}
+      ></Box>
     </Flex>
   );
 };

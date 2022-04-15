@@ -58,7 +58,14 @@ const LoginBox: FC = () => {
             onChange={formik.handleChange}
           />
 
-          <Flex width="100%" pb="20px">
+          <Flex
+            flexDirection={{
+              base: 'column',
+              md: 'row',
+            }}
+            width="100%"
+            pb="20px"
+          >
             <Checkbox
               id="remember"
               isChecked={formik.values.remember}
@@ -67,7 +74,7 @@ const LoginBox: FC = () => {
               Mantenha-me logado
             </Checkbox>
             <Spacer />
-            <Text>Esqueceu sua senha?</Text>
+            <Text textAlign="right">Esqueceu sua senha?</Text>
           </Flex>
 
           <Button width="100%" variant="primary-rounded" type="submit">
