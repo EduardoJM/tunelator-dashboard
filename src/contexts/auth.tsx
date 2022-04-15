@@ -29,7 +29,7 @@ export const AuthProvider: FC = ({ children }) => {
       if (localStorage.getItem("@TUNELATOR_REFRESH")) {
         token = localStorage.getItem("@TUNELATOR_REFRESH");
       } else if (sessionStorage.getItem("@TUNELATOR_REFRESH")) {
-        token = localStorage.getItem("@TUNELATOR_REFRESH");
+        token = sessionStorage.getItem("@TUNELATOR_REFRESH");
       }
       if (!token) {
         return;
