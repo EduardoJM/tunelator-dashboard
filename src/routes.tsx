@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
 import Dashboard from './layouts/Dashboard';
 import LoginPage from './pages/Login';
+import SignupPage from './pages/Signup';
 import HomePage from './pages/Home';
 import MailAccountsPage from './pages/MailAccounts';
 
@@ -23,6 +24,8 @@ const AppRoutes: FC = () => {
       ) : (
         <Routes>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       )}
     </>
