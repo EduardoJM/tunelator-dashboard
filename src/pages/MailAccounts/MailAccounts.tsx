@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useState } from 'react';
 import {
   Container,
   Heading,
@@ -13,6 +13,7 @@ import {
   FormLabel,
   Switch,
   useToast,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -25,6 +26,7 @@ import {
 import { getErrorMessages } from '../../utils/errors';
 import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
+import UserMailModal from '../../modals/UserMailModal';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -53,6 +55,9 @@ const MailAccounts: FC = () => {
   }, [data]);
   const { pushLoading, popLoading } = useLoading();
 
+  const editMailModal = useDisclosure();
+  const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
+
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
     try {
@@ -78,12 +83,28 @@ const MailAccounts: FC = () => {
     navigate(`/mails/${page}`);
   };
 
+  const handleEditUserMail = (userMail: UserMail) => {
+    setEditMailCurrent(userMail);
+    editMailModal.onOpen();
+  };
+
+  const handleCreateUserMail = () => {
+    setEditMailCurrent(null);
+    editMailModal.onOpen();
+  };
+
   return (
     <>
       <Container maxW="120ch">
-        <Heading as="h1" size="lg" my="50px" fontWeight="bold">
-          Minhas Contas de E-mail
-        </Heading>
+        <Flex alignItems="center" justifyContent="space-between">
+          <Heading as="h1" size="lg" my="50px" fontWeight="bold">
+            Minhas Contas de E-mail
+          </Heading>
+
+          <Button variant="primary-rounded" onClick={handleCreateUserMail}>
+            Criar Nova
+          </Button>
+        </Flex>
 
         {isLoading ? (
           <LoadingIndicatorBox />
@@ -115,7 +136,10 @@ const MailAccounts: FC = () => {
                     py="5px"
                   >
                     <FormControl display="flex" alignItems="center">
-                      <FormLabel htmlFor="email-alerts" mb="0">
+                      <FormLabel
+                        htmlFor={`email-${userMail.id}-enabled`}
+                        mb="0"
+                      >
                         Habilitado?
                       </FormLabel>
                       <Switch
@@ -126,7 +150,12 @@ const MailAccounts: FC = () => {
                       />
                     </FormControl>
 
-                    <Button variant="primary">Editar</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => handleEditUserMail(userMail)}
+                    >
+                      Editar
+                    </Button>
                   </Flex>
                 </VStack>
               </Box>
@@ -150,6 +179,12 @@ const MailAccounts: FC = () => {
           </Flex>
         )}
       </Container>
+
+      <UserMailModal
+        isOpen={editMailModal.isOpen}
+        onClose={editMailModal.onClose}
+        userMail={editMailCurrent}
+      />
     </>
   );
 };

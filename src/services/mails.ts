@@ -26,3 +26,23 @@ export async function setMailRedirectEnabled(
   });
   return response.data;
 }
+
+export async function createMail(
+  name: string,
+  redirect_enabled: boolean
+): Promise<any> {
+  const response = await api.post('/api/mails/', { redirect_enabled, name });
+  return response.data;
+}
+
+export async function updateMail(
+  id: number,
+  name: string,
+  redirect_enabled: boolean
+): Promise<any> {
+  const response = await api.patch(`/api/mails/${id}/`, {
+    redirect_enabled,
+    name,
+  });
+  return response.data;
+}

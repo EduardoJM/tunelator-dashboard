@@ -45,7 +45,22 @@ const NavBar: FC = () => {
         TUNELATOR
       </Link>
       <Spacer />
-      AAAA
+      <Link
+        as={RoutingLink}
+        to="/"
+        mr="10px"
+        _hover={{ textDecoration: 'none' }}
+      >
+        Início
+      </Link>
+      <Link
+        as={RoutingLink}
+        to="/mails"
+        mr="10px"
+        _hover={{ textDecoration: 'none' }}
+      >
+        Minhas Contas
+      </Link>
       <Spacer />
       <Menu>
         <MenuButton>
