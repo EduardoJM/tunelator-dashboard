@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { Flex, CircularProgress } from "@chakra-ui/react";
-import { useLoading } from "../../contexts/loading";
+import { FC } from 'react';
+import { Flex, CircularProgress } from '@chakra-ui/react';
+import { useLoading } from '../../contexts/loading';
 
-const LoadingIndicator: FC = () => {
+const AbsoluteLoadingIndicator: FC = () => {
   const { isLoading } = useLoading();
 
   if (!isLoading) {
@@ -24,4 +24,4 @@ const LoadingIndicator: FC = () => {
   );
 };
 
-export default LoadingIndicator;
+export default AbsoluteLoadingIndicator;

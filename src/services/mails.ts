@@ -1,11 +1,20 @@
-import { UserMail, UserMailPaginatedResponse } from "../entities/UserMail";
-import api from "./api";
+import { UserMail, UserMailPaginatedResponse } from '../entities/UserMail';
+import api from './api';
 
 export async function getLatestMails(): Promise<UserMail[]> {
   const response = await api.get<UserMailPaginatedResponse>(
-    "/api/mails/?limit=5"
+    '/api/mails/?limit=5'
   );
   return response.data.results;
+}
+
+export async function getMailsPaginated(
+  page = 1
+): Promise<UserMailPaginatedResponse> {
+  const response = await api.get<UserMailPaginatedResponse>(
+    `/api/mails/?offset=${10 * (page - 1)}&limit=10`
+  );
+  return response.data;
 }
 
 export async function setMailRedirectEnabled(

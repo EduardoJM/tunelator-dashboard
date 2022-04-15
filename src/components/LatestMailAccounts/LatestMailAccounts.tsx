@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import Ellipsis from '../Ellipsis';
 import DateTime from '../DateTime';
 import Button from '../Button';
+import LoadingIndicatorBox from '../LoadingIndicatorBox';
 import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
 import { getLatestMails, setMailRedirectEnabled } from '../../services/mails';
@@ -60,14 +61,7 @@ const LatestMailAccounts: FC = () => {
         Minhas contas de e-mail
       </Heading>
       {isLoading ? (
-        <Flex
-          width="100%"
-          height="200px"
-          alignItems="center"
-          justifyContent="center"
-        >
-          <CircularProgress isIndeterminate={true} color="brand.500" />
-        </Flex>
+        <LoadingIndicatorBox />
       ) : (
         <TableContainer>
           <Table size="sm">

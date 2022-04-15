@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
 import Dashboard from './layouts/Dashboard';
 import LoginPage from './pages/Login';
@@ -15,7 +15,8 @@ const AppRoutes: FC = () => {
         <Dashboard>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/mails" element={<MailAccountsPage />} />
+            <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
+            <Route path="/mails" element={<Navigate to="/mails/1" />} />
           </Routes>
         </Dashboard>
       ) : (

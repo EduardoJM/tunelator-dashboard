@@ -1,5 +1,5 @@
-import { FC, createContext, useContext, useState } from "react";
-import LoadingIndicator from "../components/LoadingIndicator";
+import { FC, createContext, useContext, useState } from 'react';
+import AbsoluteLoadingIndicator from '../components/AbsoluteLoadingIndicator';
 
 export interface LoadingContextData {
   isLoading: boolean;
@@ -15,11 +15,11 @@ export const LoadingProvider: FC = ({ children }) => {
   const [loadingCount, setLoadingCount] = useState(0);
 
   function pushLoading() {
-    setLoadingCount((count) => count + 1);
+    setLoadingCount(count => count + 1);
   }
 
   function popLoading() {
-    setLoadingCount((count) => count - 1);
+    setLoadingCount(count => count - 1);
   }
 
   return (
@@ -31,7 +31,7 @@ export const LoadingProvider: FC = ({ children }) => {
       }}
     >
       {children}
-      <LoadingIndicator />
+      <AbsoluteLoadingIndicator />
     </LoadingContext.Provider>
   );
 };
