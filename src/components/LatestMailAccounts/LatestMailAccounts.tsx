@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useQuery } from "react-query";
+import { useQuery, useQueryClient } from "react-query";
 import {
   TableContainer,
   Table,
@@ -13,16 +13,42 @@ import {
   Heading,
   FormControl,
   Switch,
+  useToast,
 } from "@chakra-ui/react";
 import Ellipsis from "../Ellipsis";
 import DateTime from "../DateTime";
 import Button from "../Button";
-import { getLatestMails } from "../../services/mails";
+import { useLoading } from "../../contexts/loading";
+import { UserMail } from "../../entities/UserMail";
+import { getLatestMails, setMailRedirectEnabled } from "../../services/mails";
+import { getErrorMessages } from "../../utils/errors";
 
 const LatestMailAccounts: FC = () => {
+  const { pushLoading, popLoading } = useLoading();
+  const toast = useToast();
+  const queryClient = useQueryClient();
   const { data, error, isLoading } = useQuery("latest-mails", () =>
     getLatestMails()
   );
+
+  const handleToggleEnabledStatus = async (mail: UserMail) => {
+    pushLoading();
+    try {
+      await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
+      queryClient.invalidateQueries("latest-mails");
+    } catch (err) {
+      getErrorMessages(err).forEach((error) => {
+        toast({
+          title: error.title,
+          description: error.text,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+    }
+    popLoading();
+  };
 
   return (
     <>
@@ -82,7 +108,7 @@ const LatestMailAccounts: FC = () => {
             </Thead>
             <Tbody>
               {data?.map((userMail) => (
-                <Tr key={userMail.mail}>
+                <Tr key={userMail.id}>
                   <Td>{userMail.name}</Td>
                   <Td>
                     <Ellipsis characteres={30}>{userMail.mail}</Ellipsis>
@@ -99,6 +125,7 @@ const LatestMailAccounts: FC = () => {
                         id="email-alerts"
                         colorScheme="brand"
                         defaultChecked={userMail.redirect_enabled}
+                        onChange={() => handleToggleEnabledStatus(userMail)}
                       />
                     </FormControl>
                     {userMail.redirect_enabled}
