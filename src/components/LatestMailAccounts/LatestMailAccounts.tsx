@@ -41,6 +41,7 @@ const LatestMailAccounts: FC = () => {
     try {
       await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
       queryClient.invalidateQueries('latest-mails');
+      queryClient.invalidateQueries(['mails']);
     } catch (err) {
       getErrorMessages(err).forEach(error => {
         toast({
@@ -126,7 +127,6 @@ const LatestMailAccounts: FC = () => {
                         onChange={() => handleToggleEnabledStatus(userMail)}
                       />
                     </FormControl>
-                    {userMail.redirect_enabled}
                   </Td>
                 </Tr>
               ))}

@@ -4,19 +4,33 @@ import {
   Heading,
   Flex,
   ButtonGroup,
-  Button,
+  Button as ChakraButton,
   VStack,
   Box,
   Text,
+  Divider,
+  FormControl,
+  FormLabel,
+  Switch,
+  useToast,
 } from '@chakra-ui/react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { useParams, useNavigate } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
-import { getMailsPaginated } from '../../services/mails';
+import Button from '../../components/Button';
+import {
+  getMailsPaginated,
+  setMailRedirectEnabled,
+} from '../../services/mails';
+import { getErrorMessages } from '../../utils/errors';
+import { useLoading } from '../../contexts/loading';
+import { UserMail } from '../../entities/UserMail';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const toast = useToast();
   const page = useMemo(() => {
     if (!pageNumber) {
       return 1;
@@ -37,6 +51,28 @@ const MailAccounts: FC = () => {
     const length = Math.ceil(data.count / 10);
     return Array.from({ length }).map((_, index) => index + 1);
   }, [data]);
+  const { pushLoading, popLoading } = useLoading();
+
+  const handleToggleEnabledStatus = async (mail: UserMail) => {
+    pushLoading();
+    try {
+      await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
+      queryClient.invalidateQueries(['mails']);
+      queryClient.invalidateQueries('latest-mails');
+      queryClient.refetchQueries('latest-mails');
+    } catch (err) {
+      getErrorMessages(err).forEach(error => {
+        toast({
+          title: error.title,
+          description: error.text,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+    }
+    popLoading();
+  };
 
   const handleNavigateToPage = (page: number) => {
     navigate(`/mails/${page}`);
@@ -71,6 +107,27 @@ const MailAccounts: FC = () => {
                   <Box width="100%">
                     <Text mb="10px">{userMail.mail}</Text>
                   </Box>
+                  <Divider />
+                  <Flex
+                    width="100%"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    py="5px"
+                  >
+                    <FormControl display="flex" alignItems="center">
+                      <FormLabel htmlFor="email-alerts" mb="0">
+                        Habilitado?
+                      </FormLabel>
+                      <Switch
+                        id={`email-${userMail.id}-enabled`}
+                        colorScheme="brand"
+                        defaultChecked={userMail.redirect_enabled}
+                        onChange={() => handleToggleEnabledStatus(userMail)}
+                      />
+                    </FormControl>
+
+                    <Button variant="primary">Editar</Button>
+                  </Flex>
                 </VStack>
               </Box>
             ))}
@@ -80,14 +137,14 @@ const MailAccounts: FC = () => {
           <Flex alignItems="center" justifyContent="end" mt="50px">
             <ButtonGroup size="sm" isAttached variant="outline">
               {pagination.map(page => (
-                <Button
+                <ChakraButton
                   key={page}
                   mr="-px"
                   onClick={() => handleNavigateToPage(page)}
                   colorScheme="brand"
                 >
                   {page}
-                </Button>
+                </ChakraButton>
               ))}
             </ButtonGroup>
           </Flex>
