@@ -1,5 +1,14 @@
 import { FC } from 'react';
-import { Box, VStack, Heading, Text, Flex, Spacer } from '@chakra-ui/react';
+import {
+  Box,
+  VStack,
+  Heading,
+  Text,
+  Flex,
+  Spacer,
+  Link,
+} from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
 import Input from '../../../components/Input';
@@ -64,6 +73,17 @@ const LoginBox: FC = () => {
           <Button width="100%" variant="primary-rounded" type="submit">
             Entrar
           </Button>
+
+          <Box width="100" textAlign="center" py="10px">
+            <Link
+              as={RouterLink}
+              to="/signup"
+              color="brand.500"
+              fontWeight="bold"
+            >
+              Criar minha conta
+            </Link>
+          </Box>
         </VStack>
       </form>
     </Box>

@@ -18,6 +18,7 @@ const AbsoluteLoadingIndicator: FC = () => {
       backgroundColor="brand.500"
       alignItems="center"
       justifyContent="center"
+      zIndex="600"
     >
       <CircularProgress isIndeterminate color="brand.50" />
     </Flex>
