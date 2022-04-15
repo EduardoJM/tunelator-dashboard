@@ -6,7 +6,7 @@ const Home: FC = () => {
   return (
     <>
       <Container maxW="120ch">
-        <Heading as="h1" size="2xl" my="50px" fontWeight="normal">
+        <Heading as="h1" size="xl" my="50px" fontWeight="bold">
           Bem-vindo!
         </Heading>
         <LatestMailAccounts />

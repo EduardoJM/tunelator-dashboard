@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Ellipsis from "../Ellipsis";
 import DateTime from "../DateTime";
+import Button from "../Button";
 import { getLatestMails } from "../../services/mails";
 
 const LatestMailAccounts: FC = () => {
@@ -25,7 +26,7 @@ const LatestMailAccounts: FC = () => {
 
   return (
     <>
-      <Heading as="h2" size="lg" mb="40px" fontWeight="normal">
+      <Heading as="h2" size="md" mb="40px" fontWeight="bold">
         Minhas contas de e-mail
       </Heading>
       {isLoading ? (
@@ -39,14 +40,44 @@ const LatestMailAccounts: FC = () => {
         </Flex>
       ) : (
         <TableContainer>
-          <Table>
+          <Table size="sm">
             <Thead>
               <Tr>
-                <Th>Conta</Th>
-                <Th>E-mail</Th>
-                <Th>Criado em</Th>
-                <Th>Atualizado em</Th>
-                <Th>Ativo</Th>
+                <Th
+                  borderColor="brand.500"
+                  borderBottomWidth="2px"
+                  bgColor="gray.100"
+                >
+                  Conta
+                </Th>
+                <Th
+                  borderColor="brand.500"
+                  borderBottomWidth="2px"
+                  bgColor="gray.100"
+                >
+                  E-mail
+                </Th>
+                <Th
+                  borderColor="brand.500"
+                  borderBottomWidth="2px"
+                  bgColor="gray.100"
+                >
+                  Criado em
+                </Th>
+                <Th
+                  borderColor="brand.500"
+                  borderBottomWidth="2px"
+                  bgColor="gray.100"
+                >
+                  Atualizado em
+                </Th>
+                <Th
+                  borderColor="brand.500"
+                  borderBottomWidth="2px"
+                  bgColor="gray.100"
+                >
+                  Ativo
+                </Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -66,6 +97,7 @@ const LatestMailAccounts: FC = () => {
                     <FormControl display="flex" alignItems="center">
                       <Switch
                         id="email-alerts"
+                        colorScheme="brand"
                         defaultChecked={userMail.redirect_enabled}
                       />
                     </FormControl>
@@ -77,6 +109,9 @@ const LatestMailAccounts: FC = () => {
           </Table>
         </TableContainer>
       )}
+      <Flex alignItems="center" justifyContent="end" mt="30px">
+        <Button variant="primary">Ver Tudo</Button>
+      </Flex>
     </>
   );
 };
