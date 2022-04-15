@@ -1,9 +1,10 @@
-import { FC } from "react";
-import { Routes, Route } from "react-router-dom";
-import { useAuth } from "./contexts/auth";
-import LoginPage from "./pages/Login";
-import Dashboard from "./layouts/Dashboard";
-import Home from "./pages/Home";
+import { FC } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useAuth } from './contexts/auth';
+import Dashboard from './layouts/Dashboard';
+import LoginPage from './pages/Login';
+import HomePage from './pages/Home';
+import MailAccountsPage from './pages/MailAccounts';
 
 const AppRoutes: FC = () => {
   const { loggedIn } = useAuth();
@@ -13,7 +14,8 @@ const AppRoutes: FC = () => {
       {loggedIn ? (
         <Dashboard>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/mails" element={<MailAccountsPage />} />
           </Routes>
         </Dashboard>
       ) : (

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 import {
   Flex,
   Text,
@@ -8,10 +8,12 @@ import {
   MenuItem,
   MenuDivider,
   MenuList,
-} from "@chakra-ui/react";
-import Avatar from "../Avatar";
-import { MdArrowDropDown } from "react-icons/md";
-import { useAuth } from "../../contexts/auth";
+  Link,
+} from '@chakra-ui/react';
+import { Link as RoutingLink } from 'react-router-dom';
+import Avatar from '../Avatar';
+import { MdArrowDropDown } from 'react-icons/md';
+import { useAuth } from '../../contexts/auth';
 
 const NavBar: FC = () => {
   const { userData, logout } = useAuth();
@@ -34,7 +36,14 @@ const NavBar: FC = () => {
       justifyContent="space-between"
       px="50px"
     >
-      <Text fontWeight="bold">TUNELATOR</Text>
+      <Link
+        as={RoutingLink}
+        fontWeight="bold"
+        to="/"
+        _hover={{ textDecoration: 'none' }}
+      >
+        TUNELATOR
+      </Link>
       <Spacer />
       AAAA
       <Spacer />

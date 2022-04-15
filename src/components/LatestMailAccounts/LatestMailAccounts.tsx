@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import { FC } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
 import {
   TableContainer,
   Table,
@@ -14,34 +14,38 @@ import {
   FormControl,
   Switch,
   useToast,
-} from "@chakra-ui/react";
-import Ellipsis from "../Ellipsis";
-import DateTime from "../DateTime";
-import Button from "../Button";
-import { useLoading } from "../../contexts/loading";
-import { UserMail } from "../../entities/UserMail";
-import { getLatestMails, setMailRedirectEnabled } from "../../services/mails";
-import { getErrorMessages } from "../../utils/errors";
+} from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import Ellipsis from '../Ellipsis';
+import DateTime from '../DateTime';
+import Button from '../Button';
+import { useLoading } from '../../contexts/loading';
+import { UserMail } from '../../entities/UserMail';
+import { getLatestMails, setMailRedirectEnabled } from '../../services/mails';
+import { getErrorMessages } from '../../utils/errors';
 
 const LatestMailAccounts: FC = () => {
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
   const queryClient = useQueryClient();
-  const { data, error, isLoading } = useQuery("latest-mails", () =>
-    getLatestMails()
-  );
+  const navigate = useNavigate();
+  const { data, error, isLoading } = useQuery('latest-mails', getLatestMails);
+
+  const handleGoToMailsAccountsPage = () => {
+    navigate('/mails');
+  };
 
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
     try {
       await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
-      queryClient.invalidateQueries("latest-mails");
+      queryClient.invalidateQueries('latest-mails');
     } catch (err) {
-      getErrorMessages(err).forEach((error) => {
+      getErrorMessages(err).forEach(error => {
         toast({
           title: error.title,
           description: error.text,
-          status: "error",
+          status: 'error',
           duration: 5000,
           isClosable: true,
         });
@@ -107,7 +111,7 @@ const LatestMailAccounts: FC = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {data?.map((userMail) => (
+              {data?.map(userMail => (
                 <Tr key={userMail.id}>
                   <Td>{userMail.name}</Td>
                   <Td>
@@ -137,7 +141,9 @@ const LatestMailAccounts: FC = () => {
         </TableContainer>
       )}
       <Flex alignItems="center" justifyContent="end" mt="30px">
-        <Button variant="primary">Ver Tudo</Button>
+        <Button variant="primary" onClick={handleGoToMailsAccountsPage}>
+          Ver Tudo
+        </Button>
       </Flex>
     </>
   );
