@@ -12,7 +12,7 @@ export async function getMailsPaginated(
   page = 1
 ): Promise<UserMailPaginatedResponse> {
   const response = await api.get<UserMailPaginatedResponse>(
-    `/api/mails/?offset=${10 * (page - 1)}&limit=10`
+    `/api/mails/?offset=${5 * (page - 1)}&limit=5`
   );
   return response.data;
 }

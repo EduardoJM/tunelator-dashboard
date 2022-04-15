@@ -33,7 +33,7 @@ const MailAccounts: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const toast = useToast();
-  const page = useMemo(() => {
+  const currentPage = useMemo(() => {
     if (!pageNumber) {
       return 1;
     }
@@ -43,14 +43,14 @@ const MailAccounts: FC = () => {
     }
     return num;
   }, [pageNumber]);
-  const { data, error, isLoading } = useQuery(['mails', page], () =>
-    getMailsPaginated(page)
+  const { data, error, isLoading } = useQuery(['mails', currentPage], () =>
+    getMailsPaginated(currentPage)
   );
   const pagination = useMemo(() => {
     if (!data) {
       return null;
     }
-    const length = Math.ceil(data.count / 10);
+    const length = Math.ceil(data.count / 5);
     return Array.from({ length }).map((_, index) => index + 1);
   }, [data]);
   const { pushLoading, popLoading } = useLoading();
@@ -171,6 +171,13 @@ const MailAccounts: FC = () => {
                   mr="-px"
                   onClick={() => handleNavigateToPage(page)}
                   colorScheme="brand"
+                  isActive={page == currentPage}
+                  _active={{
+                    backgroundColor: 'brand.500',
+                    color: 'white',
+                    borderColor: 'brand.500',
+                    borderWidth: '1px',
+                  }}
                 >
                   {page}
                 </ChakraButton>
@@ -179,6 +186,8 @@ const MailAccounts: FC = () => {
           </Flex>
         )}
       </Container>
+
+      <Box mt="100px" />
 
       <UserMailModal
         isOpen={editMailModal.isOpen}

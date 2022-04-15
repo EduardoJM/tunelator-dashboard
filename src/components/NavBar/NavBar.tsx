@@ -35,6 +35,13 @@ const NavBar: FC = () => {
       alignItems="center"
       justifyContent="space-between"
       px="50px"
+      style={{
+        position: 'sticky',
+        left: 0,
+        top: 0,
+        zIndex: 500,
+        boxShadow: '0 0 5px 3px rgba(0, 0, 0, 0.5)',
+      }}
     >
       <Link
         as={RoutingLink}
@@ -48,7 +55,7 @@ const NavBar: FC = () => {
       <Link
         as={RoutingLink}
         to="/"
-        mr="10px"
+        mr="20px"
         _hover={{ textDecoration: 'none' }}
       >
         Início
@@ -56,7 +63,7 @@ const NavBar: FC = () => {
       <Link
         as={RoutingLink}
         to="/mails"
-        mr="10px"
+        mr="20px"
         _hover={{ textDecoration: 'none' }}
       >
         Minhas Contas
