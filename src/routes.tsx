@@ -17,6 +17,7 @@ const AppRoutes: FC = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
             <Route path="/mails" element={<Navigate to="/mails/1" />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </Dashboard>
       ) : (
