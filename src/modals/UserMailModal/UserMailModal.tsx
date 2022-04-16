@@ -61,9 +61,9 @@ const UserMailModal: FC<UserMailModalProps> = ({
       }
 
       queryClient.invalidateQueries(['mails']);
+      queryClient.refetchQueries(['mails']);
       queryClient.invalidateQueries('latest-mails');
       queryClient.refetchQueries('latest-mails');
-      queryClient.refetchQueries(['mails']);
 
       onClose();
     } catch (err) {

@@ -29,6 +29,7 @@ export const AuthProvider: FC = ({ children }) => {
   const toast = useToast();
   const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function checkStoredCredentials() {
