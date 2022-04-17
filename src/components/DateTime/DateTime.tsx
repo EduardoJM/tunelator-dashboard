@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo } from 'react';
 
 export interface DateTimeProps {
   value: string;
@@ -7,7 +7,9 @@ export interface DateTimeProps {
 const DateTime: FC<DateTimeProps> = ({ value }) => {
   const formatedValue = useMemo(() => {
     const date = new Date(value);
-    return date.toLocaleString("pt-BR");
+    const dateString = date.toLocaleDateString('pt-BR', { dateStyle: 'long' });
+    const timeString = date.toLocaleTimeString('pt-BR', { timeStyle: 'short' });
+    return `${dateString} às ${timeString}`;
   }, [value]);
 
   return <>{formatedValue}</>;

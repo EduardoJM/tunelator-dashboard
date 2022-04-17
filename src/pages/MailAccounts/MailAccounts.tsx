@@ -27,6 +27,7 @@ import { getErrorMessages } from '../../utils/errors';
 import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
+import DateTime from '../../components/DateTime';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -109,11 +110,10 @@ const MailAccounts: FC = () => {
         {isLoading ? (
           <LoadingIndicatorBox />
         ) : (
-          <VStack width="100%">
+          <VStack width="100%" spacing="25px">
             {data?.results.map(userMail => (
               <Box
                 key={userMail.id}
-                mb="25px"
                 width="100%"
                 borderWidth="1px"
                 borderColor="gray.200"
@@ -127,6 +127,16 @@ const MailAccounts: FC = () => {
                   </Heading>
                   <Box width="100%">
                     <Text mb="10px">{userMail.mail}</Text>
+                  </Box>
+                  <Divider />
+                  <Box width="100%">
+                    <Text fontWeight="bold">Criado em</Text>
+                    <DateTime value={userMail.created_at} />
+                  </Box>
+                  <Divider />
+                  <Box width="100%">
+                    <Text fontWeight="bold">Última Atualização</Text>
+                    <DateTime value={userMail.updated_at} />
                   </Box>
                   <Divider />
                   <Flex
