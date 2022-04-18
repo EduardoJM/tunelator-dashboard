@@ -1,6 +1,7 @@
 export interface UserMail {
   id: number;
   created_at: string;
+  mail_user: string;
   mail: string;
   name: string;
   plan_enabled: boolean;

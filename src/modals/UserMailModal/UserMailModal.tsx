@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, KeyboardEvent, useState } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -18,7 +18,7 @@ import Input from '../../components/Input';
 import Checkbox from '../../components/Checkbox';
 import { UserMail } from '../../entities/UserMail';
 import { getErrorMessages } from '../../utils/errors';
-import { createMail, updateMail } from '../../services/mails';
+import { createMail, updateMail, validateUserMail } from '../../services/mails';
 import { createOrEditMailSchema } from '../../schemas/mail';
 
 export interface UserMailModalProps {
@@ -40,6 +40,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
 }) => {
   const toast = useToast();
   const queryClient = useQueryClient();
+  const [mailUserIsValid, setMailUserIsValid] = useState(false);
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -54,6 +55,18 @@ const UserMailModal: FC<UserMailModalProps> = ({
     FormProps
   >(async ({ name, mail_user, redirect_enabled }) => {
     try {
+      if (!mailUserIsValid) {
+        toast({
+          title: 'Oopps!',
+          description:
+            'Esse nome de conta não está disponível, tente mudar um pouco.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+
       createOrEditMailSchema.validateSync({
         name,
         mail_user,
@@ -92,13 +105,80 @@ const UserMailModal: FC<UserMailModalProps> = ({
     }
     formik.setValues({
       redirect_enabled: userMail.redirect_enabled,
-      mail_user: 'userMail.mail_user', // TODO: FIX IT
+      mail_user: userMail.mail_user,
       name: userMail.name,
     });
   }, [userMail]);
 
   const handleSave = () => {
     createOrUpdateUserMailMutation.mutate(formik.values);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    const validKeys = [
+      'arrowleft',
+      'arrowright',
+      'home',
+      'end',
+      'shift',
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+      'g',
+      'h',
+      'i',
+      'j',
+      'k',
+      'l',
+      'm',
+      'n',
+      'o',
+      'p',
+      'q',
+      'r',
+      's',
+      't',
+      'u',
+      'v',
+      'w',
+      'x',
+      'y',
+      'z',
+      '0',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '_',
+      'backspace',
+      'delete',
+    ];
+    if (!validKeys.includes(e.key.toLowerCase())) {
+      e.preventDefault();
+    }
+  };
+
+  const handleBlur = async () => {
+    const isValid = await validateUserMail(formik.values.mail_user);
+    setMailUserIsValid(isValid);
+    if (!isValid) {
+      toast({
+        title: 'Oopps!',
+        description:
+          'Esse nome de conta não está disponível, tente mudar um pouco.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -120,13 +200,17 @@ const UserMailModal: FC<UserMailModalProps> = ({
             id="name"
             value={formik.values.name}
             onChange={formik.handleChange}
+            mb="30px"
           />
 
           <Input
             label="Nome da conta"
             id="mail_user"
+            isDisabled={!!userMail}
             value={formik.values.mail_user}
             onChange={formik.handleChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleBlur}
           />
 
           <FormControl mt="50px" display="flex" alignItems="center">

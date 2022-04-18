@@ -40,6 +40,15 @@ export async function createMail(
   return response.data;
 }
 
+export async function validateUserMail(user_name: string): Promise<boolean> {
+  try {
+    await api.post('/api/mails/verify/user/', { user_name });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 export async function updateMail(
   id: number,
   name: string,
