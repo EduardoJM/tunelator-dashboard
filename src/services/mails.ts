@@ -29,9 +29,14 @@ export async function setMailRedirectEnabled(
 
 export async function createMail(
   name: string,
+  mail_user: string,
   redirect_enabled: boolean
 ): Promise<any> {
-  const response = await api.post('/api/mails/', { redirect_enabled, name });
+  const response = await api.post('/api/mails/', {
+    redirect_enabled,
+    mail_user,
+    name,
+  });
   return response.data;
 }
 

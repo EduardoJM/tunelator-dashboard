@@ -29,6 +29,7 @@ export interface UserMailModalProps {
 
 interface FormProps {
   name: string;
+  mail_user: string;
   redirect_enabled: boolean;
 }
 
@@ -42,6 +43,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
   const formik = useFormik({
     initialValues: {
       name: '',
+      mail_user: '',
       redirect_enabled: true,
     },
     onSubmit: data => console.log(data),
@@ -50,14 +52,18 @@ const UserMailModal: FC<UserMailModalProps> = ({
     unknown,
     unknown,
     FormProps
-  >(async ({ name, redirect_enabled }) => {
+  >(async ({ name, mail_user, redirect_enabled }) => {
     try {
-      createOrEditMailSchema.validateSync({ name, redirect_enabled });
+      createOrEditMailSchema.validateSync({
+        name,
+        mail_user,
+        redirect_enabled,
+      });
 
       if (!!userMail) {
         await updateMail(userMail.id, name, redirect_enabled);
       } else {
-        await createMail(name, redirect_enabled);
+        await createMail(name, mail_user, redirect_enabled);
       }
 
       queryClient.invalidateQueries(['mails']);
@@ -81,11 +87,12 @@ const UserMailModal: FC<UserMailModalProps> = ({
 
   useEffect(() => {
     if (!userMail) {
-      formik.setValues({ redirect_enabled: true, name: '' });
+      formik.setValues({ redirect_enabled: true, mail_user: '', name: '' });
       return;
     }
     formik.setValues({
       redirect_enabled: userMail.redirect_enabled,
+      mail_user: 'userMail.mail_user', // TODO: FIX IT
       name: userMail.name,
     });
   }, [userMail]);
@@ -112,6 +119,13 @@ const UserMailModal: FC<UserMailModalProps> = ({
             label="Identificador da Conta"
             id="name"
             value={formik.values.name}
+            onChange={formik.handleChange}
+          />
+
+          <Input
+            label="Nome da conta"
+            id="mail_user"
+            value={formik.values.mail_user}
             onChange={formik.handleChange}
           />
 
