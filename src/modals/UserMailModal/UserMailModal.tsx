@@ -15,6 +15,7 @@ import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import InputMailUser from '../../components/InputMailUser';
 import Checkbox from '../../components/Checkbox';
 import { UserMail } from '../../entities/UserMail';
 import { getErrorMessages } from '../../utils/errors';
@@ -203,7 +204,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
             mb="30px"
           />
 
-          <Input
+          <InputMailUser
             label="Nome da conta"
             id="mail_user"
             isDisabled={!!userMail}
@@ -229,7 +230,11 @@ const UserMailModal: FC<UserMailModalProps> = ({
           <Button variant="ghost" mr="10px" onClick={onClose}>
             Fechar
           </Button>
-          <Button variant="primary" onClick={handleSave}>
+          <Button
+            variant="primary"
+            onClick={handleSave}
+            isDisabled={!mailUserIsValid}
+          >
             Salvar
           </Button>
         </ModalFooter>
