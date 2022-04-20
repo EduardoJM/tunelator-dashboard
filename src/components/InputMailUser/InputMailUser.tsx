@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, ChangeEvent, KeyboardEvent } from 'react';
 import {
   Input as ChakraInput,
   InputProps as ChakraInputProps,
@@ -7,6 +7,7 @@ import {
   FormLabel,
   FormControl,
 } from '@chakra-ui/react';
+import { validKeys } from './validKeys';
 
 export interface InputMailUserProps extends ChakraInputProps {
   label: string;
@@ -14,14 +15,40 @@ export interface InputMailUserProps extends ChakraInputProps {
   domain?: string;
 }
 
-const InputMailUser: FC<InputMailUserProps> = ({ id, label, domain, ...props }) => {
+const InputMailUser: FC<InputMailUserProps> = ({
+  id,
+  label,
+  domain,
+  onChange,
+  ...props
+}) => {
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.target.value = e.target.value.toLowerCase();
+    if (!!onChange) {
+      onChange(e);
+    }
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!validKeys.includes(e.key.toLowerCase())) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <FormControl>
       <FormLabel color="foreground.muted" htmlFor={id}>
         {label}
       </FormLabel>
       <InputGroup>
-        <ChakraInput id={id} focusBorderColor="brand.500" {...props} />
+        <ChakraInput
+          id={id}
+          onChange={handleOnChange}
+          onKeyDown={handleKeyDown}
+          maxLength={20}
+          focusBorderColor="brand.500"
+          {...props}
+        />
         <InputRightAddon children={domain || '@tunelator.com.br'} />
       </InputGroup>
     </FormControl>

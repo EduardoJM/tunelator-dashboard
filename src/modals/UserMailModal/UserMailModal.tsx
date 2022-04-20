@@ -102,6 +102,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
   useEffect(() => {
     if (!userMail) {
       formik.setValues({ redirect_enabled: true, mail_user: '', name: '' });
+      setMailUserIsValid(false);
       return;
     }
     formik.setValues({
@@ -109,62 +110,11 @@ const UserMailModal: FC<UserMailModalProps> = ({
       mail_user: userMail.mail_user,
       name: userMail.name,
     });
+    setMailUserIsValid(true);
   }, [userMail]);
 
   const handleSave = () => {
     createOrUpdateUserMailMutation.mutate(formik.values);
-  };
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const validKeys = [
-      'arrowleft',
-      'arrowright',
-      'home',
-      'end',
-      'shift',
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-      'g',
-      'h',
-      'i',
-      'j',
-      'k',
-      'l',
-      'm',
-      'n',
-      'o',
-      'p',
-      'q',
-      'r',
-      's',
-      't',
-      'u',
-      'v',
-      'w',
-      'x',
-      'y',
-      'z',
-      '0',
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '_',
-      'backspace',
-      'delete',
-    ];
-    if (!validKeys.includes(e.key.toLowerCase())) {
-      e.preventDefault();
-    }
   };
 
   const handleBlur = async () => {
@@ -210,7 +160,6 @@ const UserMailModal: FC<UserMailModalProps> = ({
             isDisabled={!!userMail}
             value={formik.values.mail_user}
             onChange={formik.handleChange}
-            onKeyDown={handleKeyDown}
             onBlur={handleBlur}
           />
 
