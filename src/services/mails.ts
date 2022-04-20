@@ -1,3 +1,4 @@
+import { ReceivedMail } from '../entities/ReceivedMail';
 import { UserMail, UserMailPaginatedResponse } from '../entities/UserMail';
 import api from './api';
 
@@ -61,7 +62,9 @@ export async function updateMail(
   return response.data;
 }
 
-export async function getLatestReceivedMails() {
-  const response = await api.get('/api/mails/received/?limit=5');
-  console.log(response.data);
+export async function getLatestReceivedMails(): Promise<ReceivedMail[]> {
+  const response = await api.get<ReceivedMail[]>(
+    '/api/mails/received/?limit=5'
+  );
+  return response.data;
 }
