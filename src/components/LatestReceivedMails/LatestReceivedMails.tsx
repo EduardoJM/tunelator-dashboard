@@ -9,11 +9,13 @@ import {
   Td,
   Tbody,
   Th,
+  Flex,
 } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../LoadingIndicatorBox';
 import DateTime from '../DateTime';
 import Ellipsis from '../Ellipsis';
 import { getLatestReceivedMails } from '../../services/mails';
+import Button from '../Button';
 
 const LatestReceivedMails: FC = () => {
   const { data, error, isLoading } = useQuery(
@@ -63,37 +65,29 @@ const LatestReceivedMails: FC = () => {
                   >
                     Data
                   </Th>
-                  <Th
-                    borderColor="brand.500"
-                    borderBottomWidth="2px"
-                    bgColor="gray.100"
-                  >
-                    Encaminhado?
-                  </Th>
                 </Tr>
               </Thead>
               <Tbody>
                 {data?.map(receivedMail => (
                   <Tr key={receivedMail.id}>
                     <Td>
-                      <Ellipsis characteres={20}>
+                      <Ellipsis characteres={25}>
                         {receivedMail.origin_mail || 'Desconhecido'}
                       </Ellipsis>
                     </Td>
                     <Td>
-                      <Ellipsis characteres={20}>
+                      <Ellipsis characteres={25}>
                         {receivedMail.mail.mail}
                       </Ellipsis>
                     </Td>
                     <Td>
-                      <Ellipsis characteres={30}>
+                      <Ellipsis characteres={40}>
                         {receivedMail.subject || 'Desconhecido'}
                       </Ellipsis>
                     </Td>
                     <Td>
                       <DateTime value={receivedMail.date} />
                     </Td>
-                    <Td>{receivedMail.delivered ? 'Sim' : 'Não'}</Td>
                   </Tr>
                 ))}
               </Tbody>
@@ -101,6 +95,9 @@ const LatestReceivedMails: FC = () => {
           </TableContainer>
         </>
       )}
+      <Flex alignItems="center" justifyContent="end" mt="30px">
+        <Button variant="primary">Ver Todas as Informações</Button>
+      </Flex>
     </>
   );
 };
