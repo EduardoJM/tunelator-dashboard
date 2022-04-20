@@ -1,9 +1,14 @@
+export interface ReceivedMailIntern {
+  id: number;
+  mail: string;
+}
+
 export interface ReceivedMail {
   id: number;
   date: string;
   delivered: boolean;
   delivered_date: string;
-  mail: number;
+  mail: ReceivedMailIntern;
   origin_mail: string | null;
   subject: string | null;
 }

@@ -11,8 +11,9 @@ import {
   Th,
 } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../LoadingIndicatorBox';
-import { getLatestReceivedMails } from '../../services/mails';
 import DateTime from '../DateTime';
+import Ellipsis from '../Ellipsis';
+import { getLatestReceivedMails } from '../../services/mails';
 
 const LatestReceivedMails: FC = () => {
   const { data, error, isLoading } = useQuery(
@@ -74,9 +75,21 @@ const LatestReceivedMails: FC = () => {
               <Tbody>
                 {data?.map(receivedMail => (
                   <Tr key={receivedMail.id}>
-                    <Td>{receivedMail.origin_mail || 'Desconhecido'}</Td>
-                    <Td>{'receivedMail.mail'}</Td>
-                    <Td>{receivedMail.subject || 'Desconhecido'}</Td>
+                    <Td>
+                      <Ellipsis characteres={20}>
+                        {receivedMail.origin_mail || 'Desconhecido'}
+                      </Ellipsis>
+                    </Td>
+                    <Td>
+                      <Ellipsis characteres={20}>
+                        {receivedMail.mail.mail}
+                      </Ellipsis>
+                    </Td>
+                    <Td>
+                      <Ellipsis characteres={30}>
+                        {receivedMail.subject || 'Desconhecido'}
+                      </Ellipsis>
+                    </Td>
                     <Td>
                       <DateTime value={receivedMail.date} />
                     </Td>
