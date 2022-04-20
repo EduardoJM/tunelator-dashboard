@@ -29,7 +29,6 @@ export const AuthProvider: FC = ({ children }) => {
   const toast = useToast();
   const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function checkStoredCredentials() {
@@ -51,10 +50,7 @@ export const AuthProvider: FC = ({ children }) => {
         ] = `Bearer ${response.access}`;
 
         setUserData(response.user);
-      } catch {
-        localStorage.removeItem('@TUNELATOR_REFRESH');
-        sessionStorage.removeItem('@TUNELATOR_REFRESH');
-      }
+      } catch {}
       popLoading();
     }
 
