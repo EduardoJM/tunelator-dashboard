@@ -10,13 +10,14 @@ import {
   MenuList,
   Link,
 } from '@chakra-ui/react';
-import { Link as RoutingLink } from 'react-router-dom';
+import { Link as RoutingLink, useLocation } from 'react-router-dom';
 import Avatar from '../Avatar';
 import { MdArrowDropDown } from 'react-icons/md';
 import { useAuth } from '../../contexts/auth';
 
 const NavBar: FC = () => {
   const { userData, logout } = useAuth();
+  const { pathname } = useLocation();
 
   function handleLogoutClick() {
     logout();
@@ -56,6 +57,7 @@ const NavBar: FC = () => {
         as={RoutingLink}
         to="/"
         mr="20px"
+        fontWeight={pathname === '/' ? 'bold' : 'normal'}
         _hover={{ textDecoration: 'none' }}
       >
         Início
@@ -63,10 +65,14 @@ const NavBar: FC = () => {
       <Link
         as={RoutingLink}
         to="/mails"
+        fontWeight={pathname === '/mails' ? 'bold' : 'normal'}
         mr="20px"
         _hover={{ textDecoration: 'none' }}
       >
         Minhas Contas
+      </Link>
+      <Link mr="20px" _hover={{ textDecoration: 'none' }}>
+        E-mails Recebidos
       </Link>
       <Spacer />
       <Menu>
