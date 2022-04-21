@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import AbsoluteLoadingIndicator from './components/AbsoluteLoadingIndicator';
 import { AuthProvider } from './contexts/auth';
 import { LoadingProvider } from './contexts/loading';
 import theme from './theme';
@@ -14,15 +15,21 @@ ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
       <LoadingProvider>
-        <AuthProvider>
-          <BrowserRouter>
+        <BrowserRouter>
+          <AuthProvider>
             <QueryClientProvider client={queryClient}>
-              <Suspense fallback={<></>}>
+              <Suspense
+                fallback={
+                  <AbsoluteLoadingIndicator
+                    force={true}
+                  ></AbsoluteLoadingIndicator>
+                }
+              >
                 <AppRoutes />
               </Suspense>
             </QueryClientProvider>
-          </BrowserRouter>
-        </AuthProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </LoadingProvider>
     </ChakraProvider>
   </React.StrictMode>,

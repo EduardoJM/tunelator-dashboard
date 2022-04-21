@@ -2,6 +2,7 @@ import { FC, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
 import Dashboard from './layouts/Dashboard';
+import RequireAuth from './layouts/RequireAuth';
 //import LoginPage from './pages/Login';
 //import SignupPage from './pages/Signup';
 //import Home from './pages/Home';
@@ -19,22 +20,41 @@ const AppRoutes: FC = () => {
 
   return (
     <>
-      {loggedIn ? (
-        <Dashboard>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
-            <Route path="/mails" element={<MailAccountsPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Dashboard>
-      ) : (
-        <Routes>
-          <Route path="/" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      )}
+      <Routes>
+        {loggedIn && (
+          <Route
+            path="/"
+            element={
+              <Dashboard>
+                <HomePage />
+              </Dashboard>
+            }
+          />
+        )}
+        <Route
+          path="/mails/:pageNumber"
+          element={
+            <RequireAuth>
+              <Dashboard>
+                <MailAccountsPage />
+              </Dashboard>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/mails"
+          element={
+            <RequireAuth>
+              <Dashboard>
+                <MailAccountsPage />
+              </Dashboard>
+            </RequireAuth>
+          }
+        />
+        {!loggedIn && <Route path="/" element={<LoginPage />} />}
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </>
   );
 };

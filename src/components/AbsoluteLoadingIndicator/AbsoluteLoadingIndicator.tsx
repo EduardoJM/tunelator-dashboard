@@ -2,10 +2,16 @@ import { FC } from 'react';
 import { Flex, CircularProgress } from '@chakra-ui/react';
 import { useLoading } from '../../contexts/loading';
 
-const AbsoluteLoadingIndicator: FC = () => {
+export interface AbsoluteLoadingIndicatorProps {
+  force?: boolean;
+}
+
+const AbsoluteLoadingIndicator: FC<AbsoluteLoadingIndicatorProps> = ({
+  force,
+}) => {
   const { isLoading } = useLoading();
 
-  if (!isLoading) {
+  if (!isLoading && !force) {
     return null;
   }
   return (

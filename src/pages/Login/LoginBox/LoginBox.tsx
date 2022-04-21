@@ -8,7 +8,7 @@ import {
   Spacer,
   Link,
 } from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
 import Input from '../../../components/Input';
@@ -17,14 +17,17 @@ import Checkbox from '../../../components/Checkbox';
 
 const LoginBox: FC = () => {
   const auth = useAuth();
+  const location = useLocation();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
       remember: true,
     },
-    onSubmit: ({ email, password, remember }) =>
-      auth.login(email, password, remember),
+    onSubmit: ({ email, password, remember }) => {
+      const from = String((location.state as any)?.from?.pathname || '/');
+      auth.login(email, password, remember, from);
+    },
   });
 
   return (

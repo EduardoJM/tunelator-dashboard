@@ -1,5 +1,6 @@
 import { FC, createContext, useState, useContext, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { getErrorMessages } from '../utils/errors';
 import { loginSchema, signupSchema } from '../schemas/auth';
 import { User } from '../entities/User';
@@ -10,7 +11,12 @@ import * as authServices from '../services/auth';
 export interface AuthContextData {
   loggedIn: boolean;
   userData: User | null;
-  login: (email: string, password: string, remember: boolean) => Promise<void>;
+  login: (
+    email: string,
+    password: string,
+    remember: boolean,
+    from: string
+  ) => Promise<void>;
   signup: (
     email: string,
     first_name: string,
@@ -27,11 +33,15 @@ export const AuthContext = createContext<AuthContextData>(
 
 export const AuthProvider: FC = ({ children }) => {
   const toast = useToast();
+  const navigate = useNavigate();
+  const location = useLocation();
   const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
 
   useEffect(() => {
     async function checkStoredCredentials() {
+      const { pathname } = location;
+
       let token: string | null = null;
       if (localStorage.getItem('@TUNELATOR_REFRESH')) {
         token = localStorage.getItem('@TUNELATOR_REFRESH');
@@ -50,6 +60,8 @@ export const AuthProvider: FC = ({ children }) => {
         ] = `Bearer ${response.access}`;
 
         setUserData(response.user);
+
+        navigate(pathname, { replace: true });
       } catch {}
       popLoading();
     }
@@ -121,7 +133,12 @@ export const AuthProvider: FC = ({ children }) => {
     popLoading();
   }
 
-  async function login(email: string, password: string, remember: boolean) {
+  async function login(
+    email: string,
+    password: string,
+    remember: boolean,
+    from: string
+  ) {
     pushLoading();
     try {
       const validatedData = loginSchema.validateSync({
@@ -151,6 +168,7 @@ export const AuthProvider: FC = ({ children }) => {
         duration: 5000,
         isClosable: true,
       });
+      navigate(from, { replace: true });
     } catch (err) {
       getErrorMessages(err).forEach(error => {
         toast({
