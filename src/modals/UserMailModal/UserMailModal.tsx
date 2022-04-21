@@ -10,6 +10,7 @@ import {
   FormControl,
   FormLabel,
   useToast,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
@@ -40,8 +41,12 @@ const UserMailModal: FC<UserMailModalProps> = ({
   userMail,
 }) => {
   const toast = useToast();
+  const modalSize = useBreakpointValue({ base: 'full', md: 'xl' });
+
   const queryClient = useQueryClient();
+
   const [mailUserIsValid, setMailUserIsValid] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -137,7 +142,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
       blockScrollOnMount={false}
       isOpen={isOpen}
       onClose={onClose}
-      size="xl"
+      size={modalSize}
     >
       <ModalOverlay />
       <ModalContent>
