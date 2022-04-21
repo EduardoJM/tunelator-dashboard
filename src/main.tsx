@@ -12,26 +12,24 @@ import AppRoutes from './routes';
 const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <LoadingProvider>
-        <BrowserRouter>
-          <AuthProvider>
-            <QueryClientProvider client={queryClient}>
-              <Suspense
-                fallback={
-                  <AbsoluteLoadingIndicator
-                    force={true}
-                  ></AbsoluteLoadingIndicator>
-                }
-              >
-                <AppRoutes />
-              </Suspense>
-            </QueryClientProvider>
-          </AuthProvider>
-        </BrowserRouter>
-      </LoadingProvider>
-    </ChakraProvider>
-  </React.StrictMode>,
+  <ChakraProvider theme={theme}>
+    <LoadingProvider>
+      <BrowserRouter>
+        <AuthProvider>
+          <QueryClientProvider client={queryClient}>
+            <Suspense
+              fallback={
+                <AbsoluteLoadingIndicator
+                  force={true}
+                ></AbsoluteLoadingIndicator>
+              }
+            >
+              <AppRoutes />
+            </Suspense>
+          </QueryClientProvider>
+        </AuthProvider>
+      </BrowserRouter>
+    </LoadingProvider>
+  </ChakraProvider>,
   document.getElementById('root')
 );

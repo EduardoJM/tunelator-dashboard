@@ -14,6 +14,7 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
 import PriceInCents from '../../components/PriceInCents';
@@ -24,9 +25,18 @@ const Plans: FC = () => {
   const plans = useQuery('plans', listPlans);
   const [activePlan, setActivePlan] = useState<number | null>(null);
   const columns = useBreakpointValue({ base: 1, md: 3 });
+  const navigate = useNavigate();
 
   const handleSelectPlan = (id: number) => {
     setActivePlan(id);
+  };
+
+  const handleContinue = () => {
+    const plan = plans?.data?.find(plan => plan.id === activePlan);
+    if (!plan) {
+      return;
+    }
+    navigate('/plans/checkout', { state: { plan } });
   };
 
   return (
@@ -131,7 +141,13 @@ const Plans: FC = () => {
             </SimpleGrid>
 
             <Flex my="30px" alignItems="center" justifyContent="flex-end">
-              <Button variant="primary">Continuar</Button>
+              <Button
+                variant="primary"
+                isDisabled={!activePlan}
+                onClick={handleContinue}
+              >
+                Continuar
+              </Button>
             </Flex>
           </Container>
         )}

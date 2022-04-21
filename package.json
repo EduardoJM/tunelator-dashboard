@@ -20,6 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-input-mask": "^2.0.4",
     "react-query": "^3.34.19",
     "react-router-dom": "6",
     "yup": "^0.32.11"
@@ -29,6 +30,7 @@
     "@commitlint/config-conventional": "^16.2.1",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
+    "@types/react-input-mask": "^3.0.1",
     "@vitejs/plugin-react": "^1.0.7",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "3.3.0",

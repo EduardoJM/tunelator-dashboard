@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
 import Dashboard from './layouts/Dashboard';
 import RequireAuth from './layouts/RequireAuth';
+import PlansCheckout from './pages/PlansCheckout/PlansCheckout';
 
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
@@ -55,6 +56,16 @@ const AppRoutes: FC = () => {
             <RequireAuth>
               <Dashboard>
                 <PlansPage />
+              </Dashboard>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/plans/checkout"
+          element={
+            <RequireAuth>
+              <Dashboard>
+                <PlansCheckout />
               </Dashboard>
             </RequireAuth>
           }
