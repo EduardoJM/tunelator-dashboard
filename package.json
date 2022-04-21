@@ -25,10 +25,20 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.3",
+    "@commitlint/config-conventional": "^16.2.1",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@vitejs/plugin-react": "^1.0.7",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "3.3.0",
+    "husky": "^7.0.4",
     "typescript": "^4.5.4",
     "vite": "^2.9.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
