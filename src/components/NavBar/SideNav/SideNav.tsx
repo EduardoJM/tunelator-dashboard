@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { MdHome, MdEmail, MdLogout, MdArrowBack } from 'react-icons/md';
 import { GoMailRead } from 'react-icons/go';
+import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '../../Avatar';
 import Button from '../../Button';
@@ -55,10 +56,17 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
 
   const handleGoToHome = () => {
     navigate('/');
+    onClose();
   };
 
   const handleGoToMailAccounts = () => {
     navigate('/mails');
+    onClose();
+  };
+
+  const handleGoToPlans = () => {
+    navigate('/plans');
+    onClose();
   };
 
   if (!userData) {
@@ -66,7 +74,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   }
 
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerHeader backgroundColor="brand.500">
@@ -116,6 +124,10 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
             <Button variant="sidenav-button">
               <GoMailRead size="20px" />
               <Text ml="10px">E-mails Recebidos</Text>
+            </Button>
+            <Button variant="sidenav-button" onClick={handleGoToPlans}>
+              <FaRegMoneyBillAlt size="20px" />
+              <Text ml="10px">Planos</Text>
             </Button>
           </VStack>
         </DrawerBody>

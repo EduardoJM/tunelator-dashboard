@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import {
   Flex,
-  Text,
   Spacer,
   Menu,
   MenuButton,
@@ -86,7 +85,10 @@ const NavBar: FC = () => {
           to="/"
           mr="20px"
           display={linksDisplay}
-          fontWeight={pathname === '/' ? 'bold' : 'normal'}
+          fontWeight="bold"
+          borderBottom={
+            pathname === '/' ? '2px solid white' : '2px solid transparent'
+          }
           _hover={{ textDecoration: 'none' }}
         >
           Início
@@ -95,7 +97,10 @@ const NavBar: FC = () => {
           as={RoutingLink}
           to="/mails"
           display={linksDisplay}
-          fontWeight={pathname === '/mails' ? 'bold' : 'normal'}
+          fontWeight="bold"
+          borderBottom={
+            pathname === '/mails' ? '2px solid white' : '2px solid transparent'
+          }
           mr="20px"
           _hover={{ textDecoration: 'none' }}
         >
@@ -104,9 +109,28 @@ const NavBar: FC = () => {
         <Link
           mr="20px"
           display={linksDisplay}
+          fontWeight="bold"
+          borderBottom={
+            pathname === '/received'
+              ? '2px solid white'
+              : '2px solid transparent'
+          }
           _hover={{ textDecoration: 'none' }}
         >
           E-mails Recebidos
+        </Link>
+        <Link
+          as={RoutingLink}
+          to="/plans"
+          display={linksDisplay}
+          fontWeight="bold"
+          borderBottom={
+            pathname === '/plans' ? '2px solid white' : '2px solid transparent'
+          }
+          mr="20px"
+          _hover={{ textDecoration: 'none' }}
+        >
+          Planos
         </Link>
         <Spacer display={linksDisplay} />
         <Menu>
