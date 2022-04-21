@@ -134,7 +134,7 @@ const LatestMailAccounts: FC = () => {
           </Table>
         </TableContainer>
       )}
-      <Flex alignItems="center" justifyContent="end" mt="30px">
+      <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
         <Button variant="primary" onClick={handleGoToMailsAccountsPage}>
           Ver Tudo
         </Button>

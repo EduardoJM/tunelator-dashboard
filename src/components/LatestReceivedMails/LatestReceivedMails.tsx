@@ -95,7 +95,7 @@ const LatestReceivedMails: FC = () => {
           </TableContainer>
         </>
       )}
-      <Flex alignItems="center" justifyContent="end" mt="30px">
+      <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
         <Button variant="primary">Ver Todas as Informações</Button>
       </Flex>
     </>
