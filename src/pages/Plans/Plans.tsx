@@ -20,9 +20,12 @@ import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
 import PriceInCents from '../../components/PriceInCents';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Button';
+import { createSession, goToCheckout } from '../../services/payments';
+import { useLoading } from '../../contexts/loading';
 
 const Plans: FC = () => {
   const plans = useQuery('plans', listPlans);
+  const { pushLoading, popLoading } = useLoading();
   const [activePlan, setActivePlan] = useState<number | null>(null);
   const columns = useBreakpointValue({ base: 1, md: 3 });
   const navigate = useNavigate();
@@ -31,12 +34,14 @@ const Plans: FC = () => {
     setActivePlan(id);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const plan = plans?.data?.find(plan => plan.id === activePlan);
     if (!plan) {
       return;
     }
-    navigate('/plans/checkout', { state: { plan } });
+    pushLoading();
+    const session = await createSession(plan.id);
+    goToCheckout(session);
   };
 
   return (
