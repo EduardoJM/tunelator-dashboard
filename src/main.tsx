@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import AbsoluteLoadingIndicator from './components/AbsoluteLoadingIndicator';
 import { AuthProvider } from './contexts/auth';
 import { LoadingProvider } from './contexts/loading';
+import { PlanProvider } from './contexts/plan';
 import theme from './theme';
 import AppRoutes from './routes';
 
@@ -16,17 +17,19 @@ ReactDOM.render(
     <LoadingProvider>
       <BrowserRouter>
         <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <Suspense
-              fallback={
-                <AbsoluteLoadingIndicator
-                  force={true}
-                ></AbsoluteLoadingIndicator>
-              }
-            >
-              <AppRoutes />
-            </Suspense>
-          </QueryClientProvider>
+          <PlanProvider>
+            <QueryClientProvider client={queryClient}>
+              <Suspense
+                fallback={
+                  <AbsoluteLoadingIndicator
+                    force={true}
+                  ></AbsoluteLoadingIndicator>
+                }
+              >
+                <AppRoutes />
+              </Suspense>
+            </QueryClientProvider>
+          </PlanProvider>
         </AuthProvider>
       </BrowserRouter>
     </LoadingProvider>
