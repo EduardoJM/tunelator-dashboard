@@ -25,10 +25,9 @@ import { useLoading } from '../../contexts/loading';
 
 const Plans: FC = () => {
   const plans = useQuery('plans', listPlans);
-  const { pushLoading, popLoading } = useLoading();
+  const { pushLoading } = useLoading();
   const [activePlan, setActivePlan] = useState<number | null>(null);
   const columns = useBreakpointValue({ base: 1, md: 3 });
-  const navigate = useNavigate();
 
   const handleSelectPlan = (id: number) => {
     setActivePlan(id);
