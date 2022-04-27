@@ -9,8 +9,11 @@
     50% {
       stroke-dashoffset: 0;
     }
-    100% {
+    80% {
       stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 1380;
     }
   }
 
@@ -24,8 +27,11 @@
     60% {
       stroke-dashoffset: 0;
     }
-    100% {
+    80% {
       stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: -460;
     }
   }
 
@@ -39,7 +45,6 @@
     stroke-linejoin: round;
 
     animation: box-animation 1s linear;
-    animation-delay: 0.5s;
     animation-iteration-count: infinite;
   }
 
@@ -53,7 +58,6 @@
     stroke-dashoffset: 460;
 
     animation: line-animation 1s linear;
-    animation-delay: 0.5s;
     animation-iteration-count: infinite;
   }
 }
