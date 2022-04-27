@@ -1,0 +1,59 @@
+.loadingAnimation {
+  width: 256px;
+  height: auto;
+
+  @keyframes box-animation {
+    0% {
+      stroke-dashoffset: 1380;
+    }
+    50% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes line-animation {
+    0% {
+      stroke-dashoffset: -460;
+    }
+    30% {
+      stroke-dashoffset: -460;
+    }
+    60% {
+      stroke-dashoffset: 0;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .outside {
+    fill: none;
+    stroke: #fff;
+    stroke-dasharray: 1380;
+    stroke-dashoffset: 1380;
+    stroke-width: 28;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+    animation: box-animation 1s linear;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+  }
+
+  .lines {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 30;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 460;
+    stroke-dashoffset: 460;
+
+    animation: line-animation 1s linear;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+  }
+}
