@@ -12,6 +12,7 @@ import {
   FormControl,
   FormLabel,
   Switch,
+  Tooltip,
   useToast,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -25,6 +26,7 @@ import {
 } from '../../services/mails';
 import { getErrorMessages } from '../../utils/errors';
 import { useLoading } from '../../contexts/loading';
+import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import DateTime from '../../components/DateTime';
@@ -34,6 +36,7 @@ const MailAccounts: FC = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const toast = useToast();
+  const { plan } = usePlan();
   const currentPage = useMemo(() => {
     if (!pageNumber) {
       return 1;
@@ -159,6 +162,24 @@ const MailAccounts: FC = () => {
                         onChange={() => handleToggleEnabledStatus(userMail)}
                       />
                     </FormControl>
+
+                    {plan?.canDeleteUserMail(userMail) ? (
+                      <Button variant="destroy" mr="10px">
+                        Deletar Conta
+                      </Button>
+                    ) : (
+                      <Tooltip
+                        hasArrow
+                        label={`Você só pode deletar essa conta depois de ${plan?.days_until_user_can_delete_account} dia(s).`}
+                        bg="brand.100"
+                        color="white"
+                        shouldWrapChildren
+                      >
+                        <Button variant="destroy" mr="10px" isDisabled={true}>
+                          Deletar Conta
+                        </Button>
+                      </Tooltip>
+                    )}
 
                     <Button
                       variant="primary"

@@ -1,3 +1,5 @@
+import { UserMail } from './UserMail';
+
 export enum PlanType {
   Free = 'free',
   Paid = 'paid',
@@ -61,5 +63,15 @@ export class ActivePlan {
       return defaultValue;
     }
     return propertyItem.value as T;
+  }
+
+  canDeleteUserMail(mail: UserMail) {
+    const createdDate = new Date(mail.created_at);
+    const currentDate = new Date();
+    const difference_time = currentDate.getTime() - createdDate.getTime();
+
+    const difference_days = Math.floor(difference_time / (1000 * 3600 * 24));
+
+    return difference_days > this.days_until_user_can_delete_account;
   }
 }

@@ -11,7 +11,8 @@ export type ButtonVariant =
   | 'primary'
   | 'ghost'
   | 'full-ghost'
-  | 'sidenav-button';
+  | 'sidenav-button'
+  | 'destroy';
 
 type ButtonVariantMapping = {
   [key in ButtonVariant]: ButtonVariantProps;
@@ -40,6 +41,10 @@ const CustomButtonVariantMapping: ButtonVariantMapping = {
     justifyContent: 'flex-start',
     _hover: { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
     _active: { backgroundColor: 'rgba(255, 255, 255, 0.4)' },
+  },
+  destroy: {
+    colorScheme: 'red',
+    fontWeight: 'normal',
   },
 };
 
