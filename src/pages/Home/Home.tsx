@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Container, Heading } from '@chakra-ui/react';
-import LatestMailAccounts from '../../components/LatestMailAccounts';
-import LatestReceivedMails from '../../components/LatestReceivedMails';
+import LatestMailAccounts from './LatestMailAccounts';
+import LatestReceivedMails from './LatestReceivedMails';
 
 const Home: FC = () => {
   return (

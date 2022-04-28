@@ -9,21 +9,23 @@ import {
   Th,
   Td,
   Flex,
-  CircularProgress,
   Heading,
   FormControl,
   Switch,
   useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import Ellipsis from '../Ellipsis';
-import DateTime from '../DateTime';
-import Button from '../Button';
-import LoadingIndicatorBox from '../LoadingIndicatorBox';
-import { useLoading } from '../../contexts/loading';
-import { UserMail } from '../../entities/UserMail';
-import { getLatestMails, setMailRedirectEnabled } from '../../services/mails';
-import { getErrorMessages } from '../../utils/errors';
+import Ellipsis from '../../../components/Ellipsis';
+import DateTime from '../../../components/DateTime';
+import Button from '../../../components/Button';
+import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';
+import { useLoading } from '../../../contexts/loading';
+import { UserMail } from '../../../entities/UserMail';
+import {
+  getLatestMails,
+  setMailRedirectEnabled,
+} from '../../../services/mails';
+import { getErrorMessages } from '../../../utils/errors';
 
 const LatestMailAccounts: FC = () => {
   const { pushLoading, popLoading } = useLoading();
