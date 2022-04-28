@@ -29,6 +29,7 @@ import { useLoading } from '../../contexts/loading';
 import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
+import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import DateTime from '../../components/DateTime';
 
 const MailAccounts: FC = () => {
@@ -61,6 +62,11 @@ const MailAccounts: FC = () => {
 
   const editMailModal = useDisclosure();
   const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
+
+  const deleteMailModal = useDisclosure();
+  const [deleteMailCurrent, setDeleteMailCurrent] = useState<UserMail | null>(
+    null
+  );
 
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
@@ -95,6 +101,15 @@ const MailAccounts: FC = () => {
   const handleCreateUserMail = () => {
     setEditMailCurrent(null);
     editMailModal.onOpen();
+  };
+
+  const handleCallDeleteUserMail = (userMail: UserMail) => {
+    setDeleteMailCurrent(userMail);
+    deleteMailModal.onOpen();
+  };
+
+  const handleConfirmDeleteUserMail = () => {
+    console.log('DELETEI!');
   };
 
   return (
@@ -164,7 +179,11 @@ const MailAccounts: FC = () => {
                     </FormControl>
 
                     {plan?.canDeleteUserMail(userMail) ? (
-                      <Button variant="destroy" mr="10px">
+                      <Button
+                        onClick={() => handleCallDeleteUserMail(userMail)}
+                        variant="destroy"
+                        mr="10px"
+                      >
                         Deletar Conta
                       </Button>
                     ) : (
@@ -224,6 +243,11 @@ const MailAccounts: FC = () => {
         isOpen={editMailModal.isOpen}
         onClose={editMailModal.onClose}
         userMail={editMailCurrent}
+      />
+      <UserMailDeleteModal
+        isOpen={deleteMailModal.isOpen}
+        onCancel={deleteMailModal.onClose}
+        onConfirm={handleConfirmDeleteUserMail}
       />
     </>
   );
