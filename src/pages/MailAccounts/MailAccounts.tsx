@@ -23,6 +23,7 @@ import Button from '../../components/Button';
 import {
   getMailsPaginated,
   setMailRedirectEnabled,
+  deleteMail,
 } from '../../services/mails';
 import { getErrorMessages } from '../../utils/errors';
 import { useLoading } from '../../contexts/loading';
@@ -108,8 +109,21 @@ const MailAccounts: FC = () => {
     deleteMailModal.onOpen();
   };
 
-  const handleConfirmDeleteUserMail = () => {
-    console.log('DELETEI!');
+  const handleConfirmDeleteUserMail = async () => {
+    if (!deleteMailCurrent) {
+      return;
+    }
+
+    pushLoading();
+
+    deleteMailModal.onClose();
+
+    await deleteMail(deleteMailCurrent.id);
+    queryClient.invalidateQueries(['mails']);
+    queryClient.invalidateQueries('latest-mails');
+    queryClient.refetchQueries('latest-mails');
+    queryClient.refetchQueries(['mails', currentPage]);
+    popLoading();
   };
 
   return (

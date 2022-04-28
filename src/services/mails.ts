@@ -65,6 +65,11 @@ export async function updateMail(
   return response.data;
 }
 
+export async function deleteMail(id: number): Promise<any> {
+  const response = await api.delete(`/api/mails/accounts/${id}/`);
+  return response.data;
+}
+
 export async function getLatestReceivedMails(): Promise<ReceivedMail[]> {
   const response = await api.get<ReceivedMailPaginatedResponse>(
     '/api/mails/received/?limit=5'
