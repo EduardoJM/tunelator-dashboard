@@ -16,7 +16,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { RiAccountPinCircleLine } from 'react-icons/ri';
-import { useSpring, animated, easings } from 'react-spring';
+import { useSpring, animated } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import Ellipsis from '../../../components/Ellipsis';
 import DateTime from '../../../components/DateTime';
