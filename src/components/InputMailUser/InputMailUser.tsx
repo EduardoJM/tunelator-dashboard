@@ -6,6 +6,7 @@ import {
   InputRightAddon,
   FormLabel,
   FormControl,
+  FormHelperText,
 } from '@chakra-ui/react';
 import { validKeys } from './validKeys';
 
@@ -13,12 +14,14 @@ export interface InputMailUserProps extends ChakraInputProps {
   label: string;
   id: string;
   domain?: string;
+  helpText?: string;
 }
 
 const InputMailUser: FC<InputMailUserProps> = ({
   id,
   label,
   domain,
+  helpText,
   onChange,
   ...props
 }) => {
@@ -51,6 +54,7 @@ const InputMailUser: FC<InputMailUserProps> = ({
         />
         <InputRightAddon children={domain || '@tunelator.com.br'} />
       </InputGroup>
+      {!!helpText && <FormHelperText>{helpText}</FormHelperText>}
     </FormControl>
   );
 };

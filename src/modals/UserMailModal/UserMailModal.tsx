@@ -1,5 +1,6 @@
 import { FC, useEffect, KeyboardEvent, useState } from 'react';
 import {
+  Box,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -7,6 +8,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Collapse,
   FormControl,
   FormLabel,
   useToast,
@@ -18,6 +20,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import InputMailUser from '../../components/InputMailUser';
 import Checkbox from '../../components/Checkbox';
+import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import { getErrorMessages } from '../../utils/errors';
 import { createMail, updateMail, validateUserMail } from '../../services/mails';
@@ -33,6 +36,8 @@ interface FormProps {
   name: string;
   mail_user: string;
   redirect_enabled: boolean;
+  redirect_to_my_email: boolean;
+  redirect_to: string;
 }
 
 const UserMailModal: FC<UserMailModalProps> = ({
@@ -40,7 +45,9 @@ const UserMailModal: FC<UserMailModalProps> = ({
   onClose,
   userMail,
 }) => {
+  const { plan } = usePlan();
   const toast = useToast();
+
   const modalSize = useBreakpointValue({ base: 'full', md: 'xl' });
 
   const queryClient = useQueryClient();
@@ -52,61 +59,90 @@ const UserMailModal: FC<UserMailModalProps> = ({
       name: '',
       mail_user: '',
       redirect_enabled: true,
+      redirect_to_my_email: true,
+      redirect_to: '',
     },
     onSubmit: data => console.log(data),
   });
+
   const createOrUpdateUserMailMutation = useMutation<
     unknown,
     unknown,
     FormProps
-  >(async ({ name, mail_user, redirect_enabled }) => {
-    try {
-      if (!mailUserIsValid) {
-        toast({
-          title: 'Oopps!',
-          description:
-            'Esse nome de conta não está disponível, tente mudar um pouco.',
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
+  >(
+    async ({
+      name,
+      mail_user,
+      redirect_enabled,
+      redirect_to_my_email,
+      redirect_to,
+    }) => {
+      try {
+        if (!mailUserIsValid) {
+          toast({
+            title: 'Oopps!',
+            description:
+              'Esse nome de conta não está disponível, tente mudar um pouco.',
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
+          return;
+        }
+
+        createOrEditMailSchema.validateSync({
+          name,
+          mail_user,
+          redirect_enabled,
+          redirect_to_my_email,
+          redirect_to,
         });
-        return;
-      }
 
-      createOrEditMailSchema.validateSync({
-        name,
-        mail_user,
-        redirect_enabled,
-      });
+        if (!!userMail) {
+          await updateMail(
+            userMail.id,
+            name,
+            redirect_enabled,
+            !redirect_to_my_email ? redirect_to || null : null
+          );
+        } else {
+          await createMail(
+            name,
+            mail_user,
+            redirect_enabled,
+            !redirect_to_my_email ? redirect_to || null : null
+          );
+        }
 
-      if (!!userMail) {
-        await updateMail(userMail.id, name, redirect_enabled);
-      } else {
-        await createMail(name, mail_user, redirect_enabled);
-      }
+        queryClient.invalidateQueries(['mails']);
+        queryClient.refetchQueries(['mails']);
+        queryClient.invalidateQueries('latest-mails');
+        queryClient.refetchQueries('latest-mails');
 
-      queryClient.invalidateQueries(['mails']);
-      queryClient.refetchQueries(['mails']);
-      queryClient.invalidateQueries('latest-mails');
-      queryClient.refetchQueries('latest-mails');
-
-      onClose();
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
+        onClose();
+      } catch (err) {
+        getErrorMessages(err).forEach(error => {
+          toast({
+            title: error.title,
+            description: error.text,
+            status: 'error',
+            duration: 5000,
+            isClosable: true,
+          });
         });
-      });
+      }
     }
-  });
+  );
 
   useEffect(() => {
     if (!userMail) {
-      formik.setValues({ redirect_enabled: true, mail_user: '', name: '' });
+      formik.setValues({
+        redirect_enabled: true,
+        mail_user: '',
+        name: '',
+        redirect_to: '',
+        redirect_to_my_email: true,
+      });
       setMailUserIsValid(false);
       return;
     }
@@ -114,6 +150,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
       redirect_enabled: userMail.redirect_enabled,
       mail_user: userMail.mail_user,
       name: userMail.name,
+      redirect_to: userMail.redirect_to || '',
+      redirect_to_my_email: !userMail.redirect_to,
     });
     setMailUserIsValid(true);
   }, [userMail]);
@@ -163,10 +201,42 @@ const UserMailModal: FC<UserMailModalProps> = ({
             label="Nome da conta"
             id="mail_user"
             isDisabled={!!userMail}
+            helpText={
+              !!userMail ? 'Não é possível editar o nome do e-mail.' : undefined
+            }
             value={formik.values.mail_user}
             onChange={formik.handleChange}
             onBlur={handleBlur}
           />
+
+          {plan?.allow_custom_redirect && (
+            <>
+              <FormControl mt="50px" display="flex" alignItems="center">
+                <Checkbox
+                  id="redirect_to_my_email"
+                  isChecked={formik.values.redirect_to_my_email}
+                  onChange={formik.handleChange}
+                />
+                <FormLabel htmlFor="redirect_to_my_email" ml="10px" mb="0">
+                  Redirecionar para o meu e-mail
+                </FormLabel>
+              </FormControl>
+
+              <Box mt="10px">
+                <Collapse
+                  in={!formik.values.redirect_to_my_email}
+                  animateOpacity
+                >
+                  <Input
+                    label="Redirecionar para"
+                    id="redirect_to"
+                    value={formik.values.redirect_to}
+                    onChange={formik.handleChange}
+                  />
+                </Collapse>
+              </Box>
+            </>
+          )}
 
           <FormControl mt="50px" display="flex" alignItems="center">
             <Checkbox

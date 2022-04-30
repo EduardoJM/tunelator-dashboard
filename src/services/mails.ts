@@ -34,12 +34,14 @@ export async function setMailRedirectEnabled(
 export async function createMail(
   name: string,
   mail_user: string,
-  redirect_enabled: boolean
+  redirect_enabled: boolean,
+  redirect_to: string | null
 ): Promise<any> {
   const response = await api.post('/api/mails/accounts/', {
     redirect_enabled,
     mail_user,
     name,
+    redirect_to,
   });
   return response.data;
 }
@@ -56,11 +58,13 @@ export async function validateUserMail(user_name: string): Promise<boolean> {
 export async function updateMail(
   id: number,
   name: string,
-  redirect_enabled: boolean
+  redirect_enabled: boolean,
+  redirect_to: string | null
 ): Promise<any> {
   const response = await api.patch(`/api/mails/accounts/${id}/`, {
     redirect_enabled,
     name,
+    redirect_to,
   });
   return response.data;
 }

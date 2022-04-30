@@ -6,6 +6,7 @@ export interface UserMail {
   name: string;
   plan_enabled: boolean;
   redirect_enabled: boolean;
+  redirect_to?: string | null;
   updated_at: string;
 }
 
