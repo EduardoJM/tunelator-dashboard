@@ -33,6 +33,7 @@ import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import DateTime from '../../components/DateTime';
 import Dashboard from '../../layouts/Dashboard';
+import NoAccountsBox from '../../components/NoAccountsBox';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -156,6 +157,14 @@ const MailAccounts: FC = () => {
           <LoadingIndicatorBox />
         ) : (
           <VStack width="100%" spacing="25px">
+            {data?.results.length === 0 && (
+              <Flex width="100%" minHeight="400px" alignItems="center">
+                <NoAccountsBox
+                  createFirstButtonVisible
+                  onCreateFirstClick={handleCreateUserMail}
+                />
+              </Flex>
+            )}
             {data?.results.map(userMail => (
               <Box
                 key={userMail.id}

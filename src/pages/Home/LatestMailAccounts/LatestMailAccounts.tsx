@@ -12,15 +12,13 @@ import {
   Heading,
   FormControl,
   Switch,
-  Text,
   useToast,
 } from '@chakra-ui/react';
-import { RiAccountPinCircleLine } from 'react-icons/ri';
-import { useSpring, animated } from 'react-spring';
 import { useNavigate } from 'react-router-dom';
 import Ellipsis from '../../../components/Ellipsis';
 import DateTime from '../../../components/DateTime';
 import Button from '../../../components/Button';
+import NoAccountsBox from '../../../components/NoAccountsBox';
 import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';
 import { useLoading } from '../../../contexts/loading';
 import { UserMail } from '../../../entities/UserMail';
@@ -36,17 +34,6 @@ const LatestMailAccounts: FC = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { data, error, isLoading } = useQuery('latest-mails', getLatestMails);
-  const accountIconStyle = useSpring({
-    loop: true,
-    config: {
-      duration: 1500,
-    },
-    to: [
-      { opacity: 1, transform: 'rotateZ(-15deg) scale(1.2)' },
-      { opacity: 0.3, transform: 'rotateZ(15deg) scale(1)' },
-    ],
-    from: { opacity: 0.3, transform: 'rotateZ(15deg) scale(1)' },
-  });
 
   const handleGoToMailsAccountsPage = () => {
     navigate('/mails');
@@ -129,33 +116,10 @@ const LatestMailAccounts: FC = () => {
               {data?.length === 0 && (
                 <Tr height="220px" backgroundColor="#EEE">
                   <Td colSpan={5}>
-                    <Flex
-                      width="100%"
-                      flexDir="column"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <animated.div
-                        style={{
-                          width: 48,
-                          height: 48,
-                          transformOrigin: 'center bottom',
-                          ...accountIconStyle,
-                        }}
-                      >
-                        <RiAccountPinCircleLine size="48px" />
-                      </animated.div>
-                      <Text mt="20px" fontSize="md" fontWeight="bold">
-                        Nenhuma conta para ser mostrada.
-                      </Text>
-                      <Button
-                        mt="20px"
-                        variant="primary-rounded"
-                        onClick={handleCreateAccount}
-                      >
-                        Criar Primeira Conta
-                      </Button>
-                    </Flex>
+                    <NoAccountsBox
+                      createFirstButtonVisible
+                      onCreateFirstClick={handleCreateAccount}
+                    />
                   </Td>
                 </Tr>
               )}
