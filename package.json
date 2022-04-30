@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "resolutions": {
     "csstype": "3.0.10"
@@ -28,12 +30,21 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.10",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@storybook/addon-actions": "^6.4.22",
+    "@storybook/addon-essentials": "^6.4.22",
+    "@storybook/addon-interactions": "^6.4.22",
+    "@storybook/addon-links": "^6.4.22",
+    "@storybook/builder-vite": "^0.1.32",
+    "@storybook/react": "^6.4.22",
+    "@storybook/testing-library": "^0.0.11",
     "@types/react": "^17.0.33",
     "@types/react-dom": "^17.0.10",
     "@types/react-input-mask": "^3.0.1",
     "@vitejs/plugin-react": "^1.0.7",
+    "babel-loader": "^8.2.5",
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "3.3.0",
     "husky": "^7.0.4",
