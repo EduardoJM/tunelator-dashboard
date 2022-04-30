@@ -21,6 +21,7 @@ import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
 import PriceInCents from '../../components/PriceInCents';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Button';
+import Dashboard from '../../layouts/Dashboard';
 import {
   createSession,
   goToCheckout,
@@ -58,7 +59,7 @@ const Plans: FC = () => {
   };
 
   return (
-    <>
+    <Dashboard>
       <div>
         {!plan ? (
           <LoadingIndicatorBox />
@@ -261,7 +262,7 @@ const Plans: FC = () => {
           </Box>
         </Container>
       )}
-    </>
+    </Dashboard>
   );
 };
 

@@ -1,9 +1,6 @@
 import { FC, lazy } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
-import Dashboard from './layouts/Dashboard';
-import RequireAuth from './layouts/RequireAuth';
-import PlansCheckout from './pages/PlansCheckout/PlansCheckout';
 
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
@@ -20,57 +17,14 @@ const AppRoutes: FC = () => {
   return (
     <>
       <Routes>
-        {loggedIn && (
-          <Route
-            path="/"
-            element={
-              <Dashboard>
-                <HomePage />
-              </Dashboard>
-            }
-          />
+        {loggedIn ? (
+          <Route path="/" element={<HomePage />} />
+        ) : (
+          <Route path="/" element={<LoginPage />} />
         )}
-        <Route
-          path="/mails/:pageNumber"
-          element={
-            <RequireAuth>
-              <Dashboard>
-                <MailAccountsPage />
-              </Dashboard>
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/mails"
-          element={
-            <RequireAuth>
-              <Dashboard>
-                <MailAccountsPage />
-              </Dashboard>
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/plans"
-          element={
-            <RequireAuth>
-              <Dashboard>
-                <PlansPage />
-              </Dashboard>
-            </RequireAuth>
-          }
-        />
-        <Route
-          path="/plans/checkout"
-          element={
-            <RequireAuth>
-              <Dashboard>
-                <PlansCheckout />
-              </Dashboard>
-            </RequireAuth>
-          }
-        />
-        {!loggedIn && <Route path="/" element={<LoginPage />} />}
+        <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
+        <Route path="/mails" element={<MailAccountsPage />} />
+        <Route path="/plans" element={<PlansPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

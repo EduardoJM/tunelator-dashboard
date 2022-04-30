@@ -32,6 +32,7 @@ import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import DateTime from '../../components/DateTime';
+import Dashboard from '../../layouts/Dashboard';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -139,7 +140,7 @@ const MailAccounts: FC = () => {
   };
 
   return (
-    <>
+    <Dashboard>
       <Container maxW="120ch">
         <Flex alignItems="center" justifyContent="space-between">
           <Heading as="h1" size="lg" my="50px" fontWeight="bold">
@@ -275,7 +276,7 @@ const MailAccounts: FC = () => {
         onCancel={deleteMailModal.onClose}
         onConfirm={handleConfirmDeleteUserMail}
       />
-    </>
+    </Dashboard>
   );
 };
 
