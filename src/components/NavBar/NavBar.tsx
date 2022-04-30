@@ -14,7 +14,12 @@ import {
 import { Link as RoutingLink, useLocation } from 'react-router-dom';
 import * as CSS from 'csstype';
 import Avatar from '../Avatar';
-import { MdArrowDropDown, MdMenu } from 'react-icons/md';
+import {
+  MdArrowDropDown,
+  MdMenu,
+  MdLogout,
+  MdAccountCircle,
+} from 'react-icons/md';
 import Button from '../Button';
 import SideNav from './SideNav';
 import { useAuth } from '../../contexts/auth';
@@ -141,9 +146,16 @@ const NavBar: FC = () => {
             </Flex>
           </MenuButton>
           <MenuList color="black">
-            <MenuItem>Configurações</MenuItem>
+            <MenuItem icon={<MdAccountCircle size="24px" />}>
+              Editar Perfil
+            </MenuItem>
             <MenuDivider />
-            <MenuItem onClick={handleLogoutClick}>Sair</MenuItem>
+            <MenuItem
+              icon={<MdLogout size="24px" />}
+              onClick={handleLogoutClick}
+            >
+              Sair
+            </MenuItem>
           </MenuList>
         </Menu>
       </Flex>
