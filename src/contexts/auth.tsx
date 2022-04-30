@@ -119,6 +119,7 @@ export const AuthProvider: FC = ({ children }) => {
         duration: 5000,
         isClosable: true,
       });
+      navigate('/', { replace: true });
     } catch (err) {
       getErrorMessages(err).forEach(error => {
         toast({
