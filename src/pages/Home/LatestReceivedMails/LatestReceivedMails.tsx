@@ -10,30 +10,19 @@ import {
   Tbody,
   Th,
   Flex,
-  Text,
 } from '@chakra-ui/react';
-import { RiMailSendLine } from 'react-icons/ri';
-import { useSpring, animated, easings } from 'react-spring';
 import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';
 import DateTime from '../../../components/DateTime';
 import Ellipsis from '../../../components/Ellipsis';
 import { getLatestReceivedMails } from '../../../services/mails';
 import Button from '../../../components/Button';
+import NoReceivedMailsBox from '../../../components/NoReceivedMailsBox';
 
 const LatestReceivedMails: FC = () => {
   const { data, error, isLoading } = useQuery(
     'latest-received-mails',
     getLatestReceivedMails
   );
-  const mailsIconStyle = useSpring({
-    loop: true,
-    config: {
-      duration: 1500,
-      easing: easings.easeOutBounce,
-    },
-    to: { transform: 'translateX(100%)' },
-    from: { transform: 'translateX(-100%)' },
-  });
 
   return (
     <>
@@ -83,26 +72,7 @@ const LatestReceivedMails: FC = () => {
                 {data?.length === 0 && (
                   <Tr height="220px" backgroundColor="#EEE">
                     <Td colSpan={4} textAlign="center">
-                      <Flex
-                        width="100%"
-                        flexDir="column"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <animated.div
-                          style={{
-                            width: 48,
-                            height: 48,
-                            transformOrigin: 'center bottom',
-                            ...mailsIconStyle,
-                          }}
-                        >
-                          <RiMailSendLine size="48px" />
-                        </animated.div>
-                        <Text mt="20px" fontSize="md" fontWeight="bold">
-                          Nenhum e-mail para ser mostrado.
-                        </Text>
-                      </Flex>
+                      <NoReceivedMailsBox />
                     </Td>
                   </Tr>
                 )}
