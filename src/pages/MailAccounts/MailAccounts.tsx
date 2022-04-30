@@ -158,7 +158,15 @@ const MailAccounts: FC = () => {
         ) : (
           <VStack width="100%" spacing="25px">
             {data?.results.length === 0 && (
-              <Flex width="100%" minHeight="400px" alignItems="center">
+              <Flex
+                width="100%"
+                minHeight="400px"
+                alignItems="center"
+                mt="60px"
+                backgroundColor="#EFEFEF"
+                boxShadow="md"
+                borderRadius="10px"
+              >
                 <NoAccountsBox
                   createFirstButtonVisible
                   onCreateFirstClick={handleCreateUserMail}
