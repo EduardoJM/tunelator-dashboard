@@ -31,6 +31,12 @@ export interface ActivePlanResponse extends Plan {
 export class ActivePlan {
   private data: ActivePlanResponse;
 
+  id = -1;
+  name = '';
+  description = '';
+  plan_type = PlanType.Free;
+  monthly_price = 0;
+
   is_free = true;
   mails = 2;
   allow_custom_redirect = false;
@@ -39,6 +45,12 @@ export class ActivePlan {
 
   constructor(data: ActivePlanResponse) {
     this.data = data;
+
+    this.id = data.id;
+    this.name = data.name;
+    this.description = data.description;
+    this.plan_type = data.plan_type;
+    this.monthly_price = data.monthly_price;
 
     this.is_free = data.plan_type === PlanType.Free;
 
