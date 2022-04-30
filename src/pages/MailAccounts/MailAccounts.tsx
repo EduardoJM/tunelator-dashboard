@@ -31,7 +31,7 @@ import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
-import DateTime from '../../components/DateTime';
+import { DateTime } from '../../components';
 import Dashboard from '../../layouts/Dashboard';
 import NoAccountsBox from '../../components/NoAccountsBox';
 
@@ -69,9 +69,8 @@ const MailAccounts: FC = () => {
   const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
 
   const deleteMailModal = useDisclosure();
-  const [deleteMailCurrent, setDeleteMailCurrent] = useState<UserMail | null>(
-    null
-  );
+  const [deleteMailCurrent, setDeleteMailCurrent] =
+    useState<UserMail | null>(null);
 
   useEffect(() => {
     if (!state) {

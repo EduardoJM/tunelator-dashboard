@@ -15,8 +15,7 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import Ellipsis from '../../../components/Ellipsis';
-import DateTime from '../../../components/DateTime';
+import { DateTime, Ellipsis } from '../../../components';
 import Button from '../../../components/Button';
 import NoAccountsBox from '../../../components/NoAccountsBox';
 import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';

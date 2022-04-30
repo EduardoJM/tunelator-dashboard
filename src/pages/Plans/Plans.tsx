@@ -15,10 +15,9 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
-import PriceInCents from '../../components/PriceInCents';
+import { PriceInCents } from '../../components';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Button';
 import Dashboard from '../../layouts/Dashboard';
