@@ -68,6 +68,13 @@ const LatestReceivedMails: FC = () => {
                 </Tr>
               </Thead>
               <Tbody>
+                {data?.length === 0 && (
+                  <Tr height="200px" backgroundColor="#EEE">
+                    <Td colSpan={4} textAlign="center">
+                      Nenhum e-mail para ser mostrado.
+                    </Td>
+                  </Tr>
+                )}
                 {data?.map(receivedMail => (
                   <Tr key={receivedMail.id}>
                     <Td>

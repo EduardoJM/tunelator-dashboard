@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import {
   Container,
   Heading,
@@ -17,7 +17,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
 import Button from '../../components/Button';
 import {
@@ -36,6 +36,8 @@ import DateTime from '../../components/DateTime';
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
   const navigate = useNavigate();
+  const { state } = useLocation();
+
   const queryClient = useQueryClient();
   const toast = useToast();
   const { plan } = usePlan();
@@ -68,6 +70,16 @@ const MailAccounts: FC = () => {
   const [deleteMailCurrent, setDeleteMailCurrent] = useState<UserMail | null>(
     null
   );
+
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+    if (!!(state as any)?.openCreateModal) {
+      setEditMailCurrent(null);
+      editMailModal.onOpen();
+    }
+  }, [state]);
 
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
