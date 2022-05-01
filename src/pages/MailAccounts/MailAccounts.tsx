@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
+import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import Button from '../../components/Common/Button';
 import {
   getMailsPaginated,

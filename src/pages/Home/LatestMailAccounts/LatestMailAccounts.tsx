@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { DateTime, Ellipsis } from '../../../components';
 import Button from '../../../components/Common/Button';
 import NoAccountsBox from '../../../components/Placeholders/NoAccountsBox';
-import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';
+import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
 import { useLoading } from '../../../contexts/loading';
 import { UserMail } from '../../../entities/UserMail';
 import {

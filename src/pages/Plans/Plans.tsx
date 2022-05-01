@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
-import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
+import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import { PriceInCents } from '../../components';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Common/Button';

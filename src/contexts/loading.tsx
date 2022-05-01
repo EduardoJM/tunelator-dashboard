@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useState } from 'react';
-import AbsoluteLoadingIndicator from '../components/AbsoluteLoadingIndicator';
+import AbsoluteLoadingIndicator from '../components/Placeholders/AbsoluteLoadingIndicator';
 
 export interface LoadingContextData {
   isLoading: boolean;
@@ -31,7 +31,7 @@ export const LoadingProvider: FC = ({ children }) => {
       }}
     >
       {children}
-      <AbsoluteLoadingIndicator />
+      {loadingCount > 0 && <AbsoluteLoadingIndicator />}
     </LoadingContext.Provider>
   );
 };
