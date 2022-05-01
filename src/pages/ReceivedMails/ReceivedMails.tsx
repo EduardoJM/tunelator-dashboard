@@ -16,6 +16,7 @@ import {
   VStack,
   Text,
   Flex,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useParams } from 'react-router-dom';
@@ -29,6 +30,8 @@ import {
   LoadingIndicatorBox,
   NoReceivedMailsBox,
 } from '../../components';
+import { ResendMailSuccessModal } from '../../modals';
+import { ReceivedMail } from '../../entities/ReceivedMail';
 
 const ReceivedMails: FC = () => {
   const { pageNumber } = useParams();
@@ -56,6 +59,12 @@ const ReceivedMails: FC = () => {
       return setExpanded(null);
     }
     setExpanded(id);
+  };
+
+  const resendModal = useDisclosure();
+
+  const handleResendMail = async (mail: ReceivedMail) => {
+    resendModal.onOpen();
   };
 
   return (
@@ -220,7 +229,10 @@ const ReceivedMails: FC = () => {
                                 alignItems="center"
                                 justifyContent="flex-end"
                               >
-                                <Button variant="primaryRounded">
+                                <Button
+                                  variant="primaryRounded"
+                                  onClick={() => handleResendMail(receivedMail)}
+                                >
                                   Reenviar
                                 </Button>
                               </Flex>
@@ -236,6 +248,11 @@ const ReceivedMails: FC = () => {
           </TableContainer>
         )}
       </Container>
+
+      <ResendMailSuccessModal
+        isOpen={resendModal.isOpen}
+        onClose={resendModal.onClose}
+      />
     </Dashboard>
   );
 };
