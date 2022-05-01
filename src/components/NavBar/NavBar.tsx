@@ -112,6 +112,8 @@ const NavBar: FC = () => {
           Minhas Contas
         </Link>
         <Link
+          as={RoutingLink}
+          to="/received"
           mr="20px"
           display={linksDisplay}
           fontWeight="bold"

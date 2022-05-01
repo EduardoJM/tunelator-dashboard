@@ -9,6 +9,7 @@ const SignupPage = lazy(() => import('./pages/Signup'));
 
 const HomePage = lazy(() => import('./pages/Home'));
 const MailAccountsPage = lazy(() => import('./pages/MailAccounts'));
+const ReceivedMailsPage = lazy(() => import('./pages/ReceivedMails'));
 const PlansPage = lazy(() => import('./pages/Plans'));
 
 const AppRoutes: FC = () => {
@@ -24,6 +25,8 @@ const AppRoutes: FC = () => {
         )}
         <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
         <Route path="/mails" element={<MailAccountsPage />} />
+        <Route path="/received" element={<ReceivedMailsPage />} />
+        <Route path="/received/:pageNumber" element={<ReceivedMailsPage />} />
         <Route path="/plans" element={<PlansPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="*" element={<NotFoundPage />} />

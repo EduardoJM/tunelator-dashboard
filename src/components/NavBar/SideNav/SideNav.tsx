@@ -69,6 +69,11 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const handleGoToReceivedMails = () => {
+    navigate('/received');
+    onClose();
+  };
+
   if (!userData) {
     return null;
   }
@@ -121,7 +126,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
               <MdEmail size="20px" />
               <Text ml="10px">E-Minhas Contas</Text>
             </Button>
-            <Button variant="sidenavButton">
+            <Button variant="sidenavButton" onClick={handleGoToReceivedMails}>
               <GoMailRead size="20px" />
               <Text ml="10px">E-mails Recebidos</Text>
             </Button>
