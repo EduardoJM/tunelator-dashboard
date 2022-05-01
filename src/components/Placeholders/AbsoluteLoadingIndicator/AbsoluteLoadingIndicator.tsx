@@ -14,7 +14,7 @@ const AbsoluteLoadingIndicator: FC = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      zIndex="600"
+      zIndex="2200"
     >
       <svg
         className={styles.loadingAnimation}

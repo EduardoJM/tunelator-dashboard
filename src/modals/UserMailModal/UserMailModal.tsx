@@ -21,6 +21,7 @@ import Input from '../../components/Forms/Input';
 import InputMailUser from '../../components/Forms/InputMailUser';
 import Checkbox from '../../components/Checkbox';
 import { usePlan } from '../../contexts/plan';
+import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
 import { getErrorMessages } from '../../utils/errors';
 import { createMail, updateMail, validateUserMail } from '../../services/mails';
@@ -47,6 +48,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
 }) => {
   const { plan } = usePlan();
   const toast = useToast();
+
+  const { pushLoading, popLoading } = useLoading();
 
   const modalSize = useBreakpointValue({ base: 'full', md: 'xl' });
 
@@ -77,6 +80,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
       redirect_to_my_email,
       redirect_to,
     }) => {
+      pushLoading();
       try {
         if (!mailUserIsValid) {
           toast({
@@ -87,6 +91,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
             duration: 5000,
             isClosable: true,
           });
+          popLoading();
           return;
         }
 
@@ -131,6 +136,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
           });
         });
       }
+      popLoading();
     }
   );
 
