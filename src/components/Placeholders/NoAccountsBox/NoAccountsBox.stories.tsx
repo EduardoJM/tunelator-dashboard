@@ -14,3 +14,8 @@ export const Default = Template.bind({});
 Default.args = {
   createFirstButtonVisible: false,
 };
+
+export const WithCreateButton = Template.bind({});
+WithCreateButton.args = {
+  createFirstButtonVisible: true,
+};
