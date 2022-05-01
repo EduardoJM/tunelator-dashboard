@@ -6,3 +6,5 @@ export { default as NoAccountsBox } from './NoAccountsBox';
 export { default as LoadingIndicatorBox } from './LoadingIndicatorBox';
 
 export { default as AbsoluteLoadingIndicator } from './AbsoluteLoadingIndicator';
+
+export { default as CreatingMailBox } from './CreatingMailBox';

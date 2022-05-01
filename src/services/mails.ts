@@ -12,6 +12,11 @@ export async function getLatestMails(): Promise<UserMail[]> {
   return response.data.results;
 }
 
+export async function getMailById(id: number): Promise<UserMail> {
+  const response = await api.get<UserMail>(`/api/mails/accounts/${id}/`);
+  return response.data;
+}
+
 export async function getMailsPaginated(
   page = 1
 ): Promise<UserMailPaginatedResponse> {

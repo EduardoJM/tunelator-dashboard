@@ -34,6 +34,7 @@ import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import { DateTime } from '../../components';
 import Dashboard from '../../layouts/Dashboard';
 import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
+import { WaitMailAccountDone } from '../../components';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -139,6 +140,13 @@ const MailAccounts: FC = () => {
     popLoading();
   };
 
+  const handleRefreshPageAndLatest = () => {
+    queryClient.invalidateQueries(['mails']);
+    queryClient.invalidateQueries('latest-mails');
+    queryClient.refetchQueries('latest-mails');
+    queryClient.refetchQueries(['mails', currentPage]);
+  };
+
   return (
     <Dashboard>
       <Container maxW="120ch">
@@ -186,9 +194,18 @@ const MailAccounts: FC = () => {
                   <Heading width="100%" as="h2" size="md" fontWeight="bold">
                     {userMail.name}
                   </Heading>
-                  <Box width="100%">
-                    <Text mb="10px">{userMail.mail}</Text>
-                  </Box>
+                  {!!userMail.mail ? (
+                    <Box width="100%">
+                      <Text mb="10px">{userMail.mail}</Text>
+                    </Box>
+                  ) : (
+                    <Box width="100%">
+                      <WaitMailAccountDone
+                        accountId={userMail.id}
+                        onAccountIsDone={handleRefreshPageAndLatest}
+                      />
+                    </Box>
+                  )}
                   <Divider />
                   <Box width="100%">
                     <Text fontWeight="bold">Criado em</Text>
