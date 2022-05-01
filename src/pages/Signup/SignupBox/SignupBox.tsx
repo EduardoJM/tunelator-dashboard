@@ -3,7 +3,7 @@ import { Box, VStack, Heading, Text, Flex, Link } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
-import Input from '../../../components/Input';
+import Input from '../../../components/Forms/Input';
 import Button from '../../../components/Common/Button';
 import Checkbox from '../../../components/Checkbox';
 
