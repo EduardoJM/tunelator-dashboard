@@ -10,8 +10,8 @@ const Template: ComponentStory<typeof NoAccountsBox> = args => (
   <NoAccountsBox {...args} />
 );
 
-export const Default = Template.bind({});
-Default.args = {
+export const OnlyTextAndIcon = Template.bind({});
+OnlyTextAndIcon.args = {
   createFirstButtonVisible: false,
 };
 
