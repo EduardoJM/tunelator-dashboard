@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
 import Input from '../../../components/Input';
-import Button from '../../../components/Button';
+import Button from '../../../components/Common/Button';
 import Checkbox from '../../../components/Checkbox';
 
 const SignupBox: FC = () => {
@@ -75,7 +75,7 @@ const SignupBox: FC = () => {
             </Checkbox>
           </Flex>
 
-          <Button width="100%" variant="primary-rounded" type="submit">
+          <Button width="100%" variant="primaryRounded" type="submit">
             Criar Conta
           </Button>
 

@@ -19,7 +19,7 @@ import {
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
-import Button from '../../components/Button';
+import Button from '../../components/Common/Button';
 import {
   getMailsPaginated,
   setMailRedirectEnabled,
@@ -147,7 +147,7 @@ const MailAccounts: FC = () => {
             Minhas Contas de E-mail
           </Heading>
 
-          <Button variant="primary-rounded" onClick={handleCreateUserMail}>
+          <Button variant="primaryRounded" onClick={handleCreateUserMail}>
             Criar Nova
           </Button>
         </Flex>

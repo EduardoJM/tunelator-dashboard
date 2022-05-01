@@ -17,7 +17,7 @@ import { GoMailRead } from 'react-icons/go';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '../../Avatar';
-import Button from '../../Button';
+import Button from '../../Common/Button';
 import { useAuth } from '../../../contexts/auth';
 
 export interface SideNavProps {
@@ -113,19 +113,19 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
 
         <DrawerBody>
           <VStack width="100%">
-            <Button variant="sidenav-button" onClick={handleGoToHome}>
+            <Button variant="sidenavButton" onClick={handleGoToHome}>
               <MdHome size="20px" />
               <Text ml="10px">Início</Text>
             </Button>
-            <Button variant="sidenav-button" onClick={handleGoToMailAccounts}>
+            <Button variant="sidenavButton" onClick={handleGoToMailAccounts}>
               <MdEmail size="20px" />
               <Text ml="10px">E-Minhas Contas</Text>
             </Button>
-            <Button variant="sidenav-button">
+            <Button variant="sidenavButton">
               <GoMailRead size="20px" />
               <Text ml="10px">E-mails Recebidos</Text>
             </Button>
-            <Button variant="sidenav-button" onClick={handleGoToPlans}>
+            <Button variant="sidenavButton" onClick={handleGoToPlans}>
               <FaRegMoneyBillAlt size="20px" />
               <Text ml="10px">Planos</Text>
             </Button>
@@ -135,12 +135,12 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
         <DrawerFooter>
           <VStack width="100%">
             <Divider />
-            <Button variant="sidenav-button" onClick={logout}>
+            <Button variant="sidenavButton" onClick={logout}>
               <MdLogout size="20px" />
               <Text ml="10px">Sair</Text>
             </Button>
             <Divider />
-            <Button variant="sidenav-button" onClick={onClose}>
+            <Button variant="sidenavButton" onClick={onClose}>
               <MdArrowBack size="20px" />
               <Text ml="10px">Voltar</Text>
             </Button>

@@ -7,7 +7,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
-import Button from '../../components/Button';
+import Button from '../../components/Common/Button';
 
 export interface UserMailDeleteModalProps {
   isOpen: boolean;

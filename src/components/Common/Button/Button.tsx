@@ -7,11 +7,11 @@ import {
 type ButtonVariantProps = Partial<ChakraButtonProps>;
 
 export type ButtonVariant =
-  | 'primary-rounded'
+  | 'primaryRounded'
   | 'primary'
   | 'ghost'
-  | 'full-ghost'
-  | 'sidenav-button'
+  | 'fullGhost'
+  | 'sidenavButton'
   | 'destroy';
 
 type ButtonVariantMapping = {
@@ -19,7 +19,7 @@ type ButtonVariantMapping = {
 };
 
 const CustomButtonVariantMapping: ButtonVariantMapping = {
-  'primary-rounded': {
+  primaryRounded: {
     borderRadius: '50px',
     colorScheme: 'brand',
   },
@@ -30,12 +30,12 @@ const CustomButtonVariantMapping: ButtonVariantMapping = {
   ghost: {
     variant: 'ghost',
   },
-  'full-ghost': {
+  fullGhost: {
     variant: 'ghost',
     _hover: { backgroundColor: 'rgba(255, 255, 255, 0.05)' },
     _active: { backgroundColor: 'rgba(255, 255, 255, 0.15)' },
   },
-  'sidenav-button': {
+  sidenavButton: {
     variant: 'ghost',
     width: '100%',
     justifyContent: 'flex-start',
