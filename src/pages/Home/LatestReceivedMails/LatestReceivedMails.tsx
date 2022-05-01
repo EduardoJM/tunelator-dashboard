@@ -11,12 +11,11 @@ import {
   Th,
   Flex,
 } from '@chakra-ui/react';
-import LoadingIndicatorBox from '../../../components/LoadingIndicatorBox';
-import DateTime from '../../../components/DateTime';
-import Ellipsis from '../../../components/Ellipsis';
+import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
+import { DateTime, Ellipsis } from '../../../components';
 import { getLatestReceivedMails } from '../../../services/mails';
-import Button from '../../../components/Button';
-import NoReceivedMailsBox from '../../../components/NoReceivedMailsBox';
+import Button from '../../../components/Common/Button';
+import NoReceivedMailsBox from '../../../components/Placeholders/NoReceivedMailsBox';
 
 const LatestReceivedMails: FC = () => {
   const { data, error, isLoading } = useQuery(

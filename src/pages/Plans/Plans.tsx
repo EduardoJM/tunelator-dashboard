@@ -15,12 +15,11 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
-import { useNavigate } from 'react-router-dom';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
-import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
-import PriceInCents from '../../components/PriceInCents';
+import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
+import { PriceInCents } from '../../components';
 import { listPlans } from '../../services/plans';
-import Button from '../../components/Button';
+import Button from '../../components/Common/Button';
 import Dashboard from '../../layouts/Dashboard';
 import {
   createSession,
@@ -93,7 +92,7 @@ const Plans: FC = () => {
                 <>
                   <Divider mb="30px" />
                   <Button
-                    variant="primary-rounded"
+                    variant="primaryRounded"
                     onClick={handleGoToCustomerPortal}
                   >
                     Gerenciar
@@ -202,7 +201,7 @@ const Plans: FC = () => {
                       justifyContent="center"
                     >
                       <Button
-                        variant="primary-rounded"
+                        variant="primaryRounded"
                         isDisabled={activePlan === plan.id}
                         onClick={() => handleSelectPlan(plan.id)}
                       >
@@ -253,7 +252,7 @@ const Plans: FC = () => {
               justifyContent="center"
             >
               <Button
-                variant="primary-rounded"
+                variant="primaryRounded"
                 onClick={handleGoToCustomerPortal}
               >
                 Portal do Cliente

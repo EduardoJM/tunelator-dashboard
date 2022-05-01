@@ -11,8 +11,8 @@ import {
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
-import Input from '../../../components/Input';
-import Button from '../../../components/Button';
+import { Input, PasswordInput } from '../../../components/Forms';
+import Button from '../../../components/Common/Button';
 import Checkbox from '../../../components/Checkbox';
 
 const LoginBox: FC = () => {
@@ -52,11 +52,10 @@ const LoginBox: FC = () => {
             value={formik.values.email}
             onChange={formik.handleChange}
           />
-          <Input
+          <PasswordInput
             id="password"
             label="Senha"
             placeholder="Digite sua senha"
-            type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
           />
@@ -80,7 +79,7 @@ const LoginBox: FC = () => {
             <Text textAlign="right">Esqueceu sua senha?</Text>
           </Flex>
 
-          <Button width="100%" variant="primary-rounded" type="submit">
+          <Button width="100%" variant="primaryRounded" type="submit">
             Entrar
           </Button>
 

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Flex, Text } from '@chakra-ui/react';
 import { RiAccountPinCircleLine } from 'react-icons/ri';
-import Button from '../Button';
+import Button from '../../Common/Button';
 
 export interface NoAccountsBoxProps {
   createFirstButtonVisible?: boolean;
@@ -47,11 +47,7 @@ const NoAccountsBox: FC<NoAccountsBoxProps> = ({
         Nenhuma conta para ser mostrada.
       </Text>
       {createFirstButtonVisible && (
-        <Button
-          mt="20px"
-          variant="primary-rounded"
-          onClick={onCreateFirstClick}
-        >
+        <Button mt="20px" variant="primaryRounded" onClick={onCreateFirstClick}>
           Criar Primeira Conta
         </Button>
       )}

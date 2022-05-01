@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Box } from "@chakra-ui/react";
+import { FC } from 'react';
+import { Box } from '@chakra-ui/react';
 
 export interface EllipsisProps {
   characteres: number;
@@ -7,7 +7,12 @@ export interface EllipsisProps {
 
 const Ellipsis: FC<EllipsisProps> = ({ characteres, children }) => {
   return (
-    <Box width={`${characteres}ch`} overflow="hidden" textOverflow="ellipsis">
+    <Box
+      width={`${characteres}ch`}
+      whiteSpace="nowrap"
+      overflow="hidden"
+      textOverflow="ellipsis"
+    >
       {children}
     </Box>
   );

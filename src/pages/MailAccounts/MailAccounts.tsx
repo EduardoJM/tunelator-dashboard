@@ -18,8 +18,8 @@ import {
 } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import LoadingIndicatorBox from '../../components/LoadingIndicatorBox';
-import Button from '../../components/Button';
+import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
+import Button from '../../components/Common/Button';
 import {
   getMailsPaginated,
   setMailRedirectEnabled,
@@ -31,9 +31,9 @@ import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
-import DateTime from '../../components/DateTime';
+import { DateTime } from '../../components';
 import Dashboard from '../../layouts/Dashboard';
-import NoAccountsBox from '../../components/NoAccountsBox';
+import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -69,9 +69,8 @@ const MailAccounts: FC = () => {
   const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
 
   const deleteMailModal = useDisclosure();
-  const [deleteMailCurrent, setDeleteMailCurrent] = useState<UserMail | null>(
-    null
-  );
+  const [deleteMailCurrent, setDeleteMailCurrent] =
+    useState<UserMail | null>(null);
 
   useEffect(() => {
     if (!state) {
@@ -148,7 +147,7 @@ const MailAccounts: FC = () => {
             Minhas Contas de E-mail
           </Heading>
 
-          <Button variant="primary-rounded" onClick={handleCreateUserMail}>
+          <Button variant="primaryRounded" onClick={handleCreateUserMail}>
             Criar Nova
           </Button>
         </Flex>

@@ -1,20 +1,8 @@
 import { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { useLoading } from '../../contexts/loading';
 import styles from './AbsoluteLoadingIndicator.module.scss';
 
-export interface AbsoluteLoadingIndicatorProps {
-  force?: boolean;
-}
-
-const AbsoluteLoadingIndicator: FC<AbsoluteLoadingIndicatorProps> = ({
-  force,
-}) => {
-  const { isLoading } = useLoading();
-
-  if (!isLoading && !force) {
-    return null;
-  }
+const AbsoluteLoadingIndicator: FC = () => {
   return (
     <Flex
       width="100%"

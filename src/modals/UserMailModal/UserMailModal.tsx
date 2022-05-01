@@ -16,9 +16,9 @@ import {
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query';
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import InputMailUser from '../../components/InputMailUser';
+import Button from '../../components/Common/Button';
+import Input from '../../components/Forms/Input';
+import InputMailUser from '../../components/Forms/InputMailUser';
 import Checkbox from '../../components/Checkbox';
 import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';

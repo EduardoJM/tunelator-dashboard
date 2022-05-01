@@ -20,7 +20,7 @@ import {
   MdLogout,
   MdAccountCircle,
 } from 'react-icons/md';
-import Button from '../Button';
+import Button from '../Common/Button';
 import SideNav from './SideNav';
 import { useAuth } from '../../contexts/auth';
 
@@ -78,7 +78,7 @@ const NavBar: FC = () => {
         <Spacer />
 
         <Button
-          variant="full-ghost"
+          variant="fullGhost"
           display={drawerToggleDisplay}
           onClick={handleOpenDrawer}
         >
