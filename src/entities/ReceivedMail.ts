@@ -1,6 +1,7 @@
 export interface ReceivedMailIntern {
   id: number;
   mail: string;
+  redirect_to: string | null;
 }
 
 export interface ReceivedMail {

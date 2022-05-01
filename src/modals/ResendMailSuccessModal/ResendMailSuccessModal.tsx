@@ -40,7 +40,7 @@ const ResendMailSuccessModal: FC<ResendMailSuccessModalProps> = ({
 
           <AlertDialogFooter>
             <Button variant="ghost" ref={cancelRef} onClick={onClose}>
-              Confirmar
+              Fechar
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -19,3 +19,8 @@ export async function getReceivedMailsPaginated(
   );
   return response.data;
 }
+
+export async function resendReceivedMail(id: number): Promise<any> {
+  const response = await api.post(`/api/mails/received/${id}/resend/`);
+  return response.data;
+}

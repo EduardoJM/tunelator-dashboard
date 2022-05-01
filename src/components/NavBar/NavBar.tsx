@@ -104,7 +104,9 @@ const NavBar: FC = () => {
           display={linksDisplay}
           fontWeight="bold"
           borderBottom={
-            pathname === '/mails' ? '2px solid white' : '2px solid transparent'
+            pathname.startsWith('/mails')
+              ? '2px solid white'
+              : '2px solid transparent'
           }
           mr="20px"
           _hover={{ textDecoration: 'none' }}
@@ -118,7 +120,7 @@ const NavBar: FC = () => {
           display={linksDisplay}
           fontWeight="bold"
           borderBottom={
-            pathname === '/received'
+            pathname.startsWith('/received')
               ? '2px solid white'
               : '2px solid transparent'
           }

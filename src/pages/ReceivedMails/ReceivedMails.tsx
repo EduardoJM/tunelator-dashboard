@@ -17,23 +17,38 @@ import {
   Text,
   Flex,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { useLoading } from '../../contexts/loading';
+import { useAuth } from '../../contexts/auth';
 import Dashboard from '../../layouts/Dashboard';
-import { getReceivedMailsPaginated } from '../../services/receivedMails';
+import {
+  getReceivedMailsPaginated,
+  resendReceivedMail,
+} from '../../services/receivedMails';
 import {
   Button,
   DateTime,
   Ellipsis,
   LoadingIndicatorBox,
   NoReceivedMailsBox,
+  Pagination,
 } from '../../components';
 import { ResendMailSuccessModal } from '../../modals';
-import { ReceivedMail } from '../../entities/ReceivedMail';
+import { getErrorMessages } from '../../utils/errors';
 
 const ReceivedMails: FC = () => {
+  const { pushLoading, popLoading } = useLoading();
+
+  const toast = useToast();
+
+  const { userData } = useAuth();
+
+  const navigate = useNavigate();
+
   const { pageNumber } = useParams();
 
   const currentPage = useMemo(() => {
@@ -63,8 +78,31 @@ const ReceivedMails: FC = () => {
 
   const resendModal = useDisclosure();
 
-  const handleResendMail = async (mail: ReceivedMail) => {
-    resendModal.onOpen();
+  const handleResendMail = async (id: number) => {
+    pushLoading();
+
+    try {
+      await resendReceivedMail(id);
+
+      resendModal.onOpen();
+    } catch (err) {
+      getErrorMessages(err).forEach(error => {
+        toast({
+          title: error.title,
+          description: error.text,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+    }
+
+    popLoading();
+  };
+
+  const handleGoToPage = (page: number) => {
+    navigate(`/received/${page}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -84,7 +122,7 @@ const ReceivedMails: FC = () => {
         {isLoading ? (
           <LoadingIndicatorBox />
         ) : (
-          <TableContainer mb="100px">
+          <TableContainer mb="50px">
             <Table size="sm">
               <Thead>
                 <Tr>
@@ -167,7 +205,12 @@ const ReceivedMails: FC = () => {
                       </Td>
                     </Tr>
                     <Tr>
-                      <Td colSpan={5} p="0" bgColor="#EFEFEF">
+                      <Td
+                        colSpan={5}
+                        p="0"
+                        bgColor="#EFEFEF"
+                        borderRadius="5px"
+                      >
                         <Collapse
                           in={receivedMail.id === expanded}
                           animateOpacity
@@ -202,6 +245,20 @@ const ReceivedMails: FC = () => {
                                     </Text>
                                     <Text as="span">Sim</Text>
                                   </Box>
+                                  <Box width="100%">
+                                    <Text as="span" fontWeight="bold">
+                                      Reenviado Para:{' '}
+                                    </Text>
+                                    {!!receivedMail.mail.redirect_to ? (
+                                      <Text as="span">
+                                        {receivedMail.mail.redirect_to}
+                                      </Text>
+                                    ) : (
+                                      <Text as="span">
+                                        {userData?.email || '-'}
+                                      </Text>
+                                    )}
+                                  </Box>
                                   {receivedMail.delivered_date && (
                                     <Box width="100%">
                                       <Text as="span" fontWeight="bold">
@@ -231,7 +288,9 @@ const ReceivedMails: FC = () => {
                               >
                                 <Button
                                   variant="primaryRounded"
-                                  onClick={() => handleResendMail(receivedMail)}
+                                  onClick={() =>
+                                    handleResendMail(receivedMail.id)
+                                  }
                                 >
                                   Reenviar
                                 </Button>
@@ -247,6 +306,13 @@ const ReceivedMails: FC = () => {
             </Table>
           </TableContainer>
         )}
+
+        <Pagination
+          totalCount={data?.count || 0}
+          itemsPerPage={10}
+          currentPage={currentPage}
+          onGoToPage={handleGoToPage}
+        />
       </Container>
 
       <ResendMailSuccessModal
