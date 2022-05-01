@@ -33,7 +33,7 @@ import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import { DateTime } from '../../components';
 import Dashboard from '../../layouts/Dashboard';
-import NoAccountsBox from '../../components/NoAccountsBox';
+import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();

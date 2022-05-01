@@ -1,0 +1,16 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import NoAccountsBox from './NoAccountsBox';
+
+export default {
+  title: 'Components/Placeholders/No Accounts Box',
+  component: NoAccountsBox,
+} as ComponentMeta<typeof NoAccountsBox>;
+
+const Template: ComponentStory<typeof NoAccountsBox> = args => (
+  <NoAccountsBox {...args} />
+);
+
+export const Default = Template.bind({});
+Default.args = {
+  createFirstButtonVisible: false,
+};

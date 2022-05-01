@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Flex, Text } from '@chakra-ui/react';
 import { RiAccountPinCircleLine } from 'react-icons/ri';
-import Button from '../Button';
+import Button from '../../Button';
 
 export interface NoAccountsBoxProps {
   createFirstButtonVisible?: boolean;
