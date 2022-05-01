@@ -14,4 +14,6 @@ const Template: ComponentStory<typeof PasswordInput> = args => (
 );
 
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = {
+  label: 'Senha',
+};
