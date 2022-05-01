@@ -21,10 +21,10 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import Button from '../../components/Common/Button';
 import {
-  getMailsPaginated,
-  setMailRedirectEnabled,
-  deleteMail,
-} from '../../services/mails';
+  getMailAccountsPaginated,
+  setMailAccountRedirectEnabled,
+  deleteMailAccount,
+} from '../../services/mailAccounts';
 import { getErrorMessages } from '../../utils/errors';
 import { useLoading } from '../../contexts/loading';
 import { usePlan } from '../../contexts/plan';
@@ -55,7 +55,7 @@ const MailAccounts: FC = () => {
     return num;
   }, [pageNumber]);
   const { data, error, isLoading } = useQuery(['mails', currentPage], () =>
-    getMailsPaginated(currentPage)
+    getMailAccountsPaginated(currentPage)
   );
   const pagination = useMemo(() => {
     if (!data) {
@@ -86,7 +86,7 @@ const MailAccounts: FC = () => {
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
     try {
-      await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
+      await setMailAccountRedirectEnabled(mail.id, !mail.redirect_enabled);
       queryClient.invalidateQueries(['mails']);
       queryClient.invalidateQueries('latest-mails');
       queryClient.refetchQueries('latest-mails');
@@ -132,7 +132,7 @@ const MailAccounts: FC = () => {
 
     deleteMailModal.onClose();
 
-    await deleteMail(deleteMailCurrent.id);
+    await deleteMailAccount(deleteMailCurrent.id);
     queryClient.invalidateQueries(['mails']);
     queryClient.invalidateQueries('latest-mails');
     queryClient.refetchQueries('latest-mails');

@@ -1,23 +1,19 @@
-import {
-  ReceivedMail,
-  ReceivedMailPaginatedResponse,
-} from '../entities/ReceivedMail';
 import { UserMail, UserMailPaginatedResponse } from '../entities/UserMail';
 import api from './api';
 
-export async function getLatestMails(): Promise<UserMail[]> {
+export async function getLatestMailAccounts(): Promise<UserMail[]> {
   const response = await api.get<UserMailPaginatedResponse>(
     '/api/mails/accounts/?limit=5'
   );
   return response.data.results;
 }
 
-export async function getMailById(id: number): Promise<UserMail> {
+export async function getMailAccountById(id: number): Promise<UserMail> {
   const response = await api.get<UserMail>(`/api/mails/accounts/${id}/`);
   return response.data;
 }
 
-export async function getMailsPaginated(
+export async function getMailAccountsPaginated(
   page = 1
 ): Promise<UserMailPaginatedResponse> {
   const response = await api.get<UserMailPaginatedResponse>(
@@ -26,7 +22,7 @@ export async function getMailsPaginated(
   return response.data;
 }
 
-export async function setMailRedirectEnabled(
+export async function setMailAccountRedirectEnabled(
   id: number,
   enabled: boolean
 ): Promise<any> {
@@ -36,7 +32,7 @@ export async function setMailRedirectEnabled(
   return response.data;
 }
 
-export async function createMail(
+export async function createMailAccount(
   name: string,
   mail_user: string,
   redirect_enabled: boolean,
@@ -51,16 +47,7 @@ export async function createMail(
   return response.data;
 }
 
-export async function validateUserMail(user_name: string): Promise<boolean> {
-  try {
-    await api.post('/api/mails/verify/user/', { user_name });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-export async function updateMail(
+export async function updateMailAccount(
   id: number,
   name: string,
   redirect_enabled: boolean,
@@ -74,14 +61,18 @@ export async function updateMail(
   return response.data;
 }
 
-export async function deleteMail(id: number): Promise<any> {
-  const response = await api.delete(`/api/mails/accounts/${id}/`);
-  return response.data;
+export async function validateUserMailAccount(
+  user_name: string
+): Promise<boolean> {
+  try {
+    await api.post('/api/mails/verify/user/', { user_name });
+    return true;
+  } catch {
+    return false;
+  }
 }
 
-export async function getLatestReceivedMails(): Promise<ReceivedMail[]> {
-  const response = await api.get<ReceivedMailPaginatedResponse>(
-    '/api/mails/received/?limit=5'
-  );
-  return response.data.results;
+export async function deleteMailAccount(id: number): Promise<any> {
+  const response = await api.delete(`/api/mails/accounts/${id}/`);
+  return response.data;
 }

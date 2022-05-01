@@ -24,7 +24,11 @@ import { usePlan } from '../../contexts/plan';
 import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
 import { getErrorMessages } from '../../utils/errors';
-import { createMail, updateMail, validateUserMail } from '../../services/mails';
+import {
+  createMailAccount,
+  updateMailAccount,
+  validateUserMailAccount,
+} from '../../services/mailAccounts';
 import { createOrEditMailSchema } from '../../schemas/mail';
 
 export interface UserMailModalProps {
@@ -104,14 +108,14 @@ const UserMailModal: FC<UserMailModalProps> = ({
         });
 
         if (!!userMail) {
-          await updateMail(
+          await updateMailAccount(
             userMail.id,
             name,
             redirect_enabled,
             !redirect_to_my_email ? redirect_to || null : null
           );
         } else {
-          await createMail(
+          await createMailAccount(
             name,
             mail_user,
             redirect_enabled,
@@ -167,7 +171,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
   };
 
   const handleBlur = async () => {
-    const isValid = await validateUserMail(formik.values.mail_user);
+    const isValid = await validateUserMailAccount(formik.values.mail_user);
     setMailUserIsValid(isValid);
     if (!isValid) {
       toast({

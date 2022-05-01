@@ -22,9 +22,9 @@ import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicat
 import { useLoading } from '../../../contexts/loading';
 import { UserMail } from '../../../entities/UserMail';
 import {
-  getLatestMails,
-  setMailRedirectEnabled,
-} from '../../../services/mails';
+  getLatestMailAccounts,
+  setMailAccountRedirectEnabled,
+} from '../../../services/mailAccounts';
 import { getErrorMessages } from '../../../utils/errors';
 
 const LatestMailAccounts: FC = () => {
@@ -32,7 +32,10 @@ const LatestMailAccounts: FC = () => {
   const toast = useToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data, error, isLoading } = useQuery('latest-mails', getLatestMails);
+  const { data, error, isLoading } = useQuery(
+    'latest-mails',
+    getLatestMailAccounts
+  );
 
   const handleGoToMailsAccountsPage = () => {
     navigate('/mails');
@@ -41,7 +44,7 @@ const LatestMailAccounts: FC = () => {
   const handleToggleEnabledStatus = async (mail: UserMail) => {
     pushLoading();
     try {
-      await setMailRedirectEnabled(mail.id, !mail.redirect_enabled);
+      await setMailAccountRedirectEnabled(mail.id, !mail.redirect_enabled);
       queryClient.invalidateQueries('latest-mails');
       queryClient.invalidateQueries(['mails']);
     } catch (err) {

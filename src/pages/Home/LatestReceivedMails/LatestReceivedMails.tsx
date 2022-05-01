@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
 import { DateTime, Ellipsis } from '../../../components';
-import { getLatestReceivedMails } from '../../../services/mails';
+import { getLatestReceivedMails } from '../../../services/receivedMails';
 import Button from '../../../components/Common/Button';
 import NoReceivedMailsBox from '../../../components/Placeholders/NoReceivedMailsBox';
 
