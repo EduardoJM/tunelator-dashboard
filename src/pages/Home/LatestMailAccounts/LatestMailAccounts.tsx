@@ -39,6 +39,7 @@ const LatestMailAccounts: FC = () => {
 
   const handleGoToMailsAccountsPage = () => {
     navigate('/mails');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleToggleEnabledStatus = async (mail: UserMail) => {
@@ -63,6 +64,7 @@ const LatestMailAccounts: FC = () => {
 
   const handleCreateAccount = () => {
     navigate('/mails', { state: { openCreateModal: true } });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

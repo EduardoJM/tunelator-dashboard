@@ -11,6 +11,7 @@ import {
   Th,
   Flex,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
 import { DateTime, Ellipsis } from '../../../components';
 import { getLatestReceivedMails } from '../../../services/receivedMails';
@@ -22,6 +23,13 @@ const LatestReceivedMails: FC = () => {
     'latest-received-mails',
     getLatestReceivedMails
   );
+
+  const navigate = useNavigate();
+
+  const handleGoToReceivedMails = () => {
+    navigate('/received');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <>
@@ -103,7 +111,9 @@ const LatestReceivedMails: FC = () => {
         </>
       )}
       <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
-        <Button variant="primary">Ver Todas as Informações</Button>
+        <Button variant="primary" onClick={handleGoToReceivedMails}>
+          Ver Todas as Informações
+        </Button>
       </Flex>
     </>
   );
