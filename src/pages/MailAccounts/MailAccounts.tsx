@@ -33,19 +33,24 @@ import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
-import { DateTime } from '../../components';
+import { DateTime, Pagination } from '../../components';
 import Dashboard from '../../layouts/Dashboard';
 import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
 import { WaitMailAccountDone } from '../../components';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
+  
   const navigate = useNavigate();
+
   const { state } = useLocation();
 
   const queryClient = useQueryClient();
+
   const toast = useToast();
+
   const { plan } = usePlan();
+
   const currentPage = useMemo(() => {
     if (!pageNumber) {
       return 1;
@@ -56,16 +61,11 @@ const MailAccounts: FC = () => {
     }
     return num;
   }, [pageNumber]);
+
   const { data, error, isLoading } = useQuery(['mails', currentPage], () =>
     getMailAccountsPaginated(currentPage)
   );
-  const pagination = useMemo(() => {
-    if (!data) {
-      return null;
-    }
-    const length = Math.ceil(data.count / 5);
-    return Array.from({ length }).map((_, index) => index + 1);
-  }, [data]);
+
   const { pushLoading, popLoading } = useLoading();
 
   const editMailModal = useDisclosure();
@@ -292,29 +292,13 @@ const MailAccounts: FC = () => {
             ))}
           </VStack>
         )}
-        {!!pagination && (
-          <Flex alignItems="center" justifyContent="end" mt="50px">
-            <ButtonGroup size="sm" isAttached variant="outline">
-              {pagination.map(page => (
-                <ChakraButton
-                  key={page}
-                  mr="-px"
-                  onClick={() => handleNavigateToPage(page)}
-                  colorScheme="brand"
-                  isActive={page == currentPage}
-                  _active={{
-                    backgroundColor: 'brand.500',
-                    color: 'white',
-                    borderColor: 'brand.500',
-                    borderWidth: '1px',
-                  }}
-                >
-                  {page}
-                </ChakraButton>
-              ))}
-            </ButtonGroup>
-          </Flex>
-        )}
+
+        <Pagination
+          totalCount={data?.count ||0}
+          currentPage={currentPage}
+          onGoToPage={handleNavigateToPage}
+          itemsPerPage={5}
+        />
       </Container>
 
       <Box mt="100px" />
