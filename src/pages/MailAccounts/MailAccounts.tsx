@@ -15,8 +15,10 @@ import {
   Tooltip,
   useToast,
   useDisclosure,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from 'react-query';
+import * as CSS from 'csstype';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import Button from '../../components/Common/Button';
@@ -73,6 +75,17 @@ const MailAccounts: FC = () => {
   const [deleteMailCurrent, setDeleteMailCurrent] =
     useState<UserMail | null>(null);
 
+  const accountCardActionsDirection =
+    useBreakpointValue<CSS.Property.FlexDirection>({
+      base: 'column',
+      md: 'row',
+    });
+
+  const accountCardActionsAlign = useBreakpointValue<CSS.Property.AlignItems>({
+    base: 'stretch',
+    md: 'center',
+  });
+
   useEffect(() => {
     if (!state) {
       return;
@@ -106,6 +119,7 @@ const MailAccounts: FC = () => {
 
   const handleNavigateToPage = (page: number) => {
     navigate(`/mails/${page}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleEditUserMail = (userMail: UserMail) => {
@@ -219,11 +233,13 @@ const MailAccounts: FC = () => {
                   <Divider />
                   <Flex
                     width="100%"
-                    alignItems="center"
+                    flexDirection={accountCardActionsDirection}
+                    alignItems={accountCardActionsAlign}
                     justifyContent="space-between"
                     py="5px"
+                    gap="10px"
                   >
-                    <FormControl display="flex" alignItems="center">
+                    <FormControl flex="1" display="flex" alignItems="center">
                       <FormLabel
                         htmlFor={`email-${userMail.id}-enabled`}
                         mb="0"
@@ -242,7 +258,6 @@ const MailAccounts: FC = () => {
                       <Button
                         onClick={() => handleCallDeleteUserMail(userMail)}
                         variant="destroy"
-                        mr="10px"
                       >
                         Deletar Conta
                       </Button>
@@ -254,7 +269,12 @@ const MailAccounts: FC = () => {
                         color="white"
                         shouldWrapChildren
                       >
-                        <Button variant="destroy" mr="10px" isDisabled={true}>
+                        <Button
+                          w="100%"
+                          variant="destroy"
+                          mr="10px"
+                          isDisabled={true}
+                        >
                           Deletar Conta
                         </Button>
                       </Tooltip>
