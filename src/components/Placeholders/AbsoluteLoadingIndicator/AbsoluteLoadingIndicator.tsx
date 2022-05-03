@@ -15,12 +15,14 @@ const AbsoluteLoadingIndicator: FC = () => {
       alignItems="center"
       justifyContent="center"
       zIndex="2200"
+      data-testid="absolute-loading-overlay"
     >
       <svg
         className={styles.loadingAnimation}
         width="512"
         height="512"
         viewBox="0 0 512 512"
+        role="img"
       >
         <g>
           <path

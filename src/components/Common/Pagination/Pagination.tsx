@@ -1,5 +1,6 @@
 import { FC, useMemo } from 'react';
-import { Flex, ButtonGroup, Button } from '@chakra-ui/react';
+import { Flex, ButtonGroup } from '@chakra-ui/react';
+import Button from '../Button';
 
 export interface PaginationProps {
   totalCount: number;
@@ -32,17 +33,10 @@ const Pagination: FC<PaginationProps> = ({
       <ButtonGroup size="sm" isAttached variant="outline">
         {pagination.map(page => (
           <Button
+            variant="pagination"
             key={page}
-            mr="-px"
             onClick={() => handleGoToPage(page)}
-            colorScheme="brand"
             isActive={page == currentPage}
-            _active={{
-              backgroundColor: 'brand.500',
-              color: 'white',
-              borderColor: 'brand.500',
-              borderWidth: '1px',
-            }}
           >
             {page}
           </Button>

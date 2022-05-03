@@ -12,7 +12,8 @@ export type ButtonVariant =
   | 'ghost'
   | 'fullGhost'
   | 'sidenavButton'
-  | 'destroy';
+  | 'destroy'
+  | 'pagination';
 
 type ButtonVariantMapping = {
   [key in ButtonVariant]: ButtonVariantProps;
@@ -45,6 +46,15 @@ const CustomButtonVariantMapping: ButtonVariantMapping = {
   destroy: {
     colorScheme: 'red',
     fontWeight: 'normal',
+  },
+  pagination: {
+    colorScheme: 'brand',
+    _active: {
+      backgroundColor: 'brand.500',
+      color: 'white',
+      borderColor: 'brand.500',
+      borderWidth: '1px',
+    },
   },
 };
 
