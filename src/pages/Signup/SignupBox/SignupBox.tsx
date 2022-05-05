@@ -1,11 +1,20 @@
-import { FC } from 'react';
-import { Box, VStack, Heading, Text, Flex, Link } from '@chakra-ui/react';
+import { ChangeEvent, FC } from 'react';
+import {
+  Box,
+  VStack,
+  Heading,
+  Text,
+  Flex,
+  Link,
+  useDisclosure,
+} from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
 import { Input, PasswordInput } from '../../../components/Forms';
 import Button from '../../../components/Common/Button';
 import Checkbox from '../../../components/Checkbox';
+import { TermsOfUseModal } from '../../../modals';
 
 const SignupBox: FC = () => {
   const auth = useAuth();
@@ -37,83 +46,110 @@ const SignupBox: FC = () => {
     },
   });
 
+  const modal = useDisclosure();
+
+  const handleCancelTerms = () => {
+    modal.onClose();
+  };
+
+  const handleConfirmTerms = () => {
+    modal.onClose();
+    formik.setFieldValue('accept_terms', true);
+  };
+
+  const handleTermsCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (formik.values.accept_terms) {
+      formik.handleChange(e);
+      return;
+    }
+    e.preventDefault();
+    modal.onOpen();
+  };
+
   return (
-    <Box width="100%" maxWidth="450px" color="foreground.muted">
-      <form onSubmit={formik.handleSubmit}>
-        <VStack>
-          <Heading width="100%" color="foreground.default" as="h1" size="2xl">
-            Criar Conta
-          </Heading>
+    <>
+      <Box width="100%" maxWidth="450px" color="foreground.muted">
+        <form onSubmit={formik.handleSubmit}>
+          <VStack>
+            <Heading width="100%" color="foreground.default" as="h1" size="2xl">
+              Criar Conta
+            </Heading>
 
-          <Box pb="20px">
-            <Text>
-              A um passo de não precisar mais se descadastrar inúmeras vezes da
-              mesma lista de e-mail.
-            </Text>
-          </Box>
-
-          <Input
-            id="email"
-            label="E-mail"
-            placeholder="exemplo@exemplo.com.br"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-          />
-          <Input
-            id="first_name"
-            label="Seu nome"
-            value={formik.values.first_name}
-            onChange={formik.handleChange}
-          />
-          <Input
-            id="last_name"
-            label="Seu sobrenome"
-            value={formik.values.last_name}
-            onChange={formik.handleChange}
-          />
-          <PasswordInput
-            id="password"
-            label="Senha"
-            placeholder="Digite sua senha"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
-
-          <Flex width="100%" pb="20px" pt="20px">
-            <Checkbox
-              id="accept_terms"
-              isChecked={formik.values.accept_terms}
-              onChange={formik.handleChange}
-            >
-              Li e aceito os{' '}
-              <Text as="span" color="brand.500" fontWeight="bold">
-                Termos de Uso
+            <Box pb="20px">
+              <Text>
+                A um passo de não precisar mais se descadastrar inúmeras vezes
+                da mesma lista de e-mail.
               </Text>
-            </Checkbox>
-          </Flex>
+            </Box>
 
-          <Flex width="100%" pb="20px">
-            <Checkbox
-              id="remember"
-              isChecked={formik.values.remember}
+            <Input
+              id="email"
+              label="E-mail"
+              placeholder="exemplo@exemplo.com.br"
+              value={formik.values.email}
               onChange={formik.handleChange}
-            >
-              Mantenha-me logado
-            </Checkbox>
-          </Flex>
+            />
+            <Input
+              id="first_name"
+              label="Seu nome"
+              value={formik.values.first_name}
+              onChange={formik.handleChange}
+            />
+            <Input
+              id="last_name"
+              label="Seu sobrenome"
+              value={formik.values.last_name}
+              onChange={formik.handleChange}
+            />
+            <PasswordInput
+              id="password"
+              label="Senha"
+              placeholder="Digite sua senha"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
 
-          <Button width="100%" variant="primaryRounded" type="submit">
-            Criar Conta
-          </Button>
+            <Flex width="100%" pb="20px" pt="20px">
+              <Checkbox
+                id="accept_terms"
+                isChecked={formik.values.accept_terms}
+                onChange={handleTermsCheckboxChange}
+              >
+                Li e aceito os{' '}
+                <Text as="span" color="brand.500" fontWeight="bold">
+                  Termos de Uso
+                </Text>
+              </Checkbox>
+            </Flex>
 
-          <Box width="100" textAlign="center" py="10px">
-            <Link as={RouterLink} to="/" color="brand.500" fontWeight="bold">
-              Já tenho uma conta
-            </Link>
-          </Box>
-        </VStack>
-      </form>
-    </Box>
+            <Flex width="100%" pb="20px">
+              <Checkbox
+                id="remember"
+                isChecked={formik.values.remember}
+                onChange={formik.handleChange}
+              >
+                Mantenha-me logado
+              </Checkbox>
+            </Flex>
+
+            <Button width="100%" variant="primaryRounded" type="submit">
+              Criar Conta
+            </Button>
+
+            <Box width="100" textAlign="center" py="10px">
+              <Link as={RouterLink} to="/" color="brand.500" fontWeight="bold">
+                Já tenho uma conta
+              </Link>
+            </Box>
+          </VStack>
+        </form>
+      </Box>
+      <TermsOfUseModal
+        isOpen={modal.isOpen}
+        onCancel={handleCancelTerms}
+        onConfirm={handleConfirmTerms}
+      />
+    </>
   );
 };
 

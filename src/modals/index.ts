@@ -6,3 +6,6 @@ export { default as UserMailDeleteModal } from './UserMailDeleteModal';
 
 export type { UserMailModalProps } from './UserMailModal';
 export { default as UserMailModal } from './UserMailModal';
+
+export type { TermsOfUseModalProps } from './TermsOfUseModal';
+export { default as TermsOfUseModal } from './TermsOfUseModal';
