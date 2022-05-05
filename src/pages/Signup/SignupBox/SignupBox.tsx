@@ -15,10 +15,25 @@ const SignupBox: FC = () => {
       password: '',
       first_name: '',
       last_name: '',
+      accept_terms: false,
       remember: true,
     },
-    onSubmit: ({ email, first_name, last_name, password, remember }) => {
-      auth.signup(email, first_name, last_name, password, remember);
+    onSubmit: ({
+      email,
+      first_name,
+      last_name,
+      password,
+      remember,
+      accept_terms,
+    }) => {
+      auth.signup(
+        email,
+        first_name,
+        last_name,
+        password,
+        remember,
+        accept_terms
+      );
     },
   });
 
@@ -63,6 +78,19 @@ const SignupBox: FC = () => {
             value={formik.values.password}
             onChange={formik.handleChange}
           />
+
+          <Flex width="100%" pb="20px" pt="20px">
+            <Checkbox
+              id="accept_terms"
+              isChecked={formik.values.accept_terms}
+              onChange={formik.handleChange}
+            >
+              Li e aceito os{' '}
+              <Text as="span" color="brand.500" fontWeight="bold">
+                Termos de Uso
+              </Text>
+            </Checkbox>
+          </Flex>
 
           <Flex width="100%" pb="20px">
             <Checkbox

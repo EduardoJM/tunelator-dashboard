@@ -22,7 +22,8 @@ export interface AuthContextData {
     first_name: string,
     last_name: string,
     password: string,
-    remember: boolean
+    remember: boolean,
+    accept_terms: boolean
   ) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -85,7 +86,8 @@ export const AuthProvider: FC = ({ children }) => {
     first_name: string,
     last_name: string,
     password: string,
-    remember: boolean
+    remember: boolean,
+    accept_terms: boolean
   ) {
     pushLoading();
     try {
@@ -94,6 +96,7 @@ export const AuthProvider: FC = ({ children }) => {
         first_name,
         last_name,
         password,
+        accept_terms,
       });
       const response = await authServices.signup(
         validatedData.email,

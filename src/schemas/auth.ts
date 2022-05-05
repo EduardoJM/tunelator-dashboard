@@ -15,4 +15,7 @@ export const signupSchema = object({
   password: string().required('Insira sua senha.'),
   first_name: string().required('Insira um nome válido.'),
   last_name: string().required('Insira um sobrenome válido.'),
+  accept_terms: boolean()
+    .required('Você precisa concordar com os termos de uso.')
+    .isTrue('Você precisa concordar com os termos de uso.'),
 });
