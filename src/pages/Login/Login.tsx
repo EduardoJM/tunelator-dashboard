@@ -4,11 +4,11 @@ import LoginBox from './LoginBox';
 
 const Login: FC = () => {
   return (
-    <Flex height="100vh" width="100%">
+    <Flex minHeight="100vh" width="100%">
       <Box backgroundColor="white" flex="1">
         <Flex
           width="100%"
-          height="100%"
+          minHeight="100%"
           flexDirection="column"
           alignItems="center"
           justifyContent="center"

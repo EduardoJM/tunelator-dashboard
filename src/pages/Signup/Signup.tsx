@@ -6,11 +6,11 @@ import RequireNoAuth from '../../layouts/RequireNoAuth';
 const Signup: FC = () => {
   return (
     <RequireNoAuth>
-      <Flex height="100vh" width="100%">
+      <Flex height="100vh" width="100%" overflowY="auto">
         <Box backgroundColor="white" flex="1">
           <Flex
             width="100%"
-            height="100%"
+            minHeight="100%"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
