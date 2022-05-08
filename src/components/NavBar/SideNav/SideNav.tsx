@@ -132,7 +132,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToPlans}>
               <FaRegMoneyBillAlt size="20px" />
-              <Text ml="10px">Planos</Text>
+              <Text ml="10px">Planos e Assinatura</Text>
             </Button>
           </VStack>
         </DrawerBody>

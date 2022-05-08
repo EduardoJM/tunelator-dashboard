@@ -139,7 +139,7 @@ const NavBar: FC = () => {
           mr="20px"
           _hover={{ textDecoration: 'none' }}
         >
-          Planos
+          Planos e Assinatura
         </Link>
         <Spacer display={linksDisplay} />
         <Menu>

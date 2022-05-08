@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
-import { GiTakeMyMoney } from 'react-icons/gi';
+import { BiSad } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../components';
 
-const AlreadyPaid: FC = () => {
+const Error: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
 
   const navigate = useNavigate();
@@ -23,7 +23,8 @@ const AlreadyPaid: FC = () => {
           flexDir="column"
         >
           <Heading as="h1" size="xl" color="brand.500">
-            Você já possui uma assinatura paga...
+            Houve um erro ao tentar te encaminhar para o portal do cliente na
+            Stripe...
           </Heading>
           <Heading
             as="h2"
@@ -32,10 +33,8 @@ const AlreadyPaid: FC = () => {
             color="brand.500"
             fontWeight="normal"
           >
-            Atualmente só é possível alterar o plano da assinatura cancelando a
-            assinatura e assinando uma nova. Estamos trabalhando para melhorar
-            isso, porém, por enquanto, você pode ir na página de Planos e
-            Assinaturas, em Gerenciar, e cancelar a atual e assinar uma nova.
+            Tente novamente mais tarde e caso o erro persista, entre em contato
+            com o suporte.
           </Heading>
         </Flex>
         <Flex
@@ -44,7 +43,7 @@ const AlreadyPaid: FC = () => {
           justifyContent="center"
           color="brand.500"
         >
-          <GiTakeMyMoney size="200px" />
+          <BiSad size="200px" />
         </Flex>
       </Flex>
       <Flex alignItems="center" justifyContent="center" pt="20px" pb="60px">
@@ -56,4 +55,4 @@ const AlreadyPaid: FC = () => {
   );
 };
 
-export default AlreadyPaid;
+export default Error;

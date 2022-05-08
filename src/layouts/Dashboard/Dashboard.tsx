@@ -10,11 +10,11 @@ const Dashboard: FC = ({ children }) => {
       <Flex flexDirection="column" width="100%" minHeight="100vh">
         <NavBar />
 
-        <Box width="100%" flex="1">
+        <Flex width="100%" flex="1" alignItems="stretch">
           <Container maxW="120ch">
             <Outlet />
           </Container>
-        </Box>
+        </Flex>
 
         <Box height="200px" backgroundColor="brand.500"></Box>
       </Flex>

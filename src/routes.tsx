@@ -20,6 +20,8 @@ const CheckoutErrorPage = lazy(() => import('./pages/Checkout/Error'));
 const CheckoutSuccessPage = lazy(() => import('./pages/Checkout/Success'));
 const CheckoutCanceledPage = lazy(() => import('./pages/Checkout/Canceled'));
 
+const CustomerErrorPage = lazy(() => import('./pages/Customer/Error'));
+
 const AppRoutes: FC = () => {
   const { loggedIn } = useAuth();
 
@@ -41,6 +43,7 @@ const AppRoutes: FC = () => {
             <Route path=":pageNumber" element={<ReceivedMailsPage />} />
           </Route>
           <Route path="plans" element={<PlansPage />} />
+
           <Route path="checkout" element={<Outlet />}>
             <Route path="" element={<NotFoundPage />} />
             <Route path="already-paid" element={<CheckoutAlreadyPaidPage />} />
@@ -49,6 +52,13 @@ const AppRoutes: FC = () => {
             <Route path="success" element={<CheckoutSuccessPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
+
+          <Route path="customer" element={<Outlet />}>
+            <Route path="" element={<NotFoundPage />} />
+            <Route path="error" element={<CustomerErrorPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
