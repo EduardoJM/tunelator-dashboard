@@ -1,6 +1,7 @@
 import { FC, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Outlet } from 'react-router-dom';
 import { useAuth } from './contexts/auth';
+import Dashboard from './layouts/Dashboard';
 
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 
@@ -12,7 +13,6 @@ const MailAccountsPage = lazy(() => import('./pages/MailAccounts'));
 const ReceivedMailsPage = lazy(() => import('./pages/ReceivedMails'));
 const PlansPage = lazy(() => import('./pages/Plans'));
 
-const CheckoutPage = lazy(() => import('./pages/Checkout'));
 const CheckoutAlreadyPaidPage = lazy(
   () => import('./pages/Checkout/AlreadyPaid')
 );
@@ -26,24 +26,31 @@ const AppRoutes: FC = () => {
   return (
     <>
       <Routes>
-        {loggedIn ? (
-          <Route path="/" element={<HomePage />} />
-        ) : (
-          <Route path="/" element={<LoginPage />} />
-        )}
-        <Route path="/mails/:pageNumber" element={<MailAccountsPage />} />
-        <Route path="/mails" element={<MailAccountsPage />} />
-        <Route path="/received" element={<ReceivedMailsPage />} />
-        <Route path="/received/:pageNumber" element={<ReceivedMailsPage />} />
-        <Route path="/plans" element={<PlansPage />} />
+        <Route path="/auth" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route path="/checkout" element={<CheckoutPage />}>
-          <Route path="already-paid" element={<CheckoutAlreadyPaidPage />} />
-          <Route path="error" element={<CheckoutErrorPage />} />
-          <Route path="canceled" element={<CheckoutCanceledPage />} />
-          <Route path="success" element={<CheckoutSuccessPage />} />
+
+        <Route path="/" element={<Dashboard />}>
+          <Route path="" element={<HomePage />} />
+
+          <Route path="mails" element={<Outlet />}>
+            <Route path="" element={<MailAccountsPage />} />
+            <Route path=":pageNumber" element={<MailAccountsPage />} />
+          </Route>
+          <Route path="received" element={<Outlet />}>
+            <Route path="" element={<ReceivedMailsPage />} />
+            <Route path=":pageNumber" element={<ReceivedMailsPage />} />
+          </Route>
+          <Route path="plans" element={<PlansPage />} />
+          <Route path="checkout" element={<Outlet />}>
+            <Route path="" element={<NotFoundPage />} />
+            <Route path="already-paid" element={<CheckoutAlreadyPaidPage />} />
+            <Route path="error" element={<CheckoutErrorPage />} />
+            <Route path="canceled" element={<CheckoutCanceledPage />} />
+            <Route path="success" element={<CheckoutSuccessPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
-        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );

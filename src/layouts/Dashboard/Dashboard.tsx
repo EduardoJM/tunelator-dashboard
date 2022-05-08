@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { Flex, Box } from '@chakra-ui/react';
+import { Flex, Box, Container } from '@chakra-ui/react';
+import { Outlet } from 'react-router-dom';
 import NavBar from '../../components/NavBar';
 import RequireAuth from '../RequireAuth';
 
@@ -10,7 +11,9 @@ const Dashboard: FC = ({ children }) => {
         <NavBar />
 
         <Box width="100%" flex="1">
-          {children}
+          <Container maxW="120ch">
+            <Outlet />
+          </Container>
         </Box>
 
         <Box height="200px" backgroundColor="brand.500"></Box>

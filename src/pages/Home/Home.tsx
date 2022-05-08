@@ -6,15 +6,13 @@ import LatestReceivedMails from './LatestReceivedMails';
 
 const Home: FC = () => {
   return (
-    <Dashboard>
-      <Container maxW="120ch">
-        <Heading as="h1" size="xl" my="50px" fontWeight="bold">
-          Bem-vindo!
-        </Heading>
-        <LatestMailAccounts />
-        <LatestReceivedMails />
-      </Container>
-    </Dashboard>
+    <>
+      <Heading as="h1" size="xl" my="50px" fontWeight="bold">
+        Bem-vindo!
+      </Heading>
+      <LatestMailAccounts />
+      <LatestReceivedMails />
+    </>
   );
 };
 

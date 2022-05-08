@@ -7,7 +7,7 @@ const RequireAuth: FC = ({ children }) => {
   const location = useLocation();
 
   if (!loggedIn) {
-    return <Navigate to="/" state={{ from: location }} replace />;
+    return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
   return <>{children}</>;

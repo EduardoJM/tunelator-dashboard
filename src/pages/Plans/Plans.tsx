@@ -58,12 +58,12 @@ const Plans: FC = () => {
   };
 
   return (
-    <Dashboard>
+    <>
       <div>
         {!plan ? (
           <LoadingIndicatorBox />
         ) : (
-          <Container maxW="120ch" mt="60px">
+          <>
             <Box
               width="100%"
               p="20px"
@@ -100,7 +100,7 @@ const Plans: FC = () => {
                 </>
               )}
             </Box>
-          </Container>
+          </>
         )}
       </div>
       {plan?.is_free ? (
@@ -225,43 +225,38 @@ const Plans: FC = () => {
           )}
         </div>
       ) : (
-        <Container maxW="120ch" mt="60px">
-          <Box
-            width="100%"
-            p="20px"
-            border="1px solid #DDD"
-            borderRadius="5px"
-            backgroundColor="#FEFEFE"
-            boxShadow="md"
-            _hover={{ backgroundColor: '#EFEFEF' }}
-          >
-            <Heading as="h2" size="lg" color="brand.500" mb="30px">
-              Outros Planos
-            </Heading>
+        <Box
+          width="100%"
+          p="20px"
+          border="1px solid #DDD"
+          borderRadius="5px"
+          backgroundColor="#FEFEFE"
+          boxShadow="md"
+          _hover={{ backgroundColor: '#EFEFEF' }}
+        >
+          <Heading as="h2" size="lg" color="brand.500" mb="30px">
+            Outros Planos
+          </Heading>
 
-            <Text fontSize="lg">
-              Atualmente, para poder mudar o plano da sua assinatura você
-              precisa cancelar a sua assinatura atual e fazer uma nova. Estamos
-              trabalhando para melhorar essa experiência, porém, atualmente você
-              pode acessar o portal do cliente para gerenciar a sua assinatura:
-            </Text>
-            <Flex
-              mt="30px"
-              width="100%"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Button
-                variant="primaryRounded"
-                onClick={handleGoToCustomerPortal}
-              >
-                Portal do Cliente
-              </Button>
-            </Flex>
-          </Box>
-        </Container>
+          <Text fontSize="lg">
+            Atualmente, para poder mudar o plano da sua assinatura você precisa
+            cancelar a sua assinatura atual e fazer uma nova. Estamos
+            trabalhando para melhorar essa experiência, porém, atualmente você
+            pode acessar o portal do cliente para gerenciar a sua assinatura:
+          </Text>
+          <Flex
+            mt="30px"
+            width="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Button variant="primaryRounded" onClick={handleGoToCustomerPortal}>
+              Portal do Cliente
+            </Button>
+          </Flex>
+        </Box>
       )}
-    </Dashboard>
+    </>
   );
 };
 
