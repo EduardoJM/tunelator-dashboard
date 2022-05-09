@@ -17,7 +17,7 @@ import {
 import { useQuery } from 'react-query';
 import { AiFillCheckCircle, AiFillCloseCircle } from 'react-icons/ai';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { PriceInCents } from '../../components';
+import { PlanItem, PlansGrid, PriceInCents } from '../../components';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Common/Button';
 import Dashboard from '../../layouts/Dashboard';
@@ -118,99 +118,11 @@ const Plans: FC = () => {
               >
                 Assinar um plano
               </Heading>
-              <SimpleGrid columns={columns} spacing="20px">
-                {plans.data?.map(plan => (
-                  <VStack
-                    key={plan.id}
-                    borderRadius="5px"
-                    borderWidth="1px"
-                    borderColor="brand.500"
-                    backgroundColor={
-                      activePlan === plan.id ? 'brand.500' : 'transparent'
-                    }
-                    p="20px"
-                  >
-                    <Heading
-                      as="h2"
-                      size="lg"
-                      color={activePlan === plan.id ? 'white' : 'brand.500'}
-                      mb="25px"
-                      textAlign="center"
-                    >
-                      {plan.name}
-                    </Heading>
-
-                    <Heading
-                      as="h3"
-                      size="2xl"
-                      color={activePlan === plan.id ? 'white' : 'brand.500'}
-                      textAlign="center"
-                    >
-                      <PriceInCents value={plan.monthly_price} />
-                      <Text fontSize="sm" display="inline">
-                        /mês
-                      </Text>
-                    </Heading>
-
-                    {!!plan.description && (
-                      <Box
-                        height="130px"
-                        pt="15px"
-                        color={activePlan === plan.id ? 'white' : 'brand.500'}
-                      >
-                        <Text fontSize="lg" textAlign="center">
-                          {plan.description}
-                        </Text>
-                      </Box>
-                    )}
-
-                    {plan.display_features.length > 0 && (
-                      <List spacing="10px" mb="20px">
-                        {plan.display_features.map(item => (
-                          <ListItem
-                            key={item.name}
-                            color={activePlan === plan.id ? 'white' : 'black'}
-                          >
-                            {item.enabled ? (
-                              <ListIcon
-                                as={AiFillCheckCircle}
-                                color={
-                                  activePlan === plan.id ? 'white' : 'brand.500'
-                                }
-                              />
-                            ) : (
-                              <ListIcon
-                                as={AiFillCloseCircle}
-                                color={
-                                  activePlan === plan.id ? 'red.300' : 'red.500'
-                                }
-                              />
-                            )}
-
-                            {item.name}
-                          </ListItem>
-                        ))}
-                      </List>
-                    )}
-
-                    <Spacer />
-
-                    <Flex
-                      width="100%"
-                      alignItems="center"
-                      justifyContent="center"
-                    >
-                      <Button
-                        variant="primaryRounded"
-                        isDisabled={activePlan === plan.id}
-                        onClick={() => handleSelectPlan(plan.id)}
-                      >
-                        Selecionar
-                      </Button>
-                    </Flex>
-                  </VStack>
-                ))}
-              </SimpleGrid>
+              <PlansGrid
+                plans={plans.data || []}
+                selectedPlan={activePlan}
+                onSelectPlan={handleSelectPlan}
+              />
 
               <Flex my="30px" alignItems="center" justifyContent="flex-end">
                 <Button
