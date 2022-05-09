@@ -5,7 +5,7 @@ export interface Error {
   text: string;
 }
 
-const fieldsMapping = {
+export const fieldsMapping = {
   email: 'E-mail',
   password: 'Senha',
 };

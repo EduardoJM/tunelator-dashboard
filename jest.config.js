@@ -9,6 +9,8 @@ module.exports = {
   collectCoverage: false,
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
+    '!**/*.stories.tsx',
+    '!**/*.spec.tsx',
     '!**/node_modules/**',
     '!**/vite.config.ts',
     '!**/dist/**',
