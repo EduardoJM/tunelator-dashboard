@@ -88,6 +88,7 @@ const Plans: FC = () => {
       ) : (
         <Box
           width="100%"
+          my="60px"
           p="20px"
           border="1px solid #DDD"
           borderRadius="5px"
