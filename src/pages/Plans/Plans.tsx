@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
-import { Container, Box, Heading, Text, Flex, Divider } from '@chakra-ui/react';
+import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import { useQuery } from 'react-query';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { CurrentPlanBox, PlansGrid, PriceInCents } from '../../components';
+import { CurrentPlanBox, PlansGrid } from '../../components';
 import { listPlans } from '../../services/plans';
 import Button from '../../components/Common/Button';
 import {
