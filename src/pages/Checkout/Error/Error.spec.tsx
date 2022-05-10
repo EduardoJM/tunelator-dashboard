@@ -20,15 +20,15 @@ describe('Success', () => {
   it('must contain informations about payment error on the page', () => {
     render(<Error />);
 
-    const heading1 = screen.getByText(
+    const heading = screen.getByText(
       /^Houve um erro ao tentar te encaminhar para o processamento de pagamento...$/i
     );
-    const heading2 = screen.getByText(
+    const body = screen.getByText(
       /^Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.$/i
     );
 
-    expect(heading1).toBeInTheDocument();
-    expect(heading2).toBeInTheDocument();
+    expect(heading).toBeInTheDocument();
+    expect(body).toBeInTheDocument();
   });
 
   it('click on the plans button must navigate to plans', async () => {
