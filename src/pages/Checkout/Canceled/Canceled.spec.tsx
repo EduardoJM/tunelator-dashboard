@@ -8,7 +8,7 @@ const render = (el: ReactElement) =>
   renderDefault(el, { wrapper: BrowserRouter });
 
 describe('Success', () => {
-  it('must contains two buttons, one to home and one to support, in the page', () => {
+  it('must contains two buttons, one to plans and one to support, in the page', () => {
     render(<Canceled />);
 
     const plansButton = screen.getByText(/^Planos e Assinatura$/i);
