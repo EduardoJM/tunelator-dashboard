@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
 import {
   TableContainer,
   Table,
@@ -12,54 +11,33 @@ import {
   Heading,
   FormControl,
   Switch,
-  useToast,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { DateTime, Ellipsis } from '../../../components';
 import Button from '../../../components/Common/Button';
 import NoAccountsBox from '../../../components/Placeholders/NoAccountsBox';
 import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
-import { useLoading } from '../../../contexts/loading';
 import { UserMail } from '../../../entities/UserMail';
-import {
-  getLatestMailAccounts,
-  setMailAccountRedirectEnabled,
-} from '../../../services/mailAccounts';
-import { getErrorMessages } from '../../../utils/errors';
+import { useSetMailAccountRedirectEnabledMutation } from '../../../services/mutations';
+import { useLatestMailAccounts } from '../../../services/queries';
 
 const LatestMailAccounts: FC = () => {
-  const { pushLoading, popLoading } = useLoading();
-  const toast = useToast();
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { data, error, isLoading } = useQuery(
-    'latest-mails',
-    getLatestMailAccounts
-  );
+  const { data, error, isLoading } = useLatestMailAccounts();
+
+  const setMailAccountRedirectEnabledMutation =
+    useSetMailAccountRedirectEnabledMutation();
 
   const handleGoToMailsAccountsPage = () => {
     navigate('/mails');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleToggleEnabledStatus = async (mail: UserMail) => {
-    pushLoading();
-    try {
-      await setMailAccountRedirectEnabled(mail.id, !mail.redirect_enabled);
-      queryClient.invalidateQueries('latest-mails');
-      queryClient.invalidateQueries(['mails']);
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-    }
-    popLoading();
+  const handleToggleEnabledStatus = (mail: UserMail) => {
+    setMailAccountRedirectEnabledMutation.mutate({
+      id: mail.id,
+      enabled: !mail.redirect_enabled,
+    });
   };
 
   const handleCreateAccount = () => {

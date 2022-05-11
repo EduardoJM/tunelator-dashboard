@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useQuery } from 'react-query';
 import {
   Heading,
   TableContainer,
@@ -14,15 +13,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
 import { DateTime, Ellipsis } from '../../../components';
-import { getLatestReceivedMails } from '../../../services/receivedMails';
+import { useLatestReceivedMails } from '../../../services/queries';
 import Button from '../../../components/Common/Button';
 import NoReceivedMailsBox from '../../../components/Placeholders/NoReceivedMailsBox';
 
 const LatestReceivedMails: FC = () => {
-  const { data, error, isLoading } = useQuery(
-    'latest-received-mails',
-    getLatestReceivedMails
-  );
+  const { data, error, isLoading } = useLatestReceivedMails();
 
   const navigate = useNavigate();
 
