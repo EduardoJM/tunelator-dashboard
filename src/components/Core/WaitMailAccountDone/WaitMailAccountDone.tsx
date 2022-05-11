@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { getMailAccountById } from '../../../services/mailAccounts';
+import { getMailAccountById } from '../../../services/api/mailAccounts';
 import { CreatingMailBox } from '../../Placeholders';
 
 export interface WaitMailAccountDoneProps {

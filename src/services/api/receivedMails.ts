@@ -1,8 +1,8 @@
 import {
   ReceivedMail,
   ReceivedMailPaginatedResponse,
-} from '../entities/ReceivedMail';
-import api from './api';
+} from '../../entities/ReceivedMail';
+import api from './axios';
 
 export async function getLatestReceivedMails(): Promise<ReceivedMail[]> {
   const response = await api.get<ReceivedMailPaginatedResponse>(

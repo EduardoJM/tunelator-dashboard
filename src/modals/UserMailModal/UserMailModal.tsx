@@ -1,4 +1,4 @@
-import { FC, useEffect, KeyboardEvent, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import {
   Box,
   Modal,
@@ -15,34 +15,23 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import { useMutation, useQueryClient } from 'react-query';
 import Button from '../../components/Common/Button';
 import Input from '../../components/Forms/Input';
 import InputMailUser from '../../components/Forms/InputMailUser';
 import Checkbox from '../../components/Checkbox';
 import { usePlan } from '../../contexts/plan';
-import { useLoading } from '../../contexts/loading';
 import { UserMail } from '../../entities/UserMail';
-import { getErrorMessages } from '../../utils/errors';
+import { validateUserMailAccount } from '../../services/api/mailAccounts';
+
 import {
-  createMailAccount,
-  updateMailAccount,
-  validateUserMailAccount,
-} from '../../services/mailAccounts';
-import { createOrEditMailSchema } from '../../schemas/mail';
+  useCreateUserMailMutation,
+  useUpdateUserMailMutation,
+} from '../../services/mutations';
 
 export interface UserMailModalProps {
   isOpen: boolean;
   onClose: () => void;
   userMail: UserMail | null;
-}
-
-interface FormProps {
-  name: string;
-  mail_user: string;
-  redirect_enabled: boolean;
-  redirect_to_my_email: boolean;
-  redirect_to: string;
 }
 
 const UserMailModal: FC<UserMailModalProps> = ({
@@ -53,11 +42,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
   const { plan } = usePlan();
   const toast = useToast();
 
-  const { pushLoading, popLoading } = useLoading();
-
   const modalSize = useBreakpointValue({ base: 'full', md: 'xl' });
-
-  const queryClient = useQueryClient();
 
   const [mailUserIsValid, setMailUserIsValid] = useState(false);
 
@@ -69,80 +54,11 @@ const UserMailModal: FC<UserMailModalProps> = ({
       redirect_to_my_email: true,
       redirect_to: '',
     },
-    onSubmit: data => console.log(data),
+    onSubmit: () => {},
   });
 
-  const createOrUpdateUserMailMutation = useMutation<
-    unknown,
-    unknown,
-    FormProps
-  >(
-    async ({
-      name,
-      mail_user,
-      redirect_enabled,
-      redirect_to_my_email,
-      redirect_to,
-    }) => {
-      pushLoading();
-      try {
-        if (!mailUserIsValid) {
-          toast({
-            title: 'Oopps!',
-            description:
-              'Esse nome de conta não está disponível, tente mudar um pouco.',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-          popLoading();
-          return;
-        }
-
-        createOrEditMailSchema.validateSync({
-          name,
-          mail_user,
-          redirect_enabled,
-          redirect_to_my_email,
-          redirect_to,
-        });
-
-        if (!!userMail) {
-          await updateMailAccount(
-            userMail.id,
-            name,
-            redirect_enabled,
-            !redirect_to_my_email ? redirect_to || null : null
-          );
-        } else {
-          await createMailAccount(
-            name,
-            mail_user,
-            redirect_enabled,
-            !redirect_to_my_email ? redirect_to || null : null
-          );
-        }
-
-        queryClient.invalidateQueries(['mails']);
-        queryClient.refetchQueries(['mails']);
-        queryClient.invalidateQueries('latest-mails');
-        queryClient.refetchQueries('latest-mails');
-
-        onClose();
-      } catch (err) {
-        getErrorMessages(err).forEach(error => {
-          toast({
-            title: error.title,
-            description: error.text,
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-        });
-      }
-      popLoading();
-    }
-  );
+  const createUserMailMutation = useCreateUserMailMutation(onClose);
+  const updateUserMailMutation = useUpdateUserMailMutation(onClose);
 
   useEffect(() => {
     if (!userMail) {
@@ -167,7 +83,24 @@ const UserMailModal: FC<UserMailModalProps> = ({
   }, [userMail]);
 
   const handleSave = () => {
-    createOrUpdateUserMailMutation.mutate(formik.values);
+    if (!mailUserIsValid) {
+      toast({
+        title: 'Oopps!',
+        description:
+          'Esse nome de conta não está disponível, tente mudar um pouco.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    if (!!userMail) {
+      updateUserMailMutation.mutate({ id: userMail.id, ...formik.values });
+      return;
+    }
+
+    createUserMailMutation.mutate(formik.values);
   };
 
   const handleBlur = async () => {

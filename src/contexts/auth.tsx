@@ -5,8 +5,8 @@ import { getErrorMessages } from '../utils/errors';
 import { loginSchema, signupSchema } from '../schemas/auth';
 import { User } from '../entities/User';
 import { useLoading } from '../contexts/loading';
-import api from '../services/api';
-import * as authServices from '../services/auth';
+import api from '../services/api/axios';
+import * as authServices from '../services/api/auth';
 
 export interface AuthContextData {
   loggedIn: boolean;

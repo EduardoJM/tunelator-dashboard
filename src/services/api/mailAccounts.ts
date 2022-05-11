@@ -1,5 +1,5 @@
-import { UserMail, UserMailPaginatedResponse } from '../entities/UserMail';
-import api from './api';
+import { UserMail, UserMailPaginatedResponse } from '../../entities/UserMail';
+import api from './axios';
 
 export async function getLatestMailAccounts(): Promise<UserMail[]> {
   const response = await api.get<UserMailPaginatedResponse>(

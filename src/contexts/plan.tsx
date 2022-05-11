@@ -1,6 +1,6 @@
 import { createContext, useContext, FC, useState, useEffect } from 'react';
 import { ActivePlan } from '../entities/Plan';
-import { getCurrentPlan } from '../services/plans';
+import { getCurrentPlan } from '../services/api/plans';
 import { useAuth } from './auth';
 
 export interface PlanContextData {

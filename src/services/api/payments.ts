@@ -1,6 +1,6 @@
-import api from './api';
-import { CheckoutSession } from '../entities/CheckoutSession';
-import { CustomerPortalSession } from '../entities/CustomerPortalSession';
+import api from './axios';
+import { CheckoutSession } from '../../entities/CheckoutSession';
+import { CustomerPortalSession } from '../../entities/CustomerPortalSession';
 
 export async function createSession(plan_id: number): Promise<CheckoutSession> {
   const response = await api.post<CheckoutSession>('/api/payments/checkout/', {

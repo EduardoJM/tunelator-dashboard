@@ -1,5 +1,5 @@
-import api from './api';
-import { AuthResponse, AuthRefreshResponse } from '../entities/User';
+import api from './axios';
+import { AuthResponse, AuthRefreshResponse } from '../../entities/User';
 
 export async function login(
   email: string,

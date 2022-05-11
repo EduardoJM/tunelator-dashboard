@@ -1,10 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import {
-  Container,
   Heading,
   Flex,
-  ButtonGroup,
-  Button as ChakraButton,
   VStack,
   Box,
   Text,
@@ -13,28 +10,24 @@ import {
   FormLabel,
   Switch,
   Tooltip,
-  useToast,
   useDisclosure,
   useBreakpointValue,
 } from '@chakra-ui/react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 import * as CSS from 'csstype';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import Button from '../../components/Common/Button';
+import { useMailAccountsPaginated } from '../../services/queries';
 import {
-  getMailAccountsPaginated,
-  setMailAccountRedirectEnabled,
-  deleteMailAccount,
-} from '../../services/mailAccounts';
-import { getErrorMessages } from '../../utils/errors';
-import { useLoading } from '../../contexts/loading';
+  useSetMailAccountRedirectEnabledMutation,
+  useDeleteMailAccountMutation,
+} from '../../services/mutations';
 import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import UserMailModal from '../../modals/UserMailModal';
 import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
 import { DateTime, Pagination } from '../../components';
-import Dashboard from '../../layouts/Dashboard';
 import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
 import { WaitMailAccountDone } from '../../components';
 
@@ -46,8 +39,6 @@ const MailAccounts: FC = () => {
   const { state } = useLocation();
 
   const queryClient = useQueryClient();
-
-  const toast = useToast();
 
   const { plan } = usePlan();
 
@@ -62,11 +53,7 @@ const MailAccounts: FC = () => {
     return num;
   }, [pageNumber]);
 
-  const { data, error, isLoading } = useQuery(['mails', currentPage], () =>
-    getMailAccountsPaginated(currentPage)
-  );
-
-  const { pushLoading, popLoading } = useLoading();
+  const { data, error, isLoading } = useMailAccountsPaginated(currentPage);
 
   const editMailModal = useDisclosure();
   const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
@@ -86,6 +73,11 @@ const MailAccounts: FC = () => {
     md: 'center',
   });
 
+  const setMailAccountRedirectEnabledMutation =
+    useSetMailAccountRedirectEnabledMutation();
+
+  const deleteMailAccountMutation = useDeleteMailAccountMutation();
+
   useEffect(() => {
     if (!state) {
       return;
@@ -97,24 +89,10 @@ const MailAccounts: FC = () => {
   }, [state]);
 
   const handleToggleEnabledStatus = async (mail: UserMail) => {
-    pushLoading();
-    try {
-      await setMailAccountRedirectEnabled(mail.id, !mail.redirect_enabled);
-      queryClient.invalidateQueries(['mails']);
-      queryClient.invalidateQueries('latest-mails');
-      queryClient.refetchQueries('latest-mails');
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-    }
-    popLoading();
+    setMailAccountRedirectEnabledMutation.mutate({
+      id: mail.id,
+      enabled: !mail.redirect_enabled,
+    });
   };
 
   const handleNavigateToPage = (page: number) => {
@@ -138,20 +116,14 @@ const MailAccounts: FC = () => {
   };
 
   const handleConfirmDeleteUserMail = async () => {
+    deleteMailModal.onClose();
     if (!deleteMailCurrent) {
       return;
     }
 
-    pushLoading();
+    deleteMailAccountMutation.mutate({ id: deleteMailCurrent.id });
 
-    deleteMailModal.onClose();
-
-    await deleteMailAccount(deleteMailCurrent.id);
-    queryClient.invalidateQueries(['mails']);
-    queryClient.invalidateQueries('latest-mails');
-    queryClient.refetchQueries('latest-mails');
     queryClient.refetchQueries(['mails', currentPage]);
-    popLoading();
   };
 
   const handleRefreshPageAndLatest = () => {
