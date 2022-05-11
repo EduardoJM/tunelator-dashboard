@@ -2,7 +2,6 @@ import { FC, Fragment, useMemo, useState } from 'react';
 import {
   Alert,
   AlertIcon,
-  Container,
   Box,
   Heading,
   TableContainer,
@@ -17,18 +16,10 @@ import {
   Text,
   Flex,
   useDisclosure,
-  useToast,
 } from '@chakra-ui/react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { useLoading } from '../../contexts/loading';
 import { useAuth } from '../../contexts/auth';
-import Dashboard from '../../layouts/Dashboard';
-import {
-  getReceivedMailsPaginated,
-  resendReceivedMail,
-} from '../../services/receivedMails';
 import {
   Button,
   DateTime,
@@ -38,13 +29,10 @@ import {
   Pagination,
 } from '../../components';
 import { ResendMailSuccessModal } from '../../modals';
-import { getErrorMessages } from '../../utils/errors';
+import { useReceivedMailsPaginated } from '../../services/queries';
+import { useResendReceivedMailMutation } from '../../services/mutations';
 
 const ReceivedMails: FC = () => {
-  const { pushLoading, popLoading } = useLoading();
-
-  const toast = useToast();
-
   const { userData } = useAuth();
 
   const navigate = useNavigate();
@@ -62,9 +50,12 @@ const ReceivedMails: FC = () => {
     return num;
   }, [pageNumber]);
 
-  const { data, error, isLoading } = useQuery(
-    ['received-mails', currentPage],
-    () => getReceivedMailsPaginated(currentPage)
+  const { data, error, isLoading } = useReceivedMailsPaginated(currentPage);
+
+  const resendModal = useDisclosure();
+
+  const resendReceivedMailMutation = useResendReceivedMailMutation(
+    resendModal.onOpen
   );
 
   const [expanded, setExpanded] = useState<null | number>(null);
@@ -76,29 +67,8 @@ const ReceivedMails: FC = () => {
     setExpanded(id);
   };
 
-  const resendModal = useDisclosure();
-
-  const handleResendMail = async (id: number) => {
-    pushLoading();
-
-    try {
-      await resendReceivedMail(id);
-
-      resendModal.onOpen();
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-    }
-
-    popLoading();
-  };
+  const handleResendMail = (id: number) =>
+    resendReceivedMailMutation.mutate({ id });
 
   const handleGoToPage = (page: number) => {
     navigate(`/received/${page}`);
