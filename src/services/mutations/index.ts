@@ -3,3 +3,5 @@ export { default as useDeleteMailAccountMutation } from './useDeleteMailAccountM
 export { default as useCreateUserMailMutation } from './useCreateUserMailMutation';
 export { default as useUpdateUserMailMutation } from './useUpdateUserMailMutation';
 export { default as useResendReceivedMailMutation } from './useResendReceivedMailMutation';
+export { default as useGoToCheckoutMutation } from './useGoToCheckoutMutation';
+export { default as useGoToCustomerPortalMutation } from './useGoToCustomerPortalMutation';

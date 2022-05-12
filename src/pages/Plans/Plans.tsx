@@ -1,43 +1,38 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
-import { useQuery } from 'react-query';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import { CurrentPlanBox, PlansGrid } from '../../components';
-import { listPlans } from '../../services/plans';
 import Button from '../../components/Common/Button';
-import {
-  createSession,
-  goToCheckout,
-  createCustomerPortalSession,
-  goToCustomerPortal,
-} from '../../services/payments';
-import { useLoading } from '../../contexts/loading';
 import { usePlan } from '../../contexts/plan';
+import { useListPlans } from '../../services/queries';
+import {
+  useGoToCustomerPortalMutation,
+  useGoToCheckoutMutation,
+} from '../../services/mutations';
 
 const Plans: FC = () => {
   const { plan } = usePlan();
-  const plans = useQuery('plans', listPlans);
-  const { pushLoading } = useLoading();
+  const { data, isLoading } = useListPlans();
   const [activePlan, setActivePlan] = useState<number | null>(null);
+
+  const goToCustomerPortalMutation = useGoToCustomerPortalMutation();
+  const goToCheckoutMutation = useGoToCheckoutMutation();
 
   const handleSelectPlan = (id: number) => {
     setActivePlan(id);
   };
 
   const handleContinue = async () => {
-    const plan = plans?.data?.find(plan => plan.id === activePlan);
+    const plan = data?.find(plan => plan.id === activePlan);
     if (!plan) {
       return;
     }
-    pushLoading();
-    const session = await createSession(plan.id);
-    goToCheckout(session);
+
+    goToCheckoutMutation.mutate({ id: plan.id });
   };
 
   const handleGoToCustomerPortal = async () => {
-    pushLoading();
-    const session = await createCustomerPortalSession();
-    goToCustomerPortal(session);
+    goToCustomerPortalMutation.mutate();
   };
 
   return (
@@ -54,7 +49,7 @@ const Plans: FC = () => {
       </Box>
       {plan?.is_free ? (
         <div>
-          {plans.isLoading ? (
+          {isLoading ? (
             <LoadingIndicatorBox />
           ) : (
             <>
@@ -68,7 +63,7 @@ const Plans: FC = () => {
                 Assinar um plano
               </Heading>
               <PlansGrid
-                plans={plans.data || []}
+                plans={data || []}
                 selectedPlan={activePlan}
                 onSelectPlan={handleSelectPlan}
               />
