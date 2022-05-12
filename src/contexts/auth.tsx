@@ -7,6 +7,7 @@ import { User } from '../entities/User';
 import { useLoading } from '../contexts/loading';
 import api from '../services/api/axios';
 import * as authServices from '../services/api/auth';
+import { useLoginMutation } from '../services/mutations';
 
 export interface AuthContextData {
   loggedIn: boolean;
@@ -16,7 +17,7 @@ export interface AuthContextData {
     password: string,
     remember: boolean,
     from: string
-  ) => Promise<void>;
+  ) => void;
   signup: (
     email: string,
     first_name: string,
@@ -38,6 +39,8 @@ export const AuthProvider: FC = ({ children }) => {
   const location = useLocation();
   const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
+
+  const loginMutation = useLoginMutation(user => setUserData(user));
 
   useEffect(() => {
     async function checkStoredCredentials() {
@@ -137,55 +140,14 @@ export const AuthProvider: FC = ({ children }) => {
     popLoading();
   }
 
-  async function login(
+  const login = (
     email: string,
     password: string,
     remember: boolean,
     from: string
-  ) {
-    pushLoading();
-    try {
-      const validatedData = loginSchema.validateSync({
-        email,
-        password,
-        remember,
-      });
-      const response = await authServices.login(
-        validatedData.email,
-        validatedData.password
-      );
-
-      api.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${response.access}`;
-
-      setUserData(response.user);
-      if (remember) {
-        localStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
-      } else {
-        sessionStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
-      }
-      toast({
-        title: 'Sucesso',
-        description: 'Login efetuado com sucesso!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      navigate(from, { replace: true });
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-    }
-    popLoading();
-  }
+  ) => {
+    loginMutation.mutate({ email, password, remember, from });
+  };
 
   return (
     <AuthContext.Provider

@@ -16,15 +16,15 @@ ReactDOM.render(
   <ChakraProvider theme={theme}>
     <LoadingProvider>
       <BrowserRouter>
-        <AuthProvider>
-          <PlanProvider>
-            <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <PlanProvider>
               <Suspense fallback={<AbsoluteLoadingIndicator />}>
                 <AppRoutes />
               </Suspense>
-            </QueryClientProvider>
-          </PlanProvider>
-        </AuthProvider>
+            </PlanProvider>
+          </AuthProvider>
+        </QueryClientProvider>
       </BrowserRouter>
     </LoadingProvider>
   </ChakraProvider>,
