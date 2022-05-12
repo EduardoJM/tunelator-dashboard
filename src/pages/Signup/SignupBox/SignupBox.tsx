@@ -35,14 +35,14 @@ const SignupBox: FC = () => {
       remember,
       accept_terms,
     }) => {
-      auth.signup(
+      auth.signup({
         email,
         first_name,
         last_name,
         password,
         remember,
-        accept_terms
-      );
+        accept_terms,
+      });
     },
   });
 

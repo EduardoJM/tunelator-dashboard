@@ -1,32 +1,39 @@
 import { FC, createContext, useState, useContext, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getErrorMessages } from '../utils/errors';
-import { loginSchema, signupSchema } from '../schemas/auth';
 import { User } from '../entities/User';
 import { useLoading } from '../contexts/loading';
 import api from '../services/api/axios';
 import * as authServices from '../services/api/auth';
-import { useLoginMutation } from '../services/mutations';
+import {
+  useLoginMutation,
+  useSignupMutation,
+  useLogoutMutation,
+  useCheckLogin,
+} from '../services/mutations';
+
+export interface LoginData {
+  email: string;
+  password: string;
+  remember: boolean;
+  from: string;
+}
+
+export interface SignupData {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+  remember: boolean;
+  accept_terms: boolean;
+}
 
 export interface AuthContextData {
   loggedIn: boolean;
   userData: User | null;
-  login: (
-    email: string,
-    password: string,
-    remember: boolean,
-    from: string
-  ) => void;
-  signup: (
-    email: string,
-    first_name: string,
-    last_name: string,
-    password: string,
-    remember: boolean,
-    accept_terms: boolean
-  ) => Promise<void>;
-  logout: () => Promise<void>;
+  login: (data: LoginData) => void;
+  signup: (data: SignupData) => void;
+  logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -34,118 +41,37 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider: FC = ({ children }) => {
-  const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
 
   const loginMutation = useLoginMutation(user => setUserData(user));
+  const signupMutation = useSignupMutation(user => setUserData(user));
+  const logoutMutation = useLogoutMutation(user => setUserData(user));
+  useCheckLogin(user => setUserData(user));
 
-  useEffect(() => {
-    async function checkStoredCredentials() {
-      const { pathname } = location;
+  const logout = () => logoutMutation.mutate();
 
-      let token: string | null = null;
-      if (localStorage.getItem('@TUNELATOR_REFRESH')) {
-        token = localStorage.getItem('@TUNELATOR_REFRESH');
-      } else if (sessionStorage.getItem('@TUNELATOR_REFRESH')) {
-        token = sessionStorage.getItem('@TUNELATOR_REFRESH');
-      }
-      if (!token) {
-        return;
-      }
-      pushLoading();
-      try {
-        const response = await authServices.refresh(token);
+  const signup = ({
+    email,
+    first_name,
+    last_name,
+    password,
+    remember,
+    accept_terms,
+  }: SignupData) => {
+    signupMutation.mutate({
+      email,
+      first_name,
+      last_name,
+      password,
+      remember,
+      accept_terms,
+    });
+  };
 
-        api.defaults.headers.common[
-          'Authorization'
-        ] = `Bearer ${response.access}`;
-
-        setUserData(response.user);
-
-        navigate(pathname, { replace: true });
-      } catch {}
-      popLoading();
-    }
-
-    checkStoredCredentials();
-  }, []);
-
-  async function logout() {
-    pushLoading();
-
-    localStorage.removeItem('@TUNELATOR_REFRESH');
-    sessionStorage.removeItem('@TUNELATOR_REFRESH');
-    api.defaults.headers.common['Authorization'] = '';
-    setUserData(null);
-
-    popLoading();
-  }
-
-  async function signup(
-    email: string,
-    first_name: string,
-    last_name: string,
-    password: string,
-    remember: boolean,
-    accept_terms: boolean
-  ) {
-    pushLoading();
-    try {
-      const validatedData = signupSchema.validateSync({
-        email,
-        first_name,
-        last_name,
-        password,
-        accept_terms,
-      });
-      const response = await authServices.signup(
-        validatedData.email,
-        validatedData.first_name,
-        validatedData.last_name,
-        validatedData.password
-      );
-
-      api.defaults.headers.common[
-        'Authorization'
-      ] = `Bearer ${response.access}`;
-
-      setUserData(response.user);
-      if (remember) {
-        localStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
-      } else {
-        sessionStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
-      }
-      toast({
-        title: 'Sucesso',
-        description: 'Login efetuado com sucesso!',
-        status: 'success',
-        duration: 5000,
-        isClosable: true,
-      });
-      navigate('/', { replace: true });
-    } catch (err) {
-      getErrorMessages(err).forEach(error => {
-        toast({
-          title: error.title,
-          description: error.text,
-          status: 'error',
-          duration: 5000,
-          isClosable: true,
-        });
-      });
-    }
-    popLoading();
-  }
-
-  const login = (
-    email: string,
-    password: string,
-    remember: boolean,
-    from: string
-  ) => {
+  const login = ({ email, password, remember, from }: LoginData) => {
     loginMutation.mutate({ email, password, remember, from });
   };
 

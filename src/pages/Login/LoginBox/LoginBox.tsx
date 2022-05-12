@@ -26,7 +26,7 @@ const LoginBox: FC = () => {
     },
     onSubmit: ({ email, password, remember }) => {
       const from = String((location.state as any)?.from?.pathname || '/');
-      auth.login(email, password, remember, from);
+      auth.login({ email, password, remember, from });
     },
   });
 
