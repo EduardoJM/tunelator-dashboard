@@ -1,0 +1,43 @@
+{
+  "plans": [
+    {
+      "id": 1,
+      "display_features": [
+        {
+          "name": "first feature",
+          "enabled": true
+        }
+      ],
+      "name": "First Plan",
+      "description": "First Plan Desc",
+      "plan_type": "free",
+      "monthly_price": 0
+    },
+    {
+      "id": 2,
+      "display_features": [
+        {
+          "name": "new feature",
+          "enabled": false
+        }
+      ],
+      "name": "Second Plan",
+      "description": "Second Plan Desc",
+      "plan_type": "paid",
+      "monthly_price": 10000
+    },
+    {
+      "id": 3,
+      "display_features": [
+        {
+          "name": "any feature",
+          "enabled": false
+        }
+      ],
+      "name": "Third Plan",
+      "description": "Third Plan Desc",
+      "plan_type": "paid",
+      "monthly_price": 10500
+    }
+  ]
+}

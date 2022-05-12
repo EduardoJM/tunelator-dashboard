@@ -3,7 +3,6 @@ import { Plan, ActivePlan, ActivePlanResponse } from '../../entities/Plan';
 
 export async function listPlans(): Promise<Plan[]> {
   const response = await api.get<Plan[]>('/api/plans/');
-  console.log(response);
   return response.data;
 }
 

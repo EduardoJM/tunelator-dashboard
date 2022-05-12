@@ -1,7 +1,11 @@
 import { FC } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
+import { rest } from 'msw';
 import useListPlans from './useListPlans';
+import { plans } from '../../mocks/data.json';
+import { server } from '../../mocks/server';
+import config from '../../config';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,15 +20,19 @@ const QueryWrapper: FC = ({ children }) => (
 );
 
 describe('useListPlans', () => {
-  fit('should return all the plans', async () => {
+  it('should return all the plans returned by the API', async () => {
+    server.resetHandlers(
+      rest.get(`${config.apiUrl}/api/plans`, (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json(plans));
+      })
+    );
+
     const { result, waitFor } = renderHook(() => useListPlans(), {
       wrapper: QueryWrapper,
     });
 
     await waitFor(() => result.current.isSuccess);
 
-    console.log(result.current);
-
-    expect(result.current.data).toHaveLength(3);
+    expect(result.current.data).toHaveLength(plans.length);
   });
 });
