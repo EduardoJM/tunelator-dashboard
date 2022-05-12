@@ -16,5 +16,6 @@ module.exports = {
     '!**/dist/**',
     '!**/coverage/**',
     '!**/.storybook/**',
+    '!**/miragejs/**',
   ],
 };
