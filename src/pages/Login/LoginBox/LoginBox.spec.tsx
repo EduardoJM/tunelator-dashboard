@@ -3,14 +3,18 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
+import { rest } from 'msw';
 import { LoadingProvider } from '../../../contexts/loading';
-import { AuthProvider, useAuth } from '../../../contexts/auth';
+import { AuthProvider } from '../../../contexts/auth';
 import LoginBox from './LoginBox';
+import { server } from '../../../mocks/server';
+import config from '../../../config';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
+      cacheTime: 0,
     },
   },
 });
@@ -73,7 +77,7 @@ describe('Login', () => {
     expect(window.location.pathname).toEqual('/signup');
   });
 
-  it('click on the link to login must call the useAuth login method and made the login', async () => {
+  it('click on the button to login must call the useAuth login method and made the login', async () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
 
@@ -97,5 +101,85 @@ describe('Login', () => {
       expect(window.location.pathname).toEqual('/');
       expect(localStorage.getItem('@TUNELATOR_REFRESH')).not.toBeNull();
     });
+  });
+
+  it('click on the button to login and got an validation error for e-mail must show the error as toast', async () => {
+    render(<LoginBox />, { wrapper: Wrapper });
+
+    const emailField = screen.getByTestId('email-field');
+    const passwordField = screen.getByTestId('password-field');
+    const button = screen.getByTestId('submit-button');
+
+    await act(async () => {
+      await userEvent.type(emailField, 'email');
+      await userEvent.type(passwordField, 'password');
+
+      await userEvent.click(button);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.queryByText(/^Insira um e-mail válido\.$/i)
+    ).toBeInTheDocument();
+  });
+
+  it('click on the button to login and got an validation error for password must show the error as toast', async () => {
+    render(<LoginBox />, { wrapper: Wrapper });
+
+    const emailField = screen.getByTestId('email-field');
+    const passwordField = screen.getByTestId('password-field');
+    const button = screen.getByTestId('submit-button');
+
+    await act(async () => {
+      await userEvent.type(emailField, 'email@example.com');
+
+      await userEvent.click(button);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(/^Insira sua senha\.$/i)).toBeInTheDocument();
+  });
+
+  it('click on the button to login and got an error must show the error as toast', async () => {
+    window.localStorage.clear();
+    window.sessionStorage.clear();
+
+    server.use(
+      rest.post(`${config.apiUrl}/auth/token/`, (req, res, ctx) => {
+        return res.once(
+          ctx.status(401),
+          ctx.json({
+            detail: 'custom login error message',
+          })
+        );
+      })
+    );
+
+    render(<LoginBox />, { wrapper: Wrapper });
+
+    const emailField = screen.getByTestId('email-field');
+    const passwordField = screen.getByTestId('password-field');
+    const button = screen.getByTestId('submit-button');
+
+    await act(async () => {
+      await userEvent.type(emailField, 'email@example.com');
+      await userEvent.type(passwordField, 'password');
+
+      await userEvent.click(button);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole('alert')).toBeInTheDocument();
+    });
+
+    expect(
+      screen.queryByText(/^custom login error message$/i)
+    ).toBeInTheDocument();
   });
 });
