@@ -68,8 +68,13 @@ const SignupBox: FC = () => {
 
   return (
     <>
-      <Box width="100%" maxWidth="450px" color="foreground.muted">
-        <form onSubmit={formik.handleSubmit}>
+      <Box
+        data-testid="signup-box"
+        width="100%"
+        maxWidth="450px"
+        color="foreground.muted"
+      >
+        <form name="signup-form" onSubmit={formik.handleSubmit}>
           <VStack>
             <Heading width="100%" color="foreground.default" as="h1" size="2xl">
               Criar Conta
@@ -85,6 +90,7 @@ const SignupBox: FC = () => {
             <Input
               id="email"
               label="E-mail"
+              data-testid="email-field"
               placeholder="exemplo@exemplo.com.br"
               value={formik.values.email}
               onChange={formik.handleChange}
@@ -92,18 +98,21 @@ const SignupBox: FC = () => {
             <Input
               id="first_name"
               label="Seu nome"
+              data-testid="first-name-field"
               value={formik.values.first_name}
               onChange={formik.handleChange}
             />
             <Input
               id="last_name"
               label="Seu sobrenome"
+              data-testid="last-name-field"
               value={formik.values.last_name}
               onChange={formik.handleChange}
             />
             <PasswordInput
               id="password"
               label="Senha"
+              data-testid="password-field"
               placeholder="Digite sua senha"
               value={formik.values.password}
               onChange={formik.handleChange}
@@ -114,6 +123,7 @@ const SignupBox: FC = () => {
                 id="accept_terms"
                 isChecked={formik.values.accept_terms}
                 onChange={handleTermsCheckboxChange}
+                data-testid="terms-field"
               >
                 Li e aceito os{' '}
                 <Text as="span" color="brand.500" fontWeight="bold">
@@ -125,6 +135,7 @@ const SignupBox: FC = () => {
             <Flex width="100%" pb="20px">
               <Checkbox
                 id="remember"
+                data-testid="remember-field"
                 isChecked={formik.values.remember}
                 onChange={formik.handleChange}
               >
@@ -132,12 +143,22 @@ const SignupBox: FC = () => {
               </Checkbox>
             </Flex>
 
-            <Button width="100%" variant="primaryRounded" type="submit">
+            <Button
+              width="100%"
+              variant="primaryRounded"
+              type="submit"
+              data-testid="submit-button"
+            >
               Criar Conta
             </Button>
 
             <Box width="100" textAlign="center" py="10px">
-              <Link as={RouterLink} to="/" color="brand.500" fontWeight="bold">
+              <Link
+                as={RouterLink}
+                to="/auth"
+                color="brand.500"
+                fontWeight="bold"
+              >
                 Já tenho uma conta
               </Link>
             </Box>

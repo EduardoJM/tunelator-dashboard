@@ -15,6 +15,24 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(login));
   }),
 
+  rest.post(`${config.apiUrl}/auth/create/`, (req, res, ctx) => {
+    return res(
+      ctx.status(201),
+      ctx.json({
+        refresh: 'refresh token',
+        access: 'access token',
+        user: {
+          id: 1,
+          email: 'example@example.com',
+          first_name: 'example',
+          last_name: 'example',
+          date_joined: '2022-04-22T10:24:45',
+          last_login: '2022-04-22T10:24:45',
+        },
+      })
+    );
+  }),
+
   rest.get(`${config.apiUrl}/api/mails/received/`, (req, res, ctx) => {
     const limit = parseInt(req.url.searchParams.get('limit') || '10', 10);
 

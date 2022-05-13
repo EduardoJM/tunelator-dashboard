@@ -37,10 +37,20 @@ const TermsOfUseModal: FC<TermsOfUseModalProps> = ({
           <AlertDialogBody>ALOAHHHHHH</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button variant="ghost" ref={cancelRef} onClick={onCancel}>
+            <Button
+              variant="ghost"
+              ref={cancelRef}
+              onClick={onCancel}
+              data-testid="cancel-button"
+            >
               Cancelar
             </Button>
-            <Button variant="primary" onClick={onConfirm} ml={3}>
+            <Button
+              variant="primary"
+              onClick={onConfirm}
+              ml={3}
+              data-testid="confirm-button"
+            >
               Aceitar os Termos
             </Button>
           </AlertDialogFooter>

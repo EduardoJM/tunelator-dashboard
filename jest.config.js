@@ -17,5 +17,6 @@ module.exports = {
     '!**/coverage/**',
     '!**/.storybook/**',
     '!**/miragejs/**',
+    '!**/index.ts',
   ],
 };
