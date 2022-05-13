@@ -1,10 +1,5 @@
 import { FC, createContext, useState, useContext, useEffect } from 'react';
-import { useToast } from '@chakra-ui/react';
-import { useNavigate, useLocation } from 'react-router-dom';
 import { User } from '../entities/User';
-import { useLoading } from '../contexts/loading';
-import api from '../services/api/axios';
-import * as authServices from '../services/api/auth';
 import {
   useLoginMutation,
   useSignupMutation,
@@ -41,9 +36,6 @@ export const AuthContext = createContext<AuthContextData>(
 );
 
 export const AuthProvider: FC = ({ children }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { pushLoading, popLoading } = useLoading();
   const [userData, setUserData] = useState<User | null>(null);
 
   const loginMutation = useLoginMutation(user => setUserData(user));

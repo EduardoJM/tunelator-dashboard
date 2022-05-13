@@ -1,4 +1,15 @@
 {
+  "refresh": {
+    "access": "access token",
+    "user": {
+      "id": 1,
+      "email": "string",
+      "first_name": "string",
+      "last_name": "string",
+      "date_joined": "Date",
+      "last_login": "Date"
+    }
+  },
   "plans": [
     {
       "id": 1,
