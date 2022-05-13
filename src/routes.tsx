@@ -1,6 +1,5 @@
 import { FC, lazy } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import { useAuth } from './contexts/auth';
 import Dashboard from './layouts/Dashboard';
 
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
@@ -23,8 +22,6 @@ const CheckoutCanceledPage = lazy(() => import('./pages/Checkout/Canceled'));
 const CustomerErrorPage = lazy(() => import('./pages/Customer/Error'));
 
 const AppRoutes: FC = () => {
-  const { loggedIn } = useAuth();
-
   return (
     <>
       <Routes>
