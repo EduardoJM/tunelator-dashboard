@@ -1,9 +1,7 @@
 import { useQuery } from 'react-query';
 import { getLatestReceivedMails } from '../api/receivedMails';
 
-const useLatestReceivedMails = () => {
-  const result = useQuery('latest-received-mails', getLatestReceivedMails);
-  return result;
-};
+const useLatestReceivedMails = () =>
+  useQuery('latest-received-mails', getLatestReceivedMails);
 
 export default useLatestReceivedMails;

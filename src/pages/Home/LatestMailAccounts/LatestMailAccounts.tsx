@@ -106,7 +106,7 @@ const LatestMailAccounts: FC = () => {
                 </Tr>
               )}
               {data?.map(userMail => (
-                <Tr key={userMail.id}>
+                <Tr data-testid="latest-accounts-row" key={userMail.id}>
                   <Td>{userMail.name}</Td>
                   <Td>
                     <Ellipsis characteres={30}>{userMail.mail}</Ellipsis>

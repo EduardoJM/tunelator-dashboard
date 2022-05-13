@@ -32,6 +32,7 @@ const NoAccountsBox: FC<NoAccountsBoxProps> = ({
       flexDir="column"
       alignItems="center"
       justifyContent="center"
+      data-testid="no-accounts-box"
     >
       <animated.div
         style={{

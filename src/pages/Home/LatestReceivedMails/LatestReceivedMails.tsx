@@ -80,7 +80,7 @@ const LatestReceivedMails: FC = () => {
                   </Tr>
                 )}
                 {data?.map(receivedMail => (
-                  <Tr key={receivedMail.id}>
+                  <Tr data-testid="latest-mail-row" key={receivedMail.id}>
                     <Td>
                       <Ellipsis characteres={25}>
                         {receivedMail.origin_mail || 'Desconhecido'}

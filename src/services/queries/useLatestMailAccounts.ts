@@ -1,9 +1,7 @@
 import { useQuery } from 'react-query';
 import { getLatestMailAccounts } from '../api/mailAccounts';
 
-const useLatestMailAccounts = () => {
-  const result = useQuery('latest-mails', getLatestMailAccounts);
-  return result;
-};
+const useLatestMailAccounts = () =>
+  useQuery('latest-mails', getLatestMailAccounts);
 
 export default useLatestMailAccounts;

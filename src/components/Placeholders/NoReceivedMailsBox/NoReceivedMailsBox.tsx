@@ -21,6 +21,7 @@ const NoReceivedMailsBox: FC = () => {
       flexDir="column"
       alignItems="center"
       justifyContent="center"
+      data-testid="no-received-mails"
     >
       <animated.div
         style={{
