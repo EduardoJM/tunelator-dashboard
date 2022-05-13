@@ -12,6 +12,7 @@ const Ellipsis: FC<EllipsisProps> = ({ characteres, children }) => {
       whiteSpace="nowrap"
       overflow="hidden"
       textOverflow="ellipsis"
+      data-testid="ellipsis"
     >
       {children}
     </Box>
