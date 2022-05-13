@@ -31,8 +31,13 @@ const LoginBox: FC = () => {
   });
 
   return (
-    <Box width="100%" maxWidth="450px" color="foreground.muted">
-      <form onSubmit={formik.handleSubmit}>
+    <Box
+      data-testid="login-box"
+      width="100%"
+      maxWidth="450px"
+      color="foreground.muted"
+    >
+      <form name="login-form" onSubmit={formik.handleSubmit}>
         <VStack>
           <Heading width="100%" color="foreground.default" as="h1" size="2xl">
             Entrar
@@ -49,12 +54,14 @@ const LoginBox: FC = () => {
             id="email"
             label="E-mail"
             placeholder="exemplo@exemplo.com.br"
+            data-testid="email-field"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
           <PasswordInput
             id="password"
             label="Senha"
+            data-testid="password-field"
             placeholder="Digite sua senha"
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -70,6 +77,7 @@ const LoginBox: FC = () => {
           >
             <Checkbox
               id="remember"
+              data-testid="remember-field"
               isChecked={formik.values.remember}
               onChange={formik.handleChange}
             >
@@ -79,7 +87,12 @@ const LoginBox: FC = () => {
             <Text textAlign="right">Esqueceu sua senha?</Text>
           </Flex>
 
-          <Button width="100%" variant="primaryRounded" type="submit">
+          <Button
+            width="100%"
+            variant="primaryRounded"
+            type="submit"
+            data-testid="submit-button"
+          >
             Entrar
           </Button>
 
