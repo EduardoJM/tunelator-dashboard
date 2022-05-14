@@ -1,5 +1,11 @@
+import theme from './theme';
+
+const apiUrl = 'https://api.tunelator.com.br';
+
 const config = {
-    apiUrl: 'https://api.tunelator.com.br',
+  theme,
+  apiUrl,
 };
 
 export default config;
+export { theme, apiUrl };

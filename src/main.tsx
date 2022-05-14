@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
@@ -7,7 +7,7 @@ import AbsoluteLoadingIndicator from './components/Placeholders/AbsoluteLoadingI
 import { AuthProvider } from './contexts/auth';
 import { LoadingProvider } from './contexts/loading';
 import { PlanProvider } from './contexts/plan';
-import theme from './theme';
+import { theme } from './config';
 import AppRoutes from './routes';
 
 const queryClient = new QueryClient();

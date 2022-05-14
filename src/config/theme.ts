@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react';
+
 const colors = {
   brand: {
     50: '#a590e0',
