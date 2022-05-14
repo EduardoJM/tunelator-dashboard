@@ -18,5 +18,6 @@ module.exports = {
     '!**/.storybook/**',
     '!**/miragejs/**',
     '!**/index.ts',
+    '!**/mocks/**',
   ],
 };

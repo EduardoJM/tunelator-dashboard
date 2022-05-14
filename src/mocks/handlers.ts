@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import config from '../config';
-import { plans, refresh, login, receivedMails, accounts } from './data.json';
+import { accounts, receivedMails, refresh, login, plans } from './fixtures';
 
 export const handlers = [
   rest.get(`${config.apiUrl}/api/plans`, (req, res, ctx) => {
@@ -16,21 +16,7 @@ export const handlers = [
   }),
 
   rest.post(`${config.apiUrl}/auth/create/`, (req, res, ctx) => {
-    return res(
-      ctx.status(201),
-      ctx.json({
-        refresh: 'refresh token',
-        access: 'access token',
-        user: {
-          id: 1,
-          email: 'example@example.com',
-          first_name: 'example',
-          last_name: 'example',
-          date_joined: '2022-04-22T10:24:45',
-          last_login: '2022-04-22T10:24:45',
-        },
-      })
-    );
+    return res(ctx.status(201), ctx.json(login));
   }),
 
   rest.get(`${config.apiUrl}/api/mails/received/`, (req, res, ctx) => {
