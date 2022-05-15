@@ -29,6 +29,7 @@ export interface AuthContextData {
   login: (data: LoginData) => void;
   signup: (data: SignupData) => void;
   logout: () => void;
+  setUserData: (user: User) => void;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -72,6 +73,7 @@ export const AuthProvider: FC = ({ children }) => {
       value={{
         loggedIn: !!userData,
         userData,
+        setUserData,
         login,
         logout,
         signup,

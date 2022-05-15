@@ -3,3 +3,4 @@ export { default as useReceivedMailsPaginated } from './useReceivedMailsPaginate
 export { default as useLatestMailAccounts } from './useLatestMailAccounts';
 export { default as useLatestReceivedMails } from './useLatestReceivedMails';
 export { default as useListPlans } from './useListPlans';
+export { default as useAuthenticatedUser } from './useAuthenticatedUser';

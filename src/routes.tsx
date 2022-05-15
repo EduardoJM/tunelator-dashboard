@@ -20,6 +20,7 @@ const CheckoutSuccessPage = lazy(() => import('./pages/Checkout/Success'));
 const CheckoutCanceledPage = lazy(() => import('./pages/Checkout/Canceled'));
 
 const CustomerErrorPage = lazy(() => import('./pages/Customer/Error'));
+const CustomerProfilePage = lazy(() => import('./pages/Customer/Profile'));
 
 const AppRoutes: FC = () => {
   return (
@@ -53,6 +54,7 @@ const AppRoutes: FC = () => {
           <Route path="customer" element={<Outlet />}>
             <Route path="" element={<NotFoundPage />} />
             <Route path="error" element={<CustomerErrorPage />} />
+            <Route path="profile" element={<CustomerProfilePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
 
