@@ -60,7 +60,7 @@ describe('LatestMailAccounts', () => {
 
   it('should render an message indicating no received mails exists if nothing received mails are found', async () => {
     server.use(
-      rest.get(`${config.apiUrl}/api/mails/accounts/`, (req, res, ctx) => {
+      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
         return res.once(
           ctx.status(200),
           ctx.json({
@@ -111,7 +111,7 @@ describe('LatestMailAccounts', () => {
 
   it('should have an toggle button in all items of the table', async () => {
     server.use(
-      rest.get(`${config.apiUrl}/api/mails/accounts/`, (req, res, ctx) => {
+      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
         return res.once(
           ctx.status(200),
           ctx.json({
@@ -163,7 +163,7 @@ describe('LatestMailAccounts', () => {
     const apiCallback = jest.fn();
 
     server.use(
-      rest.get(`${config.apiUrl}/api/mails/accounts/`, (req, res, ctx) => {
+      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
         return res.once(
           ctx.status(200),
           ctx.json({
@@ -186,14 +186,11 @@ describe('LatestMailAccounts', () => {
           })
         );
       }),
-      rest.patch(
-        `${config.apiUrl}/api/mails/accounts/:id/`,
-        (req, res, ctx) => {
-          apiCallback(req.body);
+      rest.patch(`${config.apiUrl}/mails/accounts/:id/`, (req, res, ctx) => {
+        apiCallback(req.body);
 
-          return res.once(ctx.status(200), ctx.json({}));
-        }
-      )
+        return res.once(ctx.status(200), ctx.json({}));
+      })
     );
 
     render(<LatestMailAccounts />, { wrapper });
@@ -218,17 +215,14 @@ describe('LatestMailAccounts', () => {
 
   it('should click on the toggle button and got error, this error goes to the screen as an toast', async () => {
     server.use(
-      rest.patch(
-        `${config.apiUrl}/api/mails/accounts/:id/`,
-        (req, res, ctx) => {
-          return res.once(
-            ctx.status(400),
-            ctx.json({
-              detail: 'custom error message',
-            })
-          );
-        }
-      )
+      rest.patch(`${config.apiUrl}/mails/accounts/:id/`, (req, res, ctx) => {
+        return res.once(
+          ctx.status(400),
+          ctx.json({
+            detail: 'custom error message',
+          })
+        );
+      })
     );
 
     render(<LatestMailAccounts />, { wrapper });

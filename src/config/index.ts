@@ -1,6 +1,6 @@
 import theme from './theme';
 
-const apiUrl = 'https://api.tunelator.com.br';
+const apiUrl = 'https://api.tunelator.com.br/api';
 
 const config = {
   theme,

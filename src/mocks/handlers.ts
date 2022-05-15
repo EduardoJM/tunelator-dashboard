@@ -3,7 +3,7 @@ import config from '../config';
 import { accounts, receivedMails, refresh, login, plans } from './fixtures';
 
 export const handlers = [
-  rest.get(`${config.apiUrl}/api/plans`, (req, res, ctx) => {
+  rest.get(`${config.apiUrl}/plans`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(plans));
   }),
 
@@ -19,7 +19,7 @@ export const handlers = [
     return res(ctx.status(201), ctx.json(login));
   }),
 
-  rest.get(`${config.apiUrl}/api/mails/received/`, (req, res, ctx) => {
+  rest.get(`${config.apiUrl}/mails/received/`, (req, res, ctx) => {
     const limit = parseInt(req.url.searchParams.get('limit') || '10', 10);
 
     const data = {
@@ -30,7 +30,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.get(`${config.apiUrl}/api/mails/accounts/`, (req, res, ctx) => {
+  rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
     const limit = parseInt(req.url.searchParams.get('limit') || '10', 10);
 
     const data = {
