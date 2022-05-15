@@ -12,7 +12,13 @@ import {
   Divider,
   Text,
 } from '@chakra-ui/react';
-import { MdHome, MdEmail, MdLogout, MdArrowBack } from 'react-icons/md';
+import {
+  MdHome,
+  MdEmail,
+  MdLogout,
+  MdArrowBack,
+  MdAccountCircle,
+} from 'react-icons/md';
 import { GoMailRead } from 'react-icons/go';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -74,6 +80,11 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  const handleGoToProfile = () => {
+    navigate('/customer/profile');
+    onClose();
+  };
+
   if (!userData) {
     return null;
   }
@@ -124,7 +135,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToMailAccounts}>
               <MdEmail size="20px" />
-              <Text ml="10px">E-Minhas Contas</Text>
+              <Text ml="10px">Minhas Contas</Text>
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToReceivedMails}>
               <GoMailRead size="20px" />
@@ -140,6 +151,10 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
         <DrawerFooter>
           <VStack width="100%">
             <Divider />
+            <Button variant="sidenavButton" onClick={handleGoToProfile}>
+              <MdAccountCircle size="20px" />
+              <Text ml="10px">Editar Perfil</Text>
+            </Button>
             <Button variant="sidenavButton" onClick={logout}>
               <MdLogout size="20px" />
               <Text ml="10px">Sair</Text>
