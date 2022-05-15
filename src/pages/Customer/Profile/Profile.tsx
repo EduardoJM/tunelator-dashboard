@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { Box, Heading, Flex } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { Button, Input, LoadingIndicatorBox } from '../../../components';
@@ -17,6 +17,15 @@ const Profile: FC = () => {
     onSubmit: data => updateUserData.mutate(data),
   });
   const { data, isLoading } = useAuthenticatedUser();
+  const displayHeading = useMemo(() => {
+    if (!data?.first_name) {
+      return data?.email;
+    }
+    if (!data.last_name) {
+      return data.first_name;
+    }
+    return `${data.first_name} ${data.last_name}`;
+  }, [data]);
 
   useEffect(() => {
     formik.setValues({
@@ -32,7 +41,7 @@ const Profile: FC = () => {
       ) : (
         <Box py="50px">
           <Heading as="h1" size="lg" mb="30px">
-            Profile Name
+            {displayHeading}
           </Heading>
 
           <Box
