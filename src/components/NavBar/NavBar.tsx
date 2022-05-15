@@ -11,7 +11,11 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Link as RoutingLink, useLocation } from 'react-router-dom';
+import {
+  Link as RoutingLink,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import * as CSS from 'csstype';
 import Avatar from '../Avatar';
 import {
@@ -27,6 +31,7 @@ import { useAuth } from '../../contexts/auth';
 const NavBar: FC = () => {
   const { userData, logout } = useAuth();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const sideNavState = useDisclosure();
   const linksDisplay = useBreakpointValue({ base: 'none', md: 'block' });
   const drawerToggleDisplay = useBreakpointValue({ base: 'block', md: 'none' });
@@ -38,6 +43,10 @@ const NavBar: FC = () => {
 
   const handleLogoutClick = () => {
     logout();
+  };
+
+  const handleGoToProfile = () => {
+    navigate('/customer/profile');
   };
 
   const handleOpenDrawer = () => {
@@ -150,7 +159,10 @@ const NavBar: FC = () => {
             </Flex>
           </MenuButton>
           <MenuList color="black">
-            <MenuItem icon={<MdAccountCircle size="24px" />}>
+            <MenuItem
+              icon={<MdAccountCircle size="24px" />}
+              onClick={handleGoToProfile}
+            >
               Editar Perfil
             </MenuItem>
             <MenuDivider />
