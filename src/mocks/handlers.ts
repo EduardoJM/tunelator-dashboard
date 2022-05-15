@@ -19,6 +19,21 @@ export const handlers = [
     return res(ctx.status(201), ctx.json(login));
   }),
 
+  rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(login.user));
+  }),
+
+  rest.patch(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        ...login.user,
+        first_name: 'changed',
+        last_name: 'changed',
+      })
+    );
+  }),
+
   rest.get(`${config.apiUrl}/mails/received/`, (req, res, ctx) => {
     const limit = parseInt(req.url.searchParams.get('limit') || '10', 10);
 
