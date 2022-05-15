@@ -57,7 +57,7 @@ describe('LatestReceivedMails', () => {
 
   it('should render an message indicating no received mails exists if nothing received mails are found', async () => {
     server.use(
-      rest.get(`${config.apiUrl}/api/mails/received/`, (req, res, ctx) => {
+      rest.get(`${config.apiUrl}/mails/received/`, (req, res, ctx) => {
         return res.once(
           ctx.status(200),
           ctx.json({

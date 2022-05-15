@@ -3,13 +3,13 @@ import api from './axios';
 
 export async function getLatestMailAccounts(): Promise<UserMail[]> {
   const response = await api.get<UserMailPaginatedResponse>(
-    '/api/mails/accounts/?limit=5'
+    '/mails/accounts/?limit=5'
   );
   return response.data.results;
 }
 
 export async function getMailAccountById(id: number): Promise<UserMail> {
-  const response = await api.get<UserMail>(`/api/mails/accounts/${id}/`);
+  const response = await api.get<UserMail>(`/mails/accounts/${id}/`);
   return response.data;
 }
 
@@ -26,7 +26,7 @@ export async function setMailAccountRedirectEnabled(
   id: number,
   enabled: boolean
 ): Promise<any> {
-  const response = await api.patch(`/api/mails/accounts/${id}/`, {
+  const response = await api.patch(`/mails/accounts/${id}/`, {
     redirect_enabled: enabled,
   });
   return response.data;
@@ -38,7 +38,7 @@ export async function createMailAccount(
   redirect_enabled: boolean,
   redirect_to: string | null
 ): Promise<any> {
-  const response = await api.post('/api/mails/accounts/', {
+  const response = await api.post('/mails/accounts/', {
     redirect_enabled,
     mail_user,
     name,
@@ -53,7 +53,7 @@ export async function updateMailAccount(
   redirect_enabled: boolean,
   redirect_to: string | null
 ): Promise<any> {
-  const response = await api.patch(`/api/mails/accounts/${id}/`, {
+  const response = await api.patch(`/mails/accounts/${id}/`, {
     redirect_enabled,
     name,
     redirect_to,
@@ -65,7 +65,7 @@ export async function validateUserMailAccount(
   user_name: string
 ): Promise<boolean> {
   try {
-    await api.post('/api/mails/verify/user/', { user_name });
+    await api.post('/mails/verify/user/', { user_name });
     return true;
   } catch {
     return false;
@@ -73,6 +73,6 @@ export async function validateUserMailAccount(
 }
 
 export async function deleteMailAccount(id: number): Promise<any> {
-  const response = await api.delete(`/api/mails/accounts/${id}/`);
+  const response = await api.delete(`/mails/accounts/${id}/`);
   return response.data;
 }
