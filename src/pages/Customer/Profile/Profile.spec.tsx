@@ -31,6 +31,63 @@ const wrapper: FC = ({ children }) => (
 );
 
 describe('Profile', () => {
+  it('should contains the complete name as first header when the user has first and last name', async () => {
+    const user = userFactory();
+    server.use(
+      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
+        return res.once(ctx.status(200), ctx.json(user));
+      })
+    );
+
+    render(<Profile />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
+    });
+
+    const heading = screen.queryByText(`${user.first_name} ${user.last_name}`);
+    expect(heading).toBeInTheDocument();
+    expect(heading?.tagName.toUpperCase()).toEqual('H1');
+  });
+
+  it('should contains the first name as first header if the user has first name and not have last name', async () => {
+    const user = userFactory({ last_name: '' });
+    server.use(
+      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
+        return res.once(ctx.status(200), ctx.json(user));
+      })
+    );
+
+    render(<Profile />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
+    });
+
+    const heading = screen.queryByText(`${user.first_name}`);
+    expect(heading).toBeInTheDocument();
+    expect(heading?.tagName.toUpperCase()).toEqual('H1');
+  });
+
+  it('should contains the e-mail as first header if the user has no first no last name', async () => {
+    const user = userFactory({ first_name: '', last_name: '' });
+    server.use(
+      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
+        return res.once(ctx.status(200), ctx.json(user));
+      })
+    );
+
+    render(<Profile />, { wrapper });
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
+    });
+
+    const heading = screen.queryByText(`${user.email}`);
+    expect(heading).toBeInTheDocument();
+    expect(heading?.tagName.toUpperCase()).toEqual('H1');
+  });
+
   it('should shows an loading indicator while the user data is retrieved', async () => {
     render(<Profile />, { wrapper });
 
