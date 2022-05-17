@@ -1,8 +1,8 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { CurrentPlanBox, PlansGrid } from '../../components';
-import Button from '../../components/Common/Button';
+import { PlansGrid, Button } from '../../components';
+import CurrentPlanSection from './CurrentPlanSection';
 import { usePlan } from '../../contexts/plan';
 import { useListPlans } from '../../services/queries';
 import {
@@ -37,16 +37,7 @@ const Plans: FC = () => {
 
   return (
     <>
-      <Box mt="60px">
-        {!plan ? (
-          <LoadingIndicatorBox />
-        ) : (
-          <CurrentPlanBox
-            plan={plan}
-            onGoToCustomerPortalClick={handleGoToCustomerPortal}
-          />
-        )}
-      </Box>
+      <CurrentPlanSection onGoToCustomerPortal={handleGoToCustomerPortal} />
       {plan?.is_free ? (
         <div>
           {isLoading ? (
