@@ -8,6 +8,7 @@ import { PlanProvider, usePlan } from './plan';
 import { LoadingProvider } from './loading';
 import { server } from '../mocks/server';
 import { activePlan } from '../mocks/fixtures';
+import accountFactory from '../mocks/factories/account';
 import { ActivePlan } from '../entities/Plan';
 import config from '../config';
 
@@ -83,5 +84,37 @@ describe('contexts/plan', () => {
     expect(result.current.plan?.days_until_user_can_delete_account).toEqual(
       plan.days_until_user_can_delete_account
     );
+  });
+
+  it('should canDeleteUserMail return true when the difference between the account created_date and today is great or equals than the days', () => {
+    const plan = new ActivePlan(activePlan);
+
+    const date1 = new Date();
+    date1.setDate(date1.getDate() - 2);
+    const account1 = accountFactory({
+      created_at: date1.toISOString(),
+    });
+
+    expect(plan.canDeleteUserMail(account1)).toEqual(true);
+
+    const date2 = new Date();
+    date2.setDate(date1.getDate() - 3);
+    const account2 = accountFactory({
+      created_at: date2.toISOString(),
+    });
+
+    expect(plan.canDeleteUserMail(account2)).toEqual(true);
+  });
+
+  it('should canDeleteUserMail return false when the difference between the account created_date and today is less than the days', () => {
+    const plan = new ActivePlan(activePlan);
+
+    const date1 = new Date();
+    date1.setDate(date1.getDate() - 1);
+    const account1 = accountFactory({
+      created_at: date1.toISOString(),
+    });
+
+    expect(plan.canDeleteUserMail(account1)).toEqual(false);
   });
 });
