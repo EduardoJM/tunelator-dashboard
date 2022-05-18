@@ -16,6 +16,7 @@ export function goToCheckout(session: CheckoutSession) {
   const form = document.createElement('form');
   form.setAttribute('method', 'POST');
   form.setAttribute('action', url);
+  form.setAttribute('data-testid', 'go-to-checkout-helper-form');
   form.style.opacity = '0';
 
   document.body.appendChild(form);
@@ -33,6 +34,7 @@ export function goToCustomerPortal(session: CustomerPortalSession) {
   const form = document.createElement('form');
   form.setAttribute('method', 'POST');
   form.setAttribute('action', url);
+  form.setAttribute('data-testid', 'go-to-customer-portal-form');
   form.style.opacity = '0';
 
   document.body.appendChild(form);
