@@ -41,7 +41,11 @@ const CurrentPlanBox: FC<CurrentPlanBoxProps> = ({
       {!plan.is_free && (
         <>
           <Divider mb="30px" />
-          <Button variant="primaryRounded" onClick={onGoToCustomerPortalClick}>
+          <Button
+            data-testid="customer-portal-button"
+            variant="primaryRounded"
+            onClick={onGoToCustomerPortalClick}
+          >
             Gerenciar
           </Button>
         </>

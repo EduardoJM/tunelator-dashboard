@@ -1,10 +1,21 @@
 import { rest } from 'msw';
 import config from '../config';
-import { accounts, receivedMails, refresh, login, plans } from './fixtures';
+import {
+  accounts,
+  receivedMails,
+  refresh,
+  login,
+  plans,
+  activePlan,
+} from './fixtures';
 
 export const handlers = [
   rest.get(`${config.apiUrl}/plans`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(plans));
+  }),
+
+  rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(activePlan));
   }),
 
   rest.post(`${config.apiUrl}/auth/token/refresh/`, (req, res, ctx) => {

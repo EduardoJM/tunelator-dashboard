@@ -1,8 +1,9 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { CurrentPlanBox, PlansGrid } from '../../components';
-import Button from '../../components/Common/Button';
+import { PlansGrid, Button } from '../../components';
+import CurrentPlanSection from './CurrentPlanSection';
+import AlreadyPaidSection from './AlreadyPaidSection';
 import { usePlan } from '../../contexts/plan';
 import { useListPlans } from '../../services/queries';
 import {
@@ -37,16 +38,7 @@ const Plans: FC = () => {
 
   return (
     <>
-      <Box mt="60px">
-        {!plan ? (
-          <LoadingIndicatorBox />
-        ) : (
-          <CurrentPlanBox
-            plan={plan}
-            onGoToCustomerPortalClick={handleGoToCustomerPortal}
-          />
-        )}
-      </Box>
+      <CurrentPlanSection onGoToCustomerPortal={handleGoToCustomerPortal} />
       {plan?.is_free ? (
         <div>
           {isLoading ? (
@@ -71,6 +63,7 @@ const Plans: FC = () => {
               <Flex my="30px" alignItems="center" justifyContent="flex-end">
                 <Button
                   variant="primary"
+                  data-testid="go-to-checkout-button"
                   isDisabled={!activePlan}
                   onClick={handleContinue}
                 >
@@ -81,37 +74,7 @@ const Plans: FC = () => {
           )}
         </div>
       ) : (
-        <Box
-          width="100%"
-          my="60px"
-          p="20px"
-          border="1px solid #DDD"
-          borderRadius="5px"
-          backgroundColor="#FEFEFE"
-          boxShadow="md"
-          _hover={{ backgroundColor: '#EFEFEF' }}
-        >
-          <Heading as="h2" size="lg" color="brand.500" mb="30px">
-            Outros Planos
-          </Heading>
-
-          <Text fontSize="lg">
-            Atualmente, para poder mudar o plano da sua assinatura você precisa
-            cancelar a sua assinatura atual e fazer uma nova. Estamos
-            trabalhando para melhorar essa experiência, porém, atualmente você
-            pode acessar o portal do cliente para gerenciar a sua assinatura:
-          </Text>
-          <Flex
-            mt="30px"
-            width="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Button variant="primaryRounded" onClick={handleGoToCustomerPortal}>
-              Portal do Cliente
-            </Button>
-          </Flex>
-        </Box>
+        <AlreadyPaidSection onGoToCustomerPortal={handleGoToCustomerPortal} />
       )}
     </>
   );
