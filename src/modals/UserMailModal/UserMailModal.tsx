@@ -1,21 +1,20 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
   Box,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
   Collapse,
   FormControl,
   FormLabel,
   useToast,
   useBreakpointValue,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import Button from '../../components/Common/Button';
+import { Button, LoadingIndicatorBox } from '../../components';
 import Input from '../../components/Forms/Input';
 import InputMailUser from '../../components/Forms/InputMailUser';
 import Checkbox from '../../components/Checkbox';
@@ -41,6 +40,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
 }) => {
   const { plan } = usePlan();
   const toast = useToast();
+
+  const cancelRef = useRef<any>(null);
 
   const modalSize = useBreakpointValue({ base: 'full', md: 'xl' });
 
@@ -119,94 +120,97 @@ const UserMailModal: FC<UserMailModalProps> = ({
   };
 
   return (
-    <Modal
-      blockScrollOnMount={false}
+    <AlertDialog
       isOpen={isOpen}
       onClose={onClose}
       size={modalSize}
+      leastDestructiveRef={cancelRef}
     >
-      <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>
-          {!!userMail ? 'Editar Conta de E-mail' : 'Criar Conta de E-mail'}
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Input
-            label="Identificador da Conta"
-            id="name"
-            value={formik.values.name}
-            onChange={formik.handleChange}
-            mb="30px"
-          />
+      <AlertDialogOverlay>
+        <AlertDialogContent>
+          <AlertDialogHeader fontSize="lg" fontWeight="bold">
+            {!!userMail ? 'Editar Conta de E-mail' : 'Criar Conta de E-mail'}
+          </AlertDialogHeader>
 
-          <InputMailUser
-            label="Nome da conta"
-            id="mail_user"
-            isDisabled={!!userMail}
-            helpText={
-              !!userMail ? 'Não é possível editar o nome do e-mail.' : undefined
-            }
-            value={formik.values.mail_user}
-            onChange={formik.handleChange}
-            onBlur={handleBlur}
-          />
+          <AlertDialogBody>
+            <Input
+              label="Identificador da Conta"
+              id="name"
+              value={formik.values.name}
+              onChange={formik.handleChange}
+              mb="30px"
+            />
 
-          {plan?.allow_custom_redirect && (
-            <>
-              <FormControl mt="50px" display="flex" alignItems="center">
-                <Checkbox
-                  id="redirect_to_my_email"
-                  isChecked={formik.values.redirect_to_my_email}
-                  onChange={formik.handleChange}
-                />
-                <FormLabel htmlFor="redirect_to_my_email" ml="10px" mb="0">
-                  Redirecionar para o meu e-mail
-                </FormLabel>
-              </FormControl>
+            <InputMailUser
+              label="Nome da conta"
+              id="mail_user"
+              isDisabled={!!userMail}
+              helpText={
+                !!userMail
+                  ? 'Não é possível editar o nome do e-mail.'
+                  : undefined
+              }
+              value={formik.values.mail_user}
+              onChange={formik.handleChange}
+              onBlur={handleBlur}
+            />
 
-              <Box mt="10px">
-                <Collapse
-                  in={!formik.values.redirect_to_my_email}
-                  animateOpacity
-                >
-                  <Input
-                    label="Redirecionar para"
-                    id="redirect_to"
-                    value={formik.values.redirect_to}
+            {plan?.allow_custom_redirect && (
+              <>
+                <FormControl mt="50px" display="flex" alignItems="center">
+                  <Checkbox
+                    id="redirect_to_my_email"
+                    isChecked={formik.values.redirect_to_my_email}
                     onChange={formik.handleChange}
                   />
-                </Collapse>
-              </Box>
-            </>
-          )}
+                  <FormLabel htmlFor="redirect_to_my_email" ml="10px" mb="0">
+                    Redirecionar para o meu e-mail
+                  </FormLabel>
+                </FormControl>
 
-          <FormControl mt="50px" display="flex" alignItems="center">
-            <Checkbox
-              id="redirect_enabled"
-              isChecked={formik.values.redirect_enabled}
-              onChange={formik.handleChange}
-            />
-            <FormLabel htmlFor="redirect_enabled" ml="10px" mb="0">
-              Habilitado?
-            </FormLabel>
-          </FormControl>
-        </ModalBody>
+                <Box mt="10px">
+                  <Collapse
+                    in={!formik.values.redirect_to_my_email}
+                    animateOpacity
+                  >
+                    <Input
+                      label="Redirecionar para"
+                      id="redirect_to"
+                      value={formik.values.redirect_to}
+                      onChange={formik.handleChange}
+                    />
+                  </Collapse>
+                </Box>
+              </>
+            )}
 
-        <ModalFooter>
-          <Button variant="ghost" mr="10px" onClick={onClose}>
-            Fechar
-          </Button>
-          <Button
-            variant="primary"
-            onClick={handleSave}
-            isDisabled={!mailUserIsValid}
-          >
-            Salvar
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
+            <FormControl mt="50px" display="flex" alignItems="center">
+              <Checkbox
+                id="redirect_enabled"
+                isChecked={formik.values.redirect_enabled}
+                onChange={formik.handleChange}
+              />
+              <FormLabel htmlFor="redirect_enabled" ml="10px" mb="0">
+                Habilitado?
+              </FormLabel>
+            </FormControl>
+          </AlertDialogBody>
+
+          <AlertDialogFooter>
+            <Button ref={cancelRef} variant="ghost" mr="10px" onClick={onClose}>
+              Fechar
+            </Button>
+            <Button
+              variant="primary"
+              onClick={handleSave}
+              isDisabled={!mailUserIsValid}
+            >
+              Salvar
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogOverlay>
+    </AlertDialog>
   );
 };
 
