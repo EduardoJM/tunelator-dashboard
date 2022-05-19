@@ -139,12 +139,14 @@ const UserMailModal: FC<UserMailModalProps> = ({
               value={formik.values.name}
               onChange={formik.handleChange}
               mb="30px"
+              data-testid="account-name-input"
             />
 
             <InputMailUser
               label="Nome da conta"
               id="mail_user"
               isDisabled={!!userMail}
+              data-testid="account-user-input"
               helpText={
                 !!userMail
                   ? 'Não é possível editar o nome do e-mail.'
@@ -187,6 +189,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
             <FormControl mt="50px" display="flex" alignItems="center">
               <Checkbox
                 id="redirect_enabled"
+                data-testid="account-redirect-enabled"
                 isChecked={formik.values.redirect_enabled}
                 onChange={formik.handleChange}
               />
