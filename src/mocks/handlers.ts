@@ -66,4 +66,8 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(data));
   }),
+
+  rest.post(`${config.apiUrl}/auth/recovery/`, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];
