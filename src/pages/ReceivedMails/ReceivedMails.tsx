@@ -133,7 +133,7 @@ const ReceivedMails: FC = () => {
             <Tbody>
               {data?.results.length === 0 && (
                 <Tr height="220px" backgroundColor="#EEE">
-                  <Td colSpan={4} textAlign="center">
+                  <Td colSpan={5} textAlign="center">
                     <NoReceivedMailsBox />
                   </Td>
                 </Tr>
