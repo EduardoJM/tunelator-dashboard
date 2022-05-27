@@ -2,16 +2,15 @@ import { FC } from 'react';
 import { Flex, Box, VStack, Text, Heading } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { Input, Button } from '../../components';
+import { useSendRecoveryMailMutation } from '../../services/mutations';
 
 const RecoveryPassword: FC = () => {
+  const sendRecoveryMailMutation = useSendRecoveryMailMutation();
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    onSubmit: ({ email }) => {
-      //const from = String((location.state as any)?.from?.pathname || '/');
-      //auth.login({ email, password, remember, from });
-    },
+    onSubmit: ({ email }) => sendRecoveryMailMutation.mutate({ email }),
   });
 
   return (
@@ -31,7 +30,7 @@ const RecoveryPassword: FC = () => {
             maxWidth="450px"
             color="foreground.muted"
           >
-            <form name="login-form" onSubmit={formik.handleSubmit}>
+            <form name="recovery-form" onSubmit={formik.handleSubmit}>
               <VStack>
                 <Heading
                   width="100%"
@@ -59,7 +58,11 @@ const RecoveryPassword: FC = () => {
                 />
 
                 <Flex w="100%" pt="25px" flexDir="column" alignItems="stretch">
-                  <Button type="submit" variant="primaryRounded">
+                  <Button
+                    type="submit"
+                    data-testid="submit-button"
+                    variant="primaryRounded"
+                  >
                     Resetar Senha
                   </Button>
                 </Flex>

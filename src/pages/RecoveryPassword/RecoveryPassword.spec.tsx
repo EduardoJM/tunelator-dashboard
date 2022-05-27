@@ -23,5 +23,11 @@ const wrapper: FC = ({ children }) => (
 );
 
 describe('RecoveryPassword', () => {
-  it('should contains an form, an e-mail input and a submit button', () => {});
+  it('should contains an form, an e-mail input and a submit button', () => {
+    render(<RecoveryPassword />, { wrapper });
+
+    expect(screen.queryByRole('form')).toBeInTheDocument();
+    expect(screen.queryByTestId('email-field')).toBeInTheDocument();
+    expect(screen.queryByTestId('submit-button')).toBeInTheDocument();
+  });
 });
