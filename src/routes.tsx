@@ -22,12 +22,19 @@ const CheckoutCanceledPage = lazy(() => import('./pages/Checkout/Canceled'));
 const CustomerErrorPage = lazy(() => import('./pages/Customer/Error'));
 const CustomerProfilePage = lazy(() => import('./pages/Customer/Profile'));
 
+const RecoveryPasswordPage = lazy(() => import('./pages/RecoveryPassword'));
+const RecoveryResetPage = lazy(() => import('./pages/RecoveryReset'));
+
 const AppRoutes: FC = () => {
   return (
     <>
       <Routes>
         <Route path="/auth" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/recovery" element={<Outlet />}>
+          <Route path="" element={<RecoveryPasswordPage />} />
+          <Route path=":id" element={<RecoveryResetPage />} />
+        </Route>
 
         <Route path="/" element={<Dashboard />}>
           <Route path="" element={<HomePage />} />
