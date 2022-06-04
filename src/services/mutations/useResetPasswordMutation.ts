@@ -17,25 +17,26 @@ const useResetPasswordMutation = (id: string) => {
 
   return useMutation<unknown, unknown, ResetPasswordMutationProps>(
     async ({ password1, password2 }) => {
+      if (!password1 || !password2 || password1 !== password2) {
+        toast({
+          title: 'Erro!',
+          description: 'Preencha e confirme a sua nova senha!',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+
       pushLoading();
 
       try {
-        if (!password1 || !password2 || password1 !== password2) {
-          toast({
-            title: 'Erro!',
-            description: 'Preencha e confirme a sua nova senha!',
-            status: 'error',
-            duration: 5000,
-            isClosable: true,
-          });
-        }
-
-        resetPassword(id, password1);
+        await resetPassword(id, password1);
 
         toast({
           title: 'Sucesso',
           description:
-            'Senha alterada com sucesso! Faça login para continuar...!',
+            'Senha alterada com sucesso! Faça login para continuar...',
           status: 'success',
           duration: 5000,
           isClosable: true,
