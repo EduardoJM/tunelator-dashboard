@@ -11,3 +11,4 @@ export { default as useLogoutMutation } from './useLogoutMutation';
 export { default as useCheckLogin } from './useCheckLogin';
 export { default as useUpdateUserDataMutation } from './useUpdateUserDataMutation';
 export { default as useSendRecoveryMailMutation } from './useSendRecoveryMailMutation';
+export { default as useResetPasswordMutation } from './useResetPasswordMutation';

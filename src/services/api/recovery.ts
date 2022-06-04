@@ -14,3 +14,10 @@ export async function isSessionValid(id: string): Promise<boolean> {
     return false;
   }
 }
+
+export async function resetPassword(
+  id: string,
+  password: string
+): Promise<void> {
+  await api.put(`/auth/recovery/${id}/`, { password });
+}

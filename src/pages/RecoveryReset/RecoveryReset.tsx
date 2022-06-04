@@ -1,10 +1,19 @@
-import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { FC, useEffect, useState } from 'react';
+import {
+  Box,
+  Flex,
+  Heading,
+  Text,
+  useBreakpointValue,
+  VStack,
+} from '@chakra-ui/react';
 import { useParams, useNavigate } from 'react-router';
 import { GiBackwardTime } from 'react-icons/gi';
+import { useFormik } from 'formik';
 import { useLoading } from '../../contexts/loading';
 import { isSessionValid } from '../../services/api/recovery';
-import { Button } from '../../components';
+import { Button, PasswordInput } from '../../components';
+import { useResetPasswordMutation } from '../../services/mutations';
 
 const RecoveryReset: FC = () => {
   const { id } = useParams();
@@ -12,6 +21,16 @@ const RecoveryReset: FC = () => {
   const { pushLoading, popLoading } = useLoading();
   const [valid, setValid] = useState(true);
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+
+  const resetPasswordMutation = useResetPasswordMutation(id || '');
+
+  const formik = useFormik({
+    initialValues: {
+      password1: '',
+      password2: '',
+    },
+    onSubmit: data => resetPasswordMutation.mutate(data),
+  });
 
   useEffect(() => {
     const checkSession = async () => {
@@ -77,7 +96,81 @@ const RecoveryReset: FC = () => {
     );
   }
 
-  return <></>;
+  return (
+    <Flex minHeight="100vh" width="100%">
+      <Box backgroundColor="white" flex="1">
+        <Flex
+          width="100%"
+          minHeight="100%"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          p="10px"
+        >
+          <Box
+            data-testid="login-box"
+            width="100%"
+            maxWidth="450px"
+            color="foreground.muted"
+          >
+            <form name="reset-form" onSubmit={formik.handleSubmit}>
+              <VStack>
+                <Heading
+                  width="100%"
+                  color="foreground.default"
+                  as="h1"
+                  size="2xl"
+                >
+                  Redefinir Senha
+                </Heading>
+
+                <Box pb="20px">
+                  <Text>
+                    Preencha e confirme uma nova senha para a sua conta.
+                  </Text>
+                </Box>
+
+                <PasswordInput
+                  id="password1"
+                  label="Sua Senha"
+                  data-testid="password1-field"
+                  placeholder="Digite sua nova senha"
+                  value={formik.values.password1}
+                  onChange={formik.handleChange}
+                />
+
+                <PasswordInput
+                  id="password2"
+                  label="Confirme sua Senha"
+                  data-testid="password2-field"
+                  placeholder="Confirme sua nova senha"
+                  value={formik.values.password2}
+                  onChange={formik.handleChange}
+                />
+
+                <Button
+                  width="100%"
+                  variant="primaryRounded"
+                  type="submit"
+                  data-testid="submit-button"
+                >
+                  Redefinir Senha
+                </Button>
+              </VStack>
+            </form>
+          </Box>
+        </Flex>
+      </Box>
+      <Box
+        backgroundColor="brand.500"
+        flex="1"
+        display={{
+          base: 'none',
+          lg: 'block',
+        }}
+      ></Box>
+    </Flex>
+  );
 };
 
 export default RecoveryReset;
