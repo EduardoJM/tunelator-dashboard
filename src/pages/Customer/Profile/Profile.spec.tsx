@@ -159,8 +159,10 @@ describe('Profile', () => {
 
       await userEvent.click(button);
     });
-
     await waitFor(() => {
+      expect(
+        screen.queryByTestId('absolute-loading-overlay')
+      ).not.toBeInTheDocument();
       expect(apiCallback).toHaveBeenCalledTimes(1);
     });
   });
