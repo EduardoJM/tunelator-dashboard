@@ -70,4 +70,8 @@ export const handlers = [
   rest.post(`${config.apiUrl}/auth/recovery/`, (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
+  rest.get(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
 ];
