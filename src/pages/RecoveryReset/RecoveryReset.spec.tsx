@@ -66,5 +66,11 @@ describe('RecoveryReset', () => {
     });
 
     expect(location.pathname).toEqual('/recovery');
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('absolute-loading-overlay')
+      ).not.toBeInTheDocument();
+    });
   });
 });
