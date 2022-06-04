@@ -122,7 +122,7 @@ describe('RecoveryReset', () => {
   it('should call the api, show an success message and redirect to home path when changes are made', async () => {
     const apiCallback = jest.fn();
     server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
+      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
         apiCallback();
         return res.once(ctx.status(200));
       })
@@ -166,7 +166,7 @@ describe('RecoveryReset', () => {
   it('should display an error and not call the api if the passwords is sent empty', async () => {
     const apiCallback = jest.fn();
     server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
+      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
         apiCallback();
         return res.once(ctx.status(200));
       })
@@ -202,7 +202,7 @@ describe('RecoveryReset', () => {
   it('should display an error and not call the api if the passwords are different', async () => {
     const apiCallback = jest.fn();
     server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
+      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
         apiCallback();
         return res.once(ctx.status(200));
       })
@@ -242,7 +242,7 @@ describe('RecoveryReset', () => {
   it('should display an error if the api gots an error', async () => {
     const apiCallback = jest.fn();
     server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
+      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
         apiCallback();
         return res.once(ctx.status(400), ctx.json({ detail: 'My Any Error!' }));
       })

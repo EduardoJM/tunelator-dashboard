@@ -19,5 +19,5 @@ export async function resetPassword(
   id: string,
   password: string
 ): Promise<void> {
-  await api.put(`/auth/recovery/${id}/`, { password });
+  await api.put(`/auth/recovery/${id}/reset/`, { password });
 }
