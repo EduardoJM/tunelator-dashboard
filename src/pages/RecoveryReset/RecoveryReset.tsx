@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import {
   Box,
+  Container,
   Flex,
   Heading,
   Text,
@@ -56,41 +57,56 @@ const RecoveryReset: FC = () => {
 
   if (!valid) {
     return (
-      <Flex h="100%" flexDir="column" alignItems="stretch">
-        <Flex flex="1" alignItems="stretch" flexWrap="wrap-reverse">
-          <Flex
-            w={boxWidth}
-            alignItems="stretch"
-            justifyContent="center"
-            flexDir="column"
-          >
-            <Heading as="h1" size="xl" color="brand.500">
-              Esse link expirou...
-            </Heading>
-            <Heading
-              as="h2"
-              size="md"
-              mt="50px"
-              color="brand.500"
-              fontWeight="normal"
-            >
-              Esse link expirou ou não é válido. Para recuperar a sua senha você
-              precisa pedir um novo link.
-            </Heading>
-          </Flex>
-          <Flex
-            width={boxWidth}
-            alignItems="center"
-            justifyContent="center"
-            color="brand.500"
-          >
-            <GiBackwardTime size="200px" />
-          </Flex>
-        </Flex>
-        <Flex alignItems="center" justifyContent="center" pt="20px" pb="60px">
-          <Button onClick={handleGoToPasswordRecovery} variant="primaryRounded">
-            Recuperar Senha
-          </Button>
+      <Flex flexDirection="column" width="100%" minHeight="100vh">
+        <Flex width="100%" flex="1" alignItems="stretch">
+          <Container maxW="120ch">
+            <Flex h="100%" flexDir="column" alignItems="stretch">
+              <Flex flex="1" alignItems="stretch" flexWrap="wrap-reverse">
+                <Flex
+                  w={boxWidth}
+                  alignItems="stretch"
+                  justifyContent="center"
+                  flexDir="column"
+                >
+                  <Heading as="h1" size="xl" color="brand.500">
+                    Esse link expirou...
+                  </Heading>
+                  <Heading
+                    as="h2"
+                    size="md"
+                    mt="50px"
+                    color="brand.500"
+                    fontWeight="normal"
+                  >
+                    Esse link expirou ou não é válido. Para recuperar a sua
+                    senha você precisa pedir um novo link.
+                  </Heading>
+
+                  <Flex
+                    alignItems="center"
+                    justifyContent="center"
+                    pt="20px"
+                    pb="60px"
+                  >
+                    <Button
+                      onClick={handleGoToPasswordRecovery}
+                      variant="primaryRounded"
+                    >
+                      Recuperar Senha
+                    </Button>
+                  </Flex>
+                </Flex>
+                <Flex
+                  width={boxWidth}
+                  alignItems="center"
+                  justifyContent="center"
+                  color="brand.500"
+                >
+                  <GiBackwardTime size="200px" />
+                </Flex>
+              </Flex>
+            </Flex>
+          </Container>
         </Flex>
       </Flex>
     );
