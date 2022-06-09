@@ -6,6 +6,7 @@ module.exports = {
   moduleNameMapper: {
     '^.+\\.(css|scss)$': 'identity-obj-proxy',
   },
+  coverageReporters: ['json-summary', 'text', 'lcov'],
   collectCoverage: false,
   collectCoverageFrom: [
     '**/*.{ts,tsx}',

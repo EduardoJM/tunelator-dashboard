@@ -8,7 +8,8 @@
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "test:badges": "jest --coverage && jest-coverage-badges --output ./.github/badges"
   },
   "resolutions": {
     "csstype": "3.0.10"
@@ -56,6 +57,7 @@
     "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27",
+    "jest-coverage-badges": "^1.1.2",
     "msw": "^0.39.2",
     "react-test-renderer": "^16.9.0",
     "ts-jest": "^27.1.4",
