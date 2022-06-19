@@ -2,6 +2,7 @@ import factory from '../factories/plan';
 
 const activePlan = {
   ...factory(),
+  free_accounts: 5,
   configs: [
     {
       name: 'mails',
