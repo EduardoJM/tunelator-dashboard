@@ -30,7 +30,7 @@ const Pagination: FC<PaginationProps> = ({
   }
   return (
     <Flex alignItems="center" justifyContent="end" mb="50px">
-      <ButtonGroup size="sm" isAttached variant="outline">
+      <ButtonGroup size="sm" isAttached variant="outline" overflowX="auto" p="2">
         {pagination.map(page => (
           <Button
             variant="pagination"
