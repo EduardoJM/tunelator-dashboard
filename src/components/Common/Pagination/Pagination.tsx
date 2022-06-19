@@ -37,6 +37,7 @@ const Pagination: FC<PaginationProps> = ({
             key={page}
             onClick={() => handleGoToPage(page)}
             isActive={page == currentPage}
+            borderRightWidth={page === pagination.length ? '1px' : '0'}
           >
             {page}
           </Button>
