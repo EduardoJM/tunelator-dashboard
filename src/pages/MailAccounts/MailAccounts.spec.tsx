@@ -68,7 +68,6 @@ describe('MailAccounts', () => {
 
     const button = screen.queryByTestId('create-new-account-button');
     expect(button).toBeInTheDocument();
-    expect(button).not.toBeDisabled();
   });
 
   it('if the plan has no more accounts free, create account button should rendered disabled', async () => {
@@ -90,9 +89,9 @@ describe('MailAccounts', () => {
       ).not.toBeInTheDocument();
       expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
     });
-
-    const button = screen.queryByTestId('create-new-account-button');
-    expect(button).toBeInTheDocument();
-    expect(button).toBeDisabled();
+    
+    await waitFor(() => {
+      expect(screen.queryByTestId('create-new-account-button')).toBeDisabled();
+    });
   });
 });

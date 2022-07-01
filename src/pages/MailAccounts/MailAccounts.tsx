@@ -133,8 +133,6 @@ const MailAccounts: FC = () => {
     queryClient.refetchQueries(['mails', currentPage]);
   };
 
-  console.log(plan?.monthly_price);
-
   return (
     <>
       <Flex alignItems="center" justifyContent="space-between">

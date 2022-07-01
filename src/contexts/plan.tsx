@@ -19,20 +19,22 @@ export const PlanProvider: FC = ({ children }) => {
 
   useEffect(() => {
     async function updatePlan() {
+      pushLoading();
+
       if (!loggedIn) {
         setPlan(null);
+        popLoading();
         return;
       }
 
       try {
-        pushLoading();
         const plan = await getCurrentPlan();
         setPlan(plan);
+      } catch {
+        setPlan(null);
+      } finally  {
         popLoading();
-        return;
-      } catch {}
-
-      setPlan(null);
+      }
     }
 
     updatePlan();
