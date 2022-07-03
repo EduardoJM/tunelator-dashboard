@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { resolve } from 'path';
 import { dependencies } from './package.json';
 
 function renderChunks(deps: Record<string, string>) {
@@ -24,5 +25,8 @@ export default defineConfig({
         },
       },
     },
+  },
+  resolve: {
+    alias: [{ find: '@', replacement: '/src' }],
   },
 });

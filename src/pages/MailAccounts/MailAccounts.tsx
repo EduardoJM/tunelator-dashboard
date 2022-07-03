@@ -16,20 +16,20 @@ import {
 import { useQueryClient } from 'react-query';
 import * as CSS from 'csstype';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import Button from '../../components/Common/Button';
-import { useMailAccountsPaginated } from '../../services/queries';
+import LoadingIndicatorBox from '@/components/Placeholders/LoadingIndicatorBox';
+import Button from '@/components/Common/Button';
+import { useMailAccountsPaginated } from '@/services/queries';
 import {
   useSetMailAccountRedirectEnabledMutation,
   useDeleteMailAccountMutation,
-} from '../../services/mutations';
-import { usePlan } from '../../contexts/plan';
-import { UserMail } from '../../entities/UserMail';
-import UserMailModal from '../../modals/UserMailModal';
-import UserMailDeleteModal from '../../modals/UserMailDeleteModal';
-import { DateTime, Pagination } from '../../components';
-import NoAccountsBox from '../../components/Placeholders/NoAccountsBox';
-import { WaitMailAccountDone } from '../../components';
+} from '@/services/mutations';
+import { usePlan } from '@/contexts/plan';
+import { UserMail } from '@/entities/UserMail';
+import UserMailModal from '@/modals/UserMailModal';
+import UserMailDeleteModal from '@/modals/UserMailDeleteModal';
+import { DateTime, Pagination } from '@/components';
+import NoAccountsBox from '@/components/Placeholders/NoAccountsBox';
+import { WaitMailAccountDone } from '@/components';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
