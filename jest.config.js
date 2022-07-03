@@ -8,6 +8,7 @@ module.exports = {
   },
   coverageReporters: ['json-summary', 'text', 'lcov'],
   collectCoverage: false,
+  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
   collectCoverageFrom: [
     '**/*.{ts,tsx}',
     '!**/*.stories.tsx',

@@ -11,17 +11,13 @@ import { LoadingProvider } from '../../contexts/loading';
 import { activePlan, plans } from '../../mocks/fixtures';
 import { server } from '../../mocks/server';
 import { PlanType } from '../../entities/Plan';
+import { queryClient } from '../../__mocks__/contexts/queryClient';
+import {
+  waitAbsoluteLoader,
+  waitDataFetchLoader,
+} from '../../__tests__/utils/loaders';
 import config from '../../config';
 import MailAccounts from './MailAccounts';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
 
 const wrapper: FC = ({ children }) => (
   <ChakraProvider theme={config.theme}>
@@ -45,12 +41,8 @@ describe('MailAccounts', () => {
   it('should render at least five cards with received mail accounts if has more than five', async () => {
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
+    await waitAbsoluteLoader();
+    await waitDataFetchLoader();
 
     const cards = screen.queryAllByTestId('mail-account-card');
     expect(cards).toHaveLength(5);
@@ -59,12 +51,8 @@ describe('MailAccounts', () => {
   it('should render an create account button', async () => {
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
+    await waitAbsoluteLoader();
+    await waitDataFetchLoader();
 
     const button = screen.queryByTestId('create-new-account-button');
     expect(button).toBeInTheDocument();
@@ -83,13 +71,9 @@ describe('MailAccounts', () => {
     );
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
-    
+    await waitAbsoluteLoader();
+    await waitDataFetchLoader();
+
     await waitFor(() => {
       expect(screen.queryByTestId('create-new-account-button')).toBeDisabled();
     });
