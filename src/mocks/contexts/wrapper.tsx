@@ -1,4 +1,5 @@
-import { FC } from 'react';
+import { FC, ReactElement } from 'react';
+import { render as originalRender } from '@testing-library/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';
@@ -21,3 +22,7 @@ export const wrapper: FC = ({ children }) => (
     </LoadingProvider>
   </ChakraProvider>
 );
+
+export const render = (ui: ReactElement) => {
+  originalRender(ui, { wrapper });
+};
