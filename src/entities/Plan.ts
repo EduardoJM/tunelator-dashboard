@@ -25,6 +25,7 @@ export interface PlanConfigItem<T = any> {
 }
 
 export interface ActivePlanResponse extends Plan {
+  free_accounts: number;
   configs: PlanConfigItem[];
 }
 
@@ -85,5 +86,9 @@ export class ActivePlan {
     const difference_days = Math.floor(difference_time / (1000 * 3600 * 24));
 
     return difference_days >= this.days_until_user_can_delete_account;
+  }
+
+  canCreateNewAccount() {
+    return this.data.free_accounts > 0;
   }
 }

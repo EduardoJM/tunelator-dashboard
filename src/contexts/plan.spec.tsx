@@ -98,7 +98,7 @@ describe('contexts/plan', () => {
     expect(plan.canDeleteUserMail(account1)).toEqual(true);
 
     const date2 = new Date();
-    date2.setDate(date1.getDate() - 3);
+    date2.setDate(date2.getDate() - 3);
     const account2 = accountFactory({
       created_at: date2.toISOString(),
     });

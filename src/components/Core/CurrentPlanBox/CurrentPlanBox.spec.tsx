@@ -10,6 +10,7 @@ import CurrentPlanBox from './CurrentPlanBox';
 const basePlan: ActivePlanResponse = {
   id: 12,
   description: 'The description',
+  free_accounts: 10,
   display_features: [
     {
       enabled: true,

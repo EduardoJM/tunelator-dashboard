@@ -140,9 +140,31 @@ const MailAccounts: FC = () => {
           Minhas Contas de E-mail
         </Heading>
 
-        <Button variant="primaryRounded" onClick={handleCreateUserMail}>
-          Criar Nova
-        </Button>
+        {plan?.canCreateNewAccount() ? (
+          <Button
+            variant="primaryRounded"
+            data-testid="create-new-account-button"
+            onClick={handleCreateUserMail}
+          >
+            Criar Nova
+          </Button>
+        ) : (
+          <Tooltip
+            hasArrow
+            label="Ops, suas contas disponíveis acabaram! Você poder ver se algum dos nossos planos lhe atende melhor ou entrar em contato com o suporte."
+            bg="brand.100"
+            color="white"
+            shouldWrapChildren
+          >
+            <Button
+              variant="primaryRounded"
+              data-testid="create-new-account-button"
+              isDisabled={true}
+            >
+              Criar Nova
+            </Button>
+          </Tooltip>
+        )}
       </Flex>
 
       {isLoading ? (
@@ -168,6 +190,7 @@ const MailAccounts: FC = () => {
           {data?.results.map(userMail => (
             <Box
               key={userMail.id}
+              data-testid="mail-account-card"
               width="100%"
               borderWidth="1px"
               borderColor="gray.200"
