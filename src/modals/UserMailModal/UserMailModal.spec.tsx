@@ -1,11 +1,10 @@
-import { screen, waitFor, act, fireEvent } from '@testing-library/react';
+import { screen, act, fireEvent } from '@testing-library/react';
 import { render } from '@/mocks/contexts/wrapper';
 import { waitAbsoluteLoader } from '@/test/utils/loaders';
-import { rest } from 'msw';
 import { accounts } from '../../mocks/fixtures';
-import { server } from '../../mocks/server';
 import UserMailModal from './UserMailModal';
-import config from '../../config';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
+import { mockOnce } from '@/mocks/server';
 
 describe('UserMailModal', () => {
   it('should not render an alertdialog if isOpen is false', async () => {
@@ -85,11 +84,7 @@ describe('UserMailModal', () => {
   });
 
   it('should show an alert in toast if the validate user mail name returns error', async () => {
-    server.use(
-      rest.post(`${config.apiUrl}/mails/verify/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(400), ctx.json({}));
-      })
-    );
+    mockOnce('post', '/mails/verify/user/', 400, {});
 
     render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
@@ -101,14 +96,10 @@ describe('UserMailModal', () => {
       fireEvent.blur(input);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.getAllByText(
-        /^Esse nome de conta não está disponível, tente mudar um pouco\.$/i
-      ).length
-    ).toBeGreaterThan(0);
+    expect(description).toEqual(
+      'Esse nome de conta não está disponível, tente mudar um pouco.'
+    );
   });
 });
