@@ -1,35 +1,20 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { FC } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { rest } from 'msw';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { server } from '../../mocks/server';
-import { LoadingProvider } from '../../contexts/loading';
-import config from '../../config';
+import { act, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { Routes, Route } from 'react-router-dom';
+import { createRenderer } from '@/mocks/contexts/wrapper';
+import { mockOnce } from '@/mocks/server';
+import { waitAbsoluteLoader } from '@/test/utils/loaders';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 import RecoveryReset from './RecoveryReset';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
 const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<></>} />
-          <Route path="/:id" element={<>{children}</>} />
-        </Routes>
-      </BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
+  <Routes>
+    <Route path="/" element={<></>} />
+    <Route path="/:id" element={<>{children}</>} />
+  </Routes>
 );
+const render = createRenderer(wrapper);
 
 describe('RecoveryReset', () => {
   beforeEach(() => {
@@ -37,42 +22,27 @@ describe('RecoveryReset', () => {
   });
 
   it('should render an error page if the api resolves that id is not valid', async () => {
-    server.use(
-      rest.get(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
-        return res.once(ctx.status(404));
-      })
-    );
+    mockOnce('get', '/auth/recovery/:id/', 404, {});
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
-    expect(screen.queryByText(/^Esse link expirou...$/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Recuperar Senha/i)).toBeInTheDocument();
+    const expiredText = screen.queryByText(/^Esse link expirou...$/i);
+    const button = screen.queryByText(/Recuperar Senha/i);
 
-    const button = screen.getByText(/Recuperar Senha/i);
-    expect(button.tagName.toUpperCase()).toEqual('BUTTON');
+    expect(expiredText).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+    expect(button?.tagName.toUpperCase()).toEqual('BUTTON');
   });
 
   it('should redirect to the recovery e-mail page when click on the recovery password button in the error page', async () => {
-    server.use(
-      rest.get(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
-        return res.once(ctx.status(404));
-      })
-    );
+    mockOnce('get', '/auth/recovery/:id/', 404, {});
     expect(location.pathname).toEqual('/my-id');
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const button = screen.getByText(/Recuperar Senha/i);
 
@@ -81,60 +51,45 @@ describe('RecoveryReset', () => {
     });
 
     expect(location.pathname).toEqual('/recovery');
-
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
   });
 
   it('should not render the error messages if the api validate the session', async () => {
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
-    expect(
-      screen.queryByText(/^Esse link expirou...$/i)
-    ).not.toBeInTheDocument();
-    expect(screen.queryByText(/Recuperar Senha/i)).not.toBeInTheDocument();
+    const expiredText = screen.queryByText(/^Esse link expirou...$/i);
+    const recoveryText = screen.queryByText(/Recuperar Senha/i);
+
+    expect(expiredText).not.toBeInTheDocument();
+    expect(recoveryText).not.toBeInTheDocument();
   });
 
   it('should render a form and two password fields if the api validates the session', async () => {
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
-    expect(screen.queryByRole('form')).toBeInTheDocument();
-    expect(screen.queryByTestId('password1-field')).toBeInTheDocument();
-    expect(screen.queryByTestId('password2-field')).toBeInTheDocument();
-    expect(screen.queryByTestId('submit-button')).toBeInTheDocument();
+    const form = screen.queryByRole('form');
+    const passwordField = screen.queryByTestId('password1-field');
+    const confirmPasswordField = screen.queryByTestId('password2-field');
+    const submitButton = screen.queryByTestId('submit-button');
+
+    expect(form).toBeInTheDocument();
+    expect(passwordField).toBeInTheDocument();
+    expect(confirmPasswordField).toBeInTheDocument();
+    expect(submitButton).toBeInTheDocument();
   });
 
   it('should call the api, show an success message and redirect to home path when changes are made', async () => {
-    const apiCallback = jest.fn();
-    server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(200));
-      })
-    );
+    const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 200, {});
+    const expectedDescription =
+      'Senha alterada com sucesso! Faça login para continuar...';
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const password1 = screen.getByTestId('password1-field');
     const password2 = screen.getByTestId('password2-field');
@@ -147,38 +102,22 @@ describe('RecoveryReset', () => {
       await userEvent.click(submit);
     });
 
+    await waitAbsoluteLoader();
     await waitFor(() => {
       expect(apiCallback).toHaveBeenCalledTimes(1);
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
     });
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.queryByText(
-        /^Senha alterada com sucesso! Faça login para continuar\.\.\.$/i
-      )
-    ).toBeInTheDocument();
+    expect(description).toEqual(expectedDescription);
     expect(location.pathname).toEqual('/');
   });
 
   it('should display an error and not call the api if the passwords is sent empty', async () => {
-    const apiCallback = jest.fn();
-    server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(200));
-      })
-    );
+    const apiCallback = mockOnce('put', 'auth/recovery/:id/reset/', 200, {});
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const submit = screen.getByTestId('submit-button');
 
@@ -186,35 +125,19 @@ describe('RecoveryReset', () => {
       await userEvent.click(submit);
     });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.queryByText(/^Preencha e confirme a sua nova senha!$/i)
-    ).toBeInTheDocument();
+    expect(description).toEqual('Preencha e confirme a sua nova senha!');
     expect(apiCallback).toHaveBeenCalledTimes(0);
   });
 
   it('should display an error and not call the api if the passwords are different', async () => {
-    const apiCallback = jest.fn();
-    server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(200));
-      })
-    );
+    const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 200, {});
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const submit = screen.getByTestId('submit-button');
 
@@ -226,35 +149,22 @@ describe('RecoveryReset', () => {
       await userEvent.click(submit);
     });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.queryByText(/^Preencha e confirme a sua nova senha!$/i)
-    ).toBeInTheDocument();
+    expect(description).toEqual('Preencha e confirme a sua nova senha!');
     expect(apiCallback).toHaveBeenCalledTimes(0);
   });
 
   it('should display an error if the api gots an error', async () => {
-    const apiCallback = jest.fn();
-    server.use(
-      rest.put(`${config.apiUrl}/auth/recovery/:id/reset/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(400), ctx.json({ detail: 'My Any Error!' }));
-      })
-    );
+    const body = {
+      detail: 'My Any Error!',
+    };
+    const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 400, body);
 
-    render(<RecoveryReset />, { wrapper });
+    render(<RecoveryReset />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const submit = screen.getByTestId('submit-button');
 
@@ -266,14 +176,10 @@ describe('RecoveryReset', () => {
       await userEvent.click(submit);
     });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
+    const { description } = await waitForAlertInScreen();
 
-    expect(screen.queryByText(/My Any Error!/i)).toBeInTheDocument();
+    expect(description).toEqual(body.detail);
     expect(apiCallback).toHaveBeenCalledTimes(1);
   });
 });

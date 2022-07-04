@@ -26,3 +26,16 @@ export const wrapper: FC = ({ children }) => (
 export const render = (ui: ReactElement) => {
   originalRender(ui, { wrapper });
 };
+
+export const createRenderer = (NewWrapper: FC) => {
+  const Wrapper = wrapper;
+  const Element: FC = ({ children }) => (
+    <Wrapper>
+      <NewWrapper>{children}</NewWrapper>
+    </Wrapper>
+  );
+  const render = (ui: ReactElement) => {
+    return originalRender(ui, { wrapper: Element });
+  };
+  return render;
+};
