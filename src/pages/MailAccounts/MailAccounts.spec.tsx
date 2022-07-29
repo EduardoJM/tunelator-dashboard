@@ -1,41 +1,12 @@
-import { FC } from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
+import { render, screen, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
-import { ChakraProvider } from '@chakra-ui/react';
-import { AuthProvider } from '../../contexts/auth';
-import { PlanProvider } from '../../contexts/plan';
-import { LoadingProvider } from '../../contexts/loading';
-import { activePlan, plans } from '../../mocks/fixtures';
+import { activePlan } from '../../mocks/fixtures';
 import { server } from '../../mocks/server';
 import { PlanType } from '../../entities/Plan';
+import { waitLoaders } from '@/test/utils/loaders';
+import { wrapper } from '@/mocks/contexts/wrapper';
 import config from '../../config';
 import MailAccounts from './MailAccounts';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <ChakraProvider theme={config.theme}>
-    <QueryClientProvider client={queryClient}>
-      <LoadingProvider>
-        <BrowserRouter>
-          <AuthProvider>
-            <PlanProvider>{children}</PlanProvider>
-          </AuthProvider>
-        </BrowserRouter>
-      </LoadingProvider>
-    </QueryClientProvider>
-  </ChakraProvider>
-);
 
 describe('MailAccounts', () => {
   beforeEach(() => {
@@ -45,12 +16,7 @@ describe('MailAccounts', () => {
   it('should render at least five cards with received mail accounts if has more than five', async () => {
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
+    await waitLoaders();
 
     const cards = screen.queryAllByTestId('mail-account-card');
     expect(cards).toHaveLength(5);
@@ -59,12 +25,7 @@ describe('MailAccounts', () => {
   it('should render an create account button', async () => {
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
+    await waitLoaders();
 
     const button = screen.queryByTestId('create-new-account-button');
     expect(button).toBeInTheDocument();
@@ -83,13 +44,8 @@ describe('MailAccounts', () => {
     );
     render(<MailAccounts />, { wrapper });
 
-    await waitFor(() => {
-      expect(
-        screen.queryByRole('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-      expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
-    });
-    
+    await waitLoaders();
+
     await waitFor(() => {
       expect(screen.queryByTestId('create-new-account-button')).toBeDisabled();
     });

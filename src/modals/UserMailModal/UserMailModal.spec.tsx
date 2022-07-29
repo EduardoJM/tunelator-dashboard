@@ -1,87 +1,32 @@
-import { FC } from 'react';
-import {
-  render,
-  screen,
-  waitFor,
-  act,
-  fireEvent,
-} from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { BrowserRouter } from 'react-router-dom';
-import { rest } from 'msw';
-import { AuthProvider } from '../../contexts/auth';
-import { PlanProvider } from '../../contexts/plan';
-import { LoadingProvider } from '../../contexts/loading';
-import { activePlan, plans, accounts } from '../../mocks/fixtures';
-import { server } from '../../mocks/server';
-import { PlanType } from '../../entities/Plan';
+import { screen, act, fireEvent } from '@testing-library/react';
+import { render } from '@/mocks/contexts/wrapper';
+import { waitAbsoluteLoader } from '@/test/utils/loaders';
+import { accounts } from '../../mocks/fixtures';
 import UserMailModal from './UserMailModal';
-import config from '../../config';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <AuthProvider>
-          <PlanProvider>{children}</PlanProvider>
-        </AuthProvider>
-      </BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
-);
+import { waitForAlertInScreen } from '@/test/utils/alerts';
+import { mockOnce } from '@/mocks/server';
 
 describe('UserMailModal', () => {
   it('should not render an alertdialog if isOpen is false', async () => {
-    render(
-      <UserMailModal isOpen={false} userMail={null} onClose={() => {}} />,
-      {
-        wrapper,
-      }
-    );
+    render(<UserMailModal isOpen={false} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
   });
 
   it('should render an alertdialog if isOpen is true', async () => {
-    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />, {
-      wrapper,
-    });
+    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     expect(screen.queryByRole('alertdialog')).toBeInTheDocument();
   });
 
   it('should have an creation title if userMail is parsed as null', async () => {
-    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />, {
-      wrapper,
-    });
+    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     expect(screen.queryByText(/^Criar Conta de E-mail$/i)).toBeInTheDocument();
   });
@@ -89,31 +34,18 @@ describe('UserMailModal', () => {
   it('should have an update title if userMail is parsed as valid', async () => {
     const userMail = accounts.results[0];
     render(
-      <UserMailModal isOpen={true} userMail={userMail} onClose={() => {}} />,
-      {
-        wrapper,
-      }
+      <UserMailModal isOpen={true} userMail={userMail} onClose={() => {}} />
     );
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     expect(screen.queryByText(/^Editar Conta de E-mail$/i)).toBeInTheDocument();
   });
 
   it('should contains valid form inputs', async () => {
-    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />, {
-      wrapper,
-    });
+    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     expect(screen.queryByTestId('account-name-input')).toBeInTheDocument();
     expect(screen.queryByTestId('account-user-input')).toBeInTheDocument();
@@ -123,15 +55,9 @@ describe('UserMailModal', () => {
   });
 
   it('should the account user input must not disabled and the helper text not rendered if the userMail is null', async () => {
-    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />, {
-      wrapper,
-    });
+    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const input = screen.getByTestId('account-user-input');
     expect(input).not.toBeDisabled();
@@ -144,17 +70,10 @@ describe('UserMailModal', () => {
   it('should the account user input must disabled and the helper text rendered if the userMail is not null', async () => {
     const [userMail] = accounts.results;
     render(
-      <UserMailModal isOpen={true} userMail={userMail} onClose={() => {}} />,
-      {
-        wrapper,
-      }
+      <UserMailModal isOpen={true} userMail={userMail} onClose={() => {}} />
     );
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const input = screen.getByTestId('account-user-input');
     expect(input).toBeDisabled();
@@ -165,21 +84,11 @@ describe('UserMailModal', () => {
   });
 
   it('should show an alert in toast if the validate user mail name returns error', async () => {
-    server.use(
-      rest.post(`${config.apiUrl}/mails/verify/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(400), ctx.json({}));
-      })
-    );
+    mockOnce('post', '/mails/verify/user/', 400, {});
 
-    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />, {
-      wrapper,
-    });
+    render(<UserMailModal isOpen={true} userMail={null} onClose={() => {}} />);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
-    });
+    await waitAbsoluteLoader();
 
     const input = screen.getByTestId('account-user-input');
 
@@ -187,14 +96,10 @@ describe('UserMailModal', () => {
       fireEvent.blur(input);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.getAllByText(
-        /^Esse nome de conta não está disponível, tente mudar um pouco\.$/i
-      ).length
-    ).toBeGreaterThan(0);
+    expect(description).toEqual(
+      'Esse nome de conta não está disponível, tente mudar um pouco.'
+    );
   });
 });
