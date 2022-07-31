@@ -6,3 +6,6 @@ export { default as PlanItem } from './PlanItem';
 
 export type { PlansGridProps } from './PlansGrid';
 export { default as PlansGrid } from './PlansGrid';
+
+export type { CurrentPlanBoxProps } from './CurrentPlanBox';
+export { default as CurrentPlanBox } from './CurrentPlanBox';

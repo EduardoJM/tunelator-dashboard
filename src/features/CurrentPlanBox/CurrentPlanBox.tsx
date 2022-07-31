@@ -1,8 +1,7 @@
 import { FC } from 'react';
 import { Box, Heading, Divider, Text } from '@chakra-ui/react';
-import { PriceInCents } from '../../ValueFormat';
-import { Button } from '../../Common';
-import { ActivePlan } from '../../../entities/Plan';
+import { Button, PriceInCents } from '@/components';
+import { ActivePlan } from '@/entities/Plan';
 
 export interface CurrentPlanBoxProps {
   plan: ActivePlan;
