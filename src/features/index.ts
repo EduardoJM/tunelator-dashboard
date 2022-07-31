@@ -9,3 +9,5 @@ export { default as PlansGrid } from './PlansGrid';
 
 export type { CurrentPlanBoxProps } from './CurrentPlanBox';
 export { default as CurrentPlanBox } from './CurrentPlanBox';
+
+export { default as RequireAuth } from './RequireAuth';
