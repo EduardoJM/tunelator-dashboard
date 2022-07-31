@@ -65,14 +65,6 @@ export interface ButtonProps extends ChakraButtonProps {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, ...props }, ref) => {
     const mergedProps = useMemo(() => {
-      if (
-        !Object.prototype.hasOwnProperty.call(
-          CustomButtonVariantMapping,
-          variant
-        )
-      ) {
-        return props;
-      }
       return {
         ...props,
         ...CustomButtonVariantMapping[variant],
