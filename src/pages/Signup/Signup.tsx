@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Flex, Box } from '@chakra-ui/react';
 import SignupBox from './SignupBox';
-import RequireNoAuth from '../../layouts/RequireNoAuth';
+import { RequireNoAuth } from '@/features';
 
 const Signup: FC = () => {
   return (
