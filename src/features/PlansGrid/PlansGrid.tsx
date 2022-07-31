@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { SimpleGrid, useBreakpointValue } from '@chakra-ui/react';
 import PlanItem from '../PlanItem';
-import { Plan } from '../../../entities/Plan';
+import { Plan } from '@/entities/Plan';
 
 export interface PlansGridProps {
   plans: Plan[];

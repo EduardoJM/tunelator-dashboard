@@ -11,9 +11,8 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai';
-import { Button } from '../../Common';
-import { PriceInCents } from '../../ValueFormat';
-import { Plan } from '../../../entities/Plan';
+import { Button, PriceInCents } from '@/components';
+import { Plan } from '@/entities/Plan';
 
 export interface PlanItemProps {
   plan: Plan;

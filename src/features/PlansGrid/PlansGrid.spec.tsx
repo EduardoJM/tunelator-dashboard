@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import PlansGrid from './PlansGrid';
-import { Plan, PlanType } from '../../../entities/Plan';
+import { Plan, PlanType } from '@/entities/Plan';
 
 const plan1: Plan = {
   id: 12,

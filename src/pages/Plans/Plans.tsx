@@ -1,7 +1,8 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { PlansGrid, Button } from '../../components';
+import { Button } from '../../components';
+import { PlansGrid } from '@/features';
 import CurrentPlanSection from './CurrentPlanSection';
 import AlreadyPaidSection from './AlreadyPaidSection';
 import { usePlan } from '../../contexts/plan';
