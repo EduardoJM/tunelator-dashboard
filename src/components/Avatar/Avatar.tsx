@@ -1,6 +1,6 @@
-import { FC, useMemo } from "react";
-import { Flex, Text } from "@chakra-ui/react";
-import { User } from "../../entities/User";
+import { FC, useMemo } from 'react';
+import { Flex, Text } from '@chakra-ui/react';
+import { User } from '../../entities/User';
 
 export interface AvatarProps {
   user: User;
@@ -29,8 +29,9 @@ const Avatar: FC<AvatarProps> = ({ user }) => {
       alignItems="center"
       justifyContent="center"
       mr="5px"
+      data-testid="avatar"
     >
-      <Text fontWeight={"bold"}>{initials}</Text>
+      <Text fontWeight={'bold'}>{initials}</Text>
     </Flex>
   );
 };
