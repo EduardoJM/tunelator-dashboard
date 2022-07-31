@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC } from 'react';
 import { useSpring, animated, easings } from 'react-spring';
 import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { FaWrench } from 'react-icons/fa';
@@ -35,27 +35,6 @@ const CreatingMailBox: FC = () => {
     from: { transform: 'translateY(100px)' },
   });
 
-  const [dots, setDots] = useState(0);
-
-  const dotsText = useMemo(() => {
-    if (dots === 0) {
-      return '';
-    }
-    return Array.from({ length: (dots + 4) % 4 })
-      .map(() => '.')
-      .join('');
-  }, [dots]);
-
-  useEffect(() => {
-    const interval = setTimeout(() => {
-      setDots(currentDots => currentDots + 1);
-    }, 500);
-
-    return () => {
-      clearTimeout(interval);
-    };
-  }, [dots]);
-
   return (
     <Box
       bgColor="brand.500"
@@ -66,6 +45,7 @@ const CreatingMailBox: FC = () => {
       boxShadow="lg"
       mb="10px"
       overflow="hidden"
+      data-testid="creating-mail-box"
     >
       <animated.div
         style={{
@@ -106,7 +86,7 @@ const CreatingMailBox: FC = () => {
       </animated.div>
       <Flex p="10px" h={textBlockHeight} alignItems="center">
         <Text fontSize="lg" fontWeight="bold">
-          Criando Conta{dotsText}
+          Criando sua Conta
         </Text>
       </Flex>
     </Box>

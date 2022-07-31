@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { getMailAccountById } from '../../../services/api/mailAccounts';
-import { CreatingMailBox } from '../../Placeholders';
+import { CreatingMailBox } from '@/components';
+import { getMailAccountById } from '@/services/api/mailAccounts';
 
 export interface WaitMailAccountDoneProps {
   accountId: number;
@@ -12,13 +12,17 @@ const WaitMailAccountDone: FC<WaitMailAccountDoneProps> = ({
   onAccountIsDone,
 }) => {
   useEffect(() => {
-    const interval = setTimeout(async () => {
+    const checkForDone = async () => {
       const data = await getMailAccountById(accountId);
 
       if (!!data.mail) {
         onAccountIsDone();
       }
-    }, 2000);
+    };
+
+    const interval = setTimeout(checkForDone, 2000);
+
+    checkForDone();
 
     return () => {
       clearTimeout(interval);

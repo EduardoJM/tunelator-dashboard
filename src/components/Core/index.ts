@@ -1,6 +1,3 @@
-export type { WaitMailAccountDoneProps } from './WaitMailAccountDone';
-export { default as WaitMailAccountDone } from './WaitMailAccountDone';
-
 export type { PlanItemProps } from './PlanItem';
 export { default as PlanItem } from './PlanItem';
 
