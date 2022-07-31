@@ -1,4 +1,4 @@
-import { FC, useMemo, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import {
   Button as ChakraButton,
   ButtonProps as ChakraButtonProps,
@@ -64,22 +64,13 @@ export interface ButtonProps extends ChakraButtonProps {
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant, ...props }, ref) => {
-    const mergedProps = useMemo(() => {
-      if (
-        !Object.prototype.hasOwnProperty.call(
-          CustomButtonVariantMapping,
-          variant
-        )
-      ) {
-        return props;
-      }
-      return {
-        ...props,
-        ...CustomButtonVariantMapping[variant],
-      };
-    }, [variant, props]);
-
-    return <ChakraButton ref={ref} {...mergedProps} />;
+    return (
+      <ChakraButton
+        ref={ref}
+        {...props}
+        {...CustomButtonVariantMapping[variant]}
+      />
+    );
   }
 );
 

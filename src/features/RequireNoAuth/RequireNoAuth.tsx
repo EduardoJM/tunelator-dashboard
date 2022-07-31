@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '@/contexts/auth';
 
 const RequireNoAuth: FC = ({ children }) => {
   const { loggedIn } = useAuth();

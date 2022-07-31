@@ -1,6 +1,5 @@
 import { FC } from 'react';
-import { Container, Heading } from '@chakra-ui/react';
-import Dashboard from '../../layouts/Dashboard';
+import { Heading } from '@chakra-ui/react';
 import LatestMailAccounts from './LatestMailAccounts';
 import LatestReceivedMails from './LatestReceivedMails';
 

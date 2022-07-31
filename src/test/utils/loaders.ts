@@ -16,3 +16,7 @@ export const waitLoaders = async () => {
   await waitAbsoluteLoader();
   await waitDataFetchLoader();
 };
+
+export const waitForTime = async (time: number) => {
+  await new Promise(resolve => setTimeout(resolve, time));
+};

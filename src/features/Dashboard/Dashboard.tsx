@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Flex, Box, Container } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
-import NavBar from '../../components/NavBar';
-import RequireAuth from '../RequireAuth';
+import { RequireAuth } from '@/features';
+import NavBar from '@/components/NavBar';
 
 const Dashboard: FC = ({ children }) => {
   return (

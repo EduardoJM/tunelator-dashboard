@@ -1,10 +1,6 @@
 import { screen, render, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  PlanType,
-  ActivePlan,
-  ActivePlanResponse,
-} from '../../../entities/Plan';
+import { PlanType, ActivePlan, ActivePlanResponse } from '@/entities/Plan';
 import CurrentPlanBox from './CurrentPlanBox';
 
 const basePlan: ActivePlanResponse = {

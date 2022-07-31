@@ -1,6 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Plan, PlanType } from '../../../entities/Plan';
+import { Plan, PlanType } from '@/entities/Plan';
 import PlanItem from './PlanItem';
 
 const plan: Plan = {

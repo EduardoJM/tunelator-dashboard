@@ -1,6 +1,6 @@
 import { FC, lazy } from 'react';
 import { Routes, Route, Outlet } from 'react-router-dom';
-import Dashboard from './layouts/Dashboard';
+import Dashboard from './features/Dashboard';
 
 const NotFoundPage = lazy(() => import('./pages/NotFound'));
 

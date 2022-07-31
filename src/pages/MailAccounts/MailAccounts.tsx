@@ -29,7 +29,7 @@ import UserMailModal from '@/modals/UserMailModal';
 import UserMailDeleteModal from '@/modals/UserMailDeleteModal';
 import { DateTime, Pagination } from '@/components';
 import NoAccountsBox from '@/components/Placeholders/NoAccountsBox';
-import { WaitMailAccountDone } from '@/components';
+import { WaitMailAccountDone } from '@/features';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
