@@ -52,7 +52,7 @@ const PlanItem: FC<PlanItemProps> = ({ plan, selected, onSelect }) => {
       >
         <PriceInCents value={plan.monthly_price} />
         <Text fontSize="sm" display="inline">
-          /mês
+          {t('plansItem.monthPeriod')}
         </Text>
       </Heading>
 
