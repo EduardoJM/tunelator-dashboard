@@ -11,6 +11,7 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { AiFillCloseCircle, AiFillCheckCircle } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 import { Button, PriceInCents } from '@/components';
 import { Plan } from '@/entities/Plan';
 
@@ -21,6 +22,8 @@ export interface PlanItemProps {
 }
 
 const PlanItem: FC<PlanItemProps> = ({ plan, selected, onSelect }) => {
+  const { t } = useTranslation();
+
   return (
     <VStack
       key={plan.id}
@@ -91,7 +94,7 @@ const PlanItem: FC<PlanItemProps> = ({ plan, selected, onSelect }) => {
           isDisabled={selected}
           onClick={onSelect}
         >
-          Selecionar
+          {t('plansItem.select')}
         </Button>
       </Flex>
     </VStack>
