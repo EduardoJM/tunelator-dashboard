@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Box, Heading, Divider, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { Button, PriceInCents } from '@/components';
 import { ActivePlan } from '@/entities/Plan';
 
@@ -12,6 +13,8 @@ const CurrentPlanBox: FC<CurrentPlanBoxProps> = ({
   plan,
   onGoToCustomerPortalClick,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box
       width="100%"
@@ -22,8 +25,8 @@ const CurrentPlanBox: FC<CurrentPlanBoxProps> = ({
       boxShadow="md"
       _hover={{ backgroundColor: '#EFEFEF' }}
     >
-      <Heading as="h2" size="lg" color="brand.500">
-        Meu Plano
+      <Heading as="h2" size="lg" color="brand.500" data-testid="plan-box-title">
+        {t('currentPlanBox.title')}
       </Heading>
       <Divider mb="20px" />
       <Heading as="h3" size="md">
@@ -34,7 +37,7 @@ const CurrentPlanBox: FC<CurrentPlanBoxProps> = ({
       <Heading as="h3" size="2xl" color="brand.500">
         <PriceInCents value={plan.monthly_price} />
         <Text fontSize="sm" display="inline">
-          /mês
+          {t('currentPlanBox.monthPeriod')}
         </Text>
       </Heading>
       {!plan.is_free && (
@@ -45,7 +48,7 @@ const CurrentPlanBox: FC<CurrentPlanBoxProps> = ({
             variant="primaryRounded"
             onClick={onGoToCustomerPortalClick}
           >
-            Gerenciar
+            {t('currentPlanBox.manage')}
           </Button>
         </>
       )}

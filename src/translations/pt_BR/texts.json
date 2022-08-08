@@ -3,6 +3,11 @@
     "plansItem": {
       "select": "Selecionar",
       "monthPeriod": "/mês"
+    },
+    "currentPlanBox": {
+      "manage": "Gerenciar",
+      "monthPeriod": "/mês",
+      "title": "Meu Plano"
     }
   }
 }
