@@ -1,8 +1,11 @@
 import { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import styles from './AbsoluteLoadingIndicator.module.scss';
 
 const AbsoluteLoadingIndicator: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Flex
       width="100%"
@@ -35,8 +38,13 @@ const AbsoluteLoadingIndicator: FC = () => {
           />
         </g>
       </svg>
-      <Text color="#FFF" mt="20px" fontSize="lg">
-        Carregando...
+      <Text
+        color="#FFF"
+        mt="20px"
+        fontSize="lg"
+        data-testid="absolute-loading-text"
+      >
+        {t('loaders.text')}
       </Text>
     </Flex>
   );

@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 import { useSpring, animated, easings } from 'react-spring';
 import { RiMailSendLine } from 'react-icons/ri';
+import { useTranslation } from 'react-i18next';
 
 const NoReceivedMailsBox: FC = () => {
   const mailsIconStyle = useSpring({
@@ -13,6 +14,7 @@ const NoReceivedMailsBox: FC = () => {
     to: { transform: 'translateX(100%)' },
     from: { transform: 'translateX(-100%)' },
   });
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -34,7 +36,7 @@ const NoReceivedMailsBox: FC = () => {
         <RiMailSendLine size="48px" />
       </animated.div>
       <Text mt="20px" fontSize="md" fontWeight="bold">
-        Nenhum e-mail para ser mostrado.
+        {t('noReceivedMailsBox.description')}
       </Text>
     </Flex>
   );

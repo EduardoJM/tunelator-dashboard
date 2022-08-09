@@ -8,6 +8,19 @@
       "manage": "Gerenciar",
       "monthPeriod": "/mês",
       "title": "Meu Plano"
+    },
+    "loaders": {
+      "text": "Carregando..."
+    },
+    "creatingMailBox": {
+      "text": "Criando sua Conta"
+    },
+    "noAccountsBox": {
+      "description": "Nenhuma conta para ser mostrada.",
+      "createNew": "Criar Primeira Conta"
+    },
+    "noReceivedMailsBox": {
+      "description": "Nenhum e-mail para ser mostrado."
     }
   }
 }

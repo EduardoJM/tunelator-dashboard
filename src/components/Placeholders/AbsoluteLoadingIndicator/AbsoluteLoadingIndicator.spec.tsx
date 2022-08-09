@@ -22,7 +22,7 @@ describe('AbsoluteLoadingIndicator', () => {
   it('must render a loading text', () => {
     render(<AbsoluteLoadingIndicator />);
 
-    const text = screen.queryByText(/carregando/i);
+    const text = screen.queryByTestId('absolute-loading-text');
 
     expect(text).toBeInTheDocument();
   });
