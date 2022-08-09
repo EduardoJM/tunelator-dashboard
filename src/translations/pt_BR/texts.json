@@ -21,6 +21,9 @@
     },
     "noReceivedMailsBox": {
       "description": "Nenhum e-mail para ser mostrado."
+    },
+    "format": {
+      "dateSeparator": " às "
     }
   }
 }
