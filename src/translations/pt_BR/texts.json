@@ -24,6 +24,23 @@
     },
     "format": {
       "dateSeparator": " às "
+    },
+    "navbar": {
+      "home": "Início",
+      "accounts": "Minhas Contas",
+      "received": "E-mails Recebidos",
+      "plans": "Planos e Assinatura",
+      "profile": "Editar Perfil",
+      "logout": "Sair"
+    },
+    "sidenav": {
+      "home": "Início",
+      "accounts": "Minhas Contas",
+      "received": "E-mails Recebidos",
+      "plans": "Planos e Assinatura",
+      "profile": "Editar Perfil",
+      "logout": "Sair",
+      "back": "Voltar"
     }
   }
 }
