@@ -84,8 +84,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
   const handleSave = () => {
     if (!mailUserIsValid) {
       toast({
-        title: t('modals.createaccount.errortitle'),
-        description: t('modals.createaccount.errordesc'),
+        title: t('errors.title'),
+        description: t('errors.usedaccount'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -106,8 +106,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
     setMailUserIsValid(isValid);
     if (!isValid) {
       toast({
-        title: t('modals.createaccount.errortitle'),
-        description: t('modals.createaccount.errordesc'),
+        title: t('errors.title'),
+        description: t('errors.usedaccount'),
         status: 'error',
         duration: 5000,
         isClosable: true,

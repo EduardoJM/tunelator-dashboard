@@ -1,4 +1,5 @@
 import { ValidationError } from 'yup';
+import i18n from 'i18next';
 
 export interface Error {
   title: string;
@@ -6,8 +7,8 @@ export interface Error {
 }
 
 export const fieldsMapping = {
-  email: 'E-mail',
-  password: 'Senha',
+  email: i18n.t('fields.email'),
+  password: i18n.t('fields.password'),
 };
 
 export function getErrorMessages(err: any): Error[] {
@@ -17,8 +18,8 @@ export function getErrorMessages(err: any): Error[] {
     if (typeof err.response.data === 'string') {
       return [
         {
-          title: 'Oopps!',
-          text: 'Não foi possível completar a operação.',
+          title: i18n.t('errors.title'),
+          text: i18n.t('errors.default'),
         },
       ];
     }
@@ -44,8 +45,8 @@ export function getErrorMessages(err: any): Error[] {
   }
   return [
     {
-      title: 'Oopps!',
-      text: 'Não foi possível completar a operação.',
+      title: i18n.t('errors.title'),
+      text: i18n.t('errors.default'),
     },
   ];
 }

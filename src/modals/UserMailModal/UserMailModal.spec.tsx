@@ -98,6 +98,6 @@ describe('UserMailModal', () => {
 
     const { description } = await waitForAlertInScreen();
 
-    expect(description).toEqual('modals.createaccount.errordesc');
+    expect(description).toEqual('errors.usedaccount');
   });
 });

@@ -7,8 +7,8 @@ describe('errors', () => {
 
     expect(messages).toMatchObject([
       {
-        text: 'Não foi possível completar a operação.',
-        title: 'Oopps!',
+        title: 'errors.title',
+        text: 'errors.default',
       },
     ]);
   });
@@ -58,8 +58,8 @@ describe('errors', () => {
 
     expect(messages).toMatchObject([
       {
-        text: 'Não foi possível completar a operação.',
-        title: 'Oopps!',
+        title: 'errors.title',
+        text: 'errors.default',
       },
     ]);
   });
