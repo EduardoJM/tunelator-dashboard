@@ -40,7 +40,7 @@ describe('UserMailDeleteModal', () => {
       />
     );
 
-    const header = screen.queryByText(/^Deletar Conta de E-mail$/i);
+    const header = screen.getByTestId('modal-title');
 
     expect(header).toBeInTheDocument();
   });
@@ -54,8 +54,8 @@ describe('UserMailDeleteModal', () => {
       />
     );
 
-    const cancelButton = screen.queryByText(/^Cancelar$/i);
-    const confirmButton = screen.queryByText(/^Deletar$/i);
+    const cancelButton = screen.getByTestId('cancel-button');
+    const confirmButton = screen.getByTestId('confirm-button');
 
     expect(cancelButton).toBeInTheDocument();
     expect(confirmButton).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('UserMailDeleteModal', () => {
       />
     );
 
-    const cancelButton = screen.getByText(/^Cancelar$/i);
+    const cancelButton = screen.getByTestId('cancel-button');
 
     await act(async () => {
       await userEvent.click(cancelButton);
@@ -90,7 +90,7 @@ describe('UserMailDeleteModal', () => {
       />
     );
 
-    const confirmButton = screen.getByText(/^Deletar$/i);
+    const confirmButton = screen.getByTestId('confirm-button');
 
     await act(async () => {
       await userEvent.click(confirmButton);
