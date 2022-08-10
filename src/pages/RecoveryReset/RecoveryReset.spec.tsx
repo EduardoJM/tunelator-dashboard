@@ -84,8 +84,7 @@ describe('RecoveryReset', () => {
 
   it('should call the api, show an success message and redirect to home path when changes are made', async () => {
     const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 200, {});
-    const expectedDescription =
-      'Senha alterada com sucesso! Faça login para continuar...';
+    const expectedDescription = 'reset.message';
 
     render(<RecoveryReset />);
 
@@ -128,7 +127,7 @@ describe('RecoveryReset', () => {
     await waitAbsoluteLoader();
     const { description } = await waitForAlertInScreen();
 
-    expect(description).toEqual('Preencha e confirme a sua nova senha!');
+    expect(description).toEqual('errors.wrongchangepassword');
     expect(apiCallback).toHaveBeenCalledTimes(0);
   });
 
@@ -152,7 +151,7 @@ describe('RecoveryReset', () => {
     await waitAbsoluteLoader();
     const { description } = await waitForAlertInScreen();
 
-    expect(description).toEqual('Preencha e confirme a sua nova senha!');
+    expect(description).toEqual('errors.wrongchangepassword');
     expect(apiCallback).toHaveBeenCalledTimes(0);
   });
 

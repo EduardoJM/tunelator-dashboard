@@ -13,7 +13,7 @@ export const fieldsMapping = {
 
 export function getErrorMessages(err: any): Error[] {
   if (err instanceof ValidationError) {
-    return err.errors.map(text => ({ title: 'Oopps!', text }));
+    return err.errors.map(text => ({ title: i18n.t('errors.title'), text }));
   } else if (!!err.response) {
     if (typeof err.response.data === 'string') {
       return [
@@ -27,7 +27,7 @@ export function getErrorMessages(err: any): Error[] {
     if (Object.prototype.hasOwnProperty.call(data, 'detail')) {
       return [
         {
-          title: 'Oopps!',
+          title: i18n.t('errors.title'),
           text: String(data.detail),
         },
       ];

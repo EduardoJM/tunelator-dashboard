@@ -10,6 +10,7 @@ import { server } from '../../../mocks/server';
 import userFactory from '../../../mocks/factories/user';
 import config from '../../../config';
 import Profile from './Profile';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -263,12 +264,8 @@ describe('Profile', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.queryByText(/^Insira um nome válido\.$/i)
-    ).toBeInTheDocument();
+    expect(description).toEqual('errors.wrongname');
   });
 });

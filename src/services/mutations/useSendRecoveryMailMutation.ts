@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { useMutation } from 'react-query';
+import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { sendRecoveryEmail } from '../api/recovery';
 
@@ -10,6 +11,7 @@ interface SendRecoveryMailMutationProps {
 const useSendRecoveryMailMutation = () => {
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
+  const { t } = useTranslation();
 
   return useMutation<unknown, unknown, SendRecoveryMailMutationProps>(
     async ({ email }) => {
@@ -18,9 +20,8 @@ const useSendRecoveryMailMutation = () => {
       await sendRecoveryEmail(email);
 
       toast({
-        title: 'Sucesso',
-        description:
-          'Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!',
+        title: t('recovery.success'),
+        description: t('recovery.message'),
         status: 'success',
         duration: 5000,
         isClosable: true,

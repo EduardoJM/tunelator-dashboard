@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 import { object, string, boolean } from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { getErrorMessages } from '../../utils/errors';
 import { updateMailAccount } from '../api/mailAccounts';
@@ -18,6 +19,7 @@ const useUpdateUserMailMutation = (onClose?: () => void) => {
   const queryClient = useQueryClient();
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
+  const { t } = useTranslation();
 
   return useMutation<unknown, unknown, UpdateUserMailMutationProps>(
     async ({
@@ -32,11 +34,11 @@ const useUpdateUserMailMutation = (onClose?: () => void) => {
 
       try {
         const createOrEditMailSchema = object({
-          name: string().required('Insira um nome válido.'),
+          name: string().required(t('errors.wrongname')),
           mail_user: string().required(),
           redirect_enabled: boolean().required(),
           redirect_to_my_email: boolean().required(),
-          redirect_to: string().optional().email('Insira um e-mail válido'),
+          redirect_to: string().optional().email(t('errors.wrongemail')),
         });
 
         createOrEditMailSchema.validateSync({

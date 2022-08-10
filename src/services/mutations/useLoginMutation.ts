@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { object, string, boolean } from 'yup';
 import { useLoading } from '../../contexts/loading';
 import { getErrorMessages } from '../../utils/errors';
@@ -19,6 +20,7 @@ const useLoginMutation = (setUserData: (user: User) => void) => {
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return useMutation<unknown, unknown, LoginMutationProps>(
     async ({ email, password, remember, from }) => {
@@ -27,9 +29,9 @@ const useLoginMutation = (setUserData: (user: User) => void) => {
       try {
         const loginSchema = object({
           email: string()
-            .email('Insira um e-mail válido.')
-            .required('Insira um e-mail válido.'),
-          password: string().required('Insira sua senha.'),
+            .email(t('errors.wrongemail'))
+            .required(t('errors.wrongemail')),
+          password: string().required(t('errors.wrongpassword')),
           remember: boolean().required(),
         });
 
@@ -57,8 +59,8 @@ const useLoginMutation = (setUserData: (user: User) => void) => {
         }
 
         toast({
-          title: 'Sucesso',
-          description: 'Login efetuado com sucesso!',
+          title: t('login.success'),
+          description: t('login.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

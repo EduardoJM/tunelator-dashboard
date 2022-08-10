@@ -75,11 +75,33 @@
     "errors": {
       "title": "Oopps!",
       "default": "Não foi possível completar a operação.",
-      "usedaccount": "Esse nome de conta não está disponível, tente mudar um pouco."
+      "usedaccount": "Esse nome de conta não está disponível, tente mudar um pouco.",
+      "wrongname": "Insira um nome válido.",
+      "wronglastname": "Insira um sobrenome válido.",
+      "wrongemail": "Insira um e-mail válido.",
+      "wrongpassword": "Insira sua senha.",
+      "wrongchangepassword": "Preencha e confirme a sua nova senha!",
+      "wrongterms": "Você precisa concordar com os termos de uso."
     },
     "fields": {
       "email": "E-mail",
       "password": "Senha"
+    },
+    "login": {
+      "success": "Sucesso",
+      "message": "Login efetuado com sucesso!"
+    },
+    "reset": {
+      "success": "Sucesso",
+      "message": "Senha alterada com sucesso! Faça login para continuar..."
+    },
+    "recovery": {
+      "success": "Sucesso",
+      "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
+    },
+    "userupdate": {
+      "success": "Sucesso",
+      "message": "Dados atualizados com sucesso!"
     }
   }
 }

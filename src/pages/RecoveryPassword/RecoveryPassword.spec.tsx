@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { rest } from 'msw';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 import RecoveryPassword from './RecoveryPassword';
 import { LoadingProvider } from '../../contexts/loading';
 import { server } from '../../mocks/server';
@@ -56,11 +57,10 @@ describe('RecoveryPassword', () => {
 
     await waitFor(() => {
       expect(apiCallback).toHaveBeenCalledTimes(1);
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
     });
 
-    expect(
-      screen.queryByText(/Se o e-mail estiver associado/i)
-    ).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+
+    expect(description).toEqual('recovery.message');
   });
 });
