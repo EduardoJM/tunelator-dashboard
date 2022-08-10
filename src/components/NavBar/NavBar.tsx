@@ -24,11 +24,13 @@ import {
   MdLogout,
   MdAccountCircle,
 } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import Button from '../Common/Button';
 import SideNav from './SideNav';
 import { useAuth } from '../../contexts/auth';
 
 const NavBar: FC = () => {
+  const { t } = useTranslation();
   const { userData, logout } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -105,7 +107,7 @@ const NavBar: FC = () => {
           }
           _hover={{ textDecoration: 'none' }}
         >
-          Início
+          {t('navbar.home')}
         </Link>
         <Link
           as={RoutingLink}
@@ -120,7 +122,7 @@ const NavBar: FC = () => {
           mr="20px"
           _hover={{ textDecoration: 'none' }}
         >
-          Minhas Contas
+          {t('navbar.accounts')}
         </Link>
         <Link
           as={RoutingLink}
@@ -135,7 +137,7 @@ const NavBar: FC = () => {
           }
           _hover={{ textDecoration: 'none' }}
         >
-          E-mails Recebidos
+          {t('navbar.received')}
         </Link>
         <Link
           as={RoutingLink}
@@ -148,7 +150,7 @@ const NavBar: FC = () => {
           mr="20px"
           _hover={{ textDecoration: 'none' }}
         >
-          Planos e Assinatura
+          {t('navbar.plans')}
         </Link>
         <Spacer display={linksDisplay} />
         <Menu>
@@ -163,14 +165,14 @@ const NavBar: FC = () => {
               icon={<MdAccountCircle size="24px" />}
               onClick={handleGoToProfile}
             >
-              Editar Perfil
+              {t('navbar.profile')}
             </MenuItem>
             <MenuDivider />
             <MenuItem
               icon={<MdLogout size="24px" />}
               onClick={handleLogoutClick}
             >
-              Sair
+              {t('navbar.logout')}
             </MenuItem>
           </MenuList>
         </Menu>

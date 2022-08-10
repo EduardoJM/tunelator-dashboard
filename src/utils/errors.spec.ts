@@ -7,8 +7,8 @@ describe('errors', () => {
 
     expect(messages).toMatchObject([
       {
-        text: 'Não foi possível completar a operação.',
-        title: 'Oopps!',
+        title: 'errors.title',
+        text: 'errors.default',
       },
     ]);
   });
@@ -37,11 +37,11 @@ describe('errors', () => {
     expect(message).toMatchObject([
       {
         text: 'firstField is required',
-        title: 'Oopps!',
+        title: 'errors.title',
       },
       {
         text: 'data is a required field',
-        title: 'Oopps!',
+        title: 'errors.title',
       },
     ]);
   });
@@ -58,8 +58,8 @@ describe('errors', () => {
 
     expect(messages).toMatchObject([
       {
-        text: 'Não foi possível completar a operação.',
-        title: 'Oopps!',
+        title: 'errors.title',
+        text: 'errors.default',
       },
     ]);
   });
@@ -79,7 +79,7 @@ describe('errors', () => {
     expect(messages).toMatchObject([
       {
         text: 'this is the detail',
-        title: 'Oopps!',
+        title: 'errors.title',
       },
     ]);
   });

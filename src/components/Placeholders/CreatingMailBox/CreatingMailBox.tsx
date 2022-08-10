@@ -4,10 +4,12 @@ import { Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react';
 import { FaWrench } from 'react-icons/fa';
 import { BiCog } from 'react-icons/bi';
 import { GoMailRead } from 'react-icons/go';
+import { useTranslation } from 'react-i18next';
 
 const CreatingMailBox: FC = () => {
   const height = useBreakpointValue({ base: '200px', md: '100px' });
   const textBlockHeight = useBreakpointValue({ base: '100px', md: '100%' });
+  const { t } = useTranslation();
 
   const wrenchAnimationStyle = useSpring({
     loop: true,
@@ -86,7 +88,7 @@ const CreatingMailBox: FC = () => {
       </animated.div>
       <Flex p="10px" h={textBlockHeight} alignItems="center">
         <Text fontSize="lg" fontWeight="bold">
-          Criando sua Conta
+          {t('creatingMailBox.text')}
         </Text>
       </Flex>
     </Box>

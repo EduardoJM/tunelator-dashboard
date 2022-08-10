@@ -14,18 +14,15 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import { Button, LoadingIndicatorBox } from '../../components';
-import Input from '../../components/Forms/Input';
-import InputMailUser from '../../components/Forms/InputMailUser';
-import Checkbox from '../../components/Checkbox';
-import { usePlan } from '../../contexts/plan';
-import { UserMail } from '../../entities/UserMail';
-import { validateUserMailAccount } from '../../services/api/mailAccounts';
-
+import { useTranslation } from 'react-i18next';
+import { Button, Input, InputMailUser, Checkbox } from '@/components';
+import { usePlan } from '@/contexts/plan';
+import { UserMail } from '@/entities/UserMail';
+import { validateUserMailAccount } from '@/services/api/mailAccounts';
 import {
   useCreateUserMailMutation,
   useUpdateUserMailMutation,
-} from '../../services/mutations';
+} from '@/services/mutations';
 
 export interface UserMailModalProps {
   isOpen: boolean;
@@ -40,6 +37,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
 }) => {
   const { plan } = usePlan();
   const toast = useToast();
+  const { t } = useTranslation();
 
   const cancelRef = useRef<any>(null);
 
@@ -86,9 +84,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
   const handleSave = () => {
     if (!mailUserIsValid) {
       toast({
-        title: 'Oopps!',
-        description:
-          'Esse nome de conta não está disponível, tente mudar um pouco.',
+        title: t('errors.title'),
+        description: t('errors.usedaccount'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -109,9 +106,8 @@ const UserMailModal: FC<UserMailModalProps> = ({
     setMailUserIsValid(isValid);
     if (!isValid) {
       toast({
-        title: 'Oopps!',
-        description:
-          'Esse nome de conta não está disponível, tente mudar um pouco.',
+        title: t('errors.title'),
+        description: t('errors.usedaccount'),
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -128,13 +124,19 @@ const UserMailModal: FC<UserMailModalProps> = ({
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            {!!userMail ? 'Editar Conta de E-mail' : 'Criar Conta de E-mail'}
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+            data-testid="modal-title"
+          >
+            {!!userMail
+              ? t('modals.editaccount.title')
+              : t('modals.createaccount.title')}
           </AlertDialogHeader>
 
           <AlertDialogBody>
             <Input
-              label="Identificador da Conta"
+              label={t('modals.createaccount.accountid')}
               id="name"
               value={formik.values.name}
               onChange={formik.handleChange}
@@ -143,15 +145,11 @@ const UserMailModal: FC<UserMailModalProps> = ({
             />
 
             <InputMailUser
-              label="Nome da conta"
+              label={t('modals.createaccount.accountname')}
               id="mail_user"
               isDisabled={!!userMail}
               data-testid="account-user-input"
-              helpText={
-                !!userMail
-                  ? 'Não é possível editar o nome do e-mail.'
-                  : undefined
-              }
+              helpText={!!userMail ? t('modals.editaccount.noedit') : undefined}
               value={formik.values.mail_user}
               onChange={formik.handleChange}
               onBlur={handleBlur}
@@ -166,7 +164,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
                     onChange={formik.handleChange}
                   />
                   <FormLabel htmlFor="redirect_to_my_email" ml="10px" mb="0">
-                    Redirecionar para o meu e-mail
+                    {t('modals.createaccount.redirecttome')}
                   </FormLabel>
                 </FormControl>
 
@@ -176,7 +174,7 @@ const UserMailModal: FC<UserMailModalProps> = ({
                     animateOpacity
                   >
                     <Input
-                      label="Redirecionar para"
+                      label={t('modals.createaccount.redirectto')}
                       id="redirect_to"
                       value={formik.values.redirect_to}
                       onChange={formik.handleChange}
@@ -194,21 +192,21 @@ const UserMailModal: FC<UserMailModalProps> = ({
                 onChange={formik.handleChange}
               />
               <FormLabel htmlFor="redirect_enabled" ml="10px" mb="0">
-                Habilitado?
+                {t('modals.createaccount.enabled')}
               </FormLabel>
             </FormControl>
           </AlertDialogBody>
 
           <AlertDialogFooter>
             <Button ref={cancelRef} variant="ghost" mr="10px" onClick={onClose}>
-              Fechar
+              {t('modals.close')}
             </Button>
             <Button
               variant="primary"
               onClick={handleSave}
               isDisabled={!mailUserIsValid}
             >
-              Salvar
+              {t('modals.save')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -7,6 +7,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import Button from '../../components/Common/Button';
 
 export interface ResendMailSuccessModalProps {
@@ -19,6 +20,7 @@ const ResendMailSuccessModal: FC<ResendMailSuccessModalProps> = ({
   onClose,
 }) => {
   const cancelRef = useRef<any>(null);
+  const { t } = useTranslation();
 
   return (
     <AlertDialog
@@ -28,19 +30,24 @@ const ResendMailSuccessModal: FC<ResendMailSuccessModalProps> = ({
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Reenvio de E-mail
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+            data-testid="dialog-title"
+          >
+            {t('modals.resend.title')}
           </AlertDialogHeader>
 
-          <AlertDialogBody>
-            Em alguns segundos seu e-mail será enviado novamente. Como apenas
-            fazemos o redirecionamento de e-mails, por favor, verifique sua
-            Caixa de Spam também.
-          </AlertDialogBody>
+          <AlertDialogBody>{t('modals.resend.body')}</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button variant="ghost" ref={cancelRef} onClick={onClose}>
-              Fechar
+            <Button
+              variant="ghost"
+              ref={cancelRef}
+              onClick={onClose}
+              data-testid="close-button"
+            >
+              {t('modals.close')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

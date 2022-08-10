@@ -1,10 +1,13 @@
 import { toast } from '@chakra-ui/react';
 import { screen, waitForElementToBeRemoved } from '@testing-library/react';
+import { setupTranslations } from '@/translations';
 import { server } from './mocks/server';
 
 import '@testing-library/jest-dom';
 
 beforeAll(() => {
+  setupTranslations(true);
+
   server.listen();
 
   window.scrollTo = jest.fn();

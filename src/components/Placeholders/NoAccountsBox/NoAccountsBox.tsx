@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { Flex, Text } from '@chakra-ui/react';
 import { RiAccountPinCircleLine } from 'react-icons/ri';
+import { useTranslation } from 'react-i18next';
 import Button from '../../Common/Button';
 
 export interface NoAccountsBoxProps {
@@ -24,6 +25,7 @@ const NoAccountsBox: FC<NoAccountsBoxProps> = ({
     ],
     from: { opacity: 0.3, transform: 'rotateZ(15deg) scale(1)' },
   });
+  const { t } = useTranslation();
 
   return (
     <Flex
@@ -45,11 +47,11 @@ const NoAccountsBox: FC<NoAccountsBoxProps> = ({
         <RiAccountPinCircleLine size="48px" />
       </animated.div>
       <Text mt="20px" fontSize="md" fontWeight="bold">
-        Nenhuma conta para ser mostrada.
+        {t('noAccountsBox.description')}
       </Text>
       {createFirstButtonVisible && (
         <Button mt="20px" variant="primaryRounded" onClick={onCreateFirstClick}>
-          Criar Primeira Conta
+          {t('noAccountsBox.createNew')}
         </Button>
       )}
     </Flex>

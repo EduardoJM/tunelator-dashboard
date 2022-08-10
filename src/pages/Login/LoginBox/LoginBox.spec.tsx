@@ -9,6 +9,7 @@ import { AuthProvider } from '../../../contexts/auth';
 import LoginBox from './LoginBox';
 import { server } from '../../../mocks/server';
 import config from '../../../config';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -152,9 +153,9 @@ describe('Login', () => {
       expect(screen.queryByRole('alert')).toBeInTheDocument();
     });
 
-    expect(
-      screen.queryByText(/^Insira um e-mail válido\.$/i)
-    ).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+
+    expect(description).toEqual('errors.wrongemail');
   });
 
   it('click on the button to login and got an validation error for password must show the error as toast', async () => {
@@ -170,11 +171,9 @@ describe('Login', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    const { description } = await waitForAlertInScreen();
 
-    expect(screen.queryByText(/^Insira sua senha\.$/i)).toBeInTheDocument();
+    expect(description).toEqual('errors.wrongpassword');
   });
 
   it('click on the button to login and got an error must show the error as toast', async () => {

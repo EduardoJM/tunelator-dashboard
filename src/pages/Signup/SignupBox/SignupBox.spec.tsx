@@ -4,6 +4,7 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 import { LoadingProvider } from '../../../contexts/loading';
 import { AuthProvider } from '../../../contexts/auth';
 import SignupBox from './SignupBox';
@@ -381,12 +382,8 @@ describe('SignupBox', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
+    const { description } = await waitForAlertInScreen();
 
-    expect(
-      screen.queryByText(/^Você precisa concordar com os termos de uso.$/i)
-    ).toBeInTheDocument();
+    expect(description).toEqual('errors.wrongterms');
   });
 });

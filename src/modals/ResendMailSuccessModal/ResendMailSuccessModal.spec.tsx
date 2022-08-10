@@ -22,7 +22,7 @@ describe('TermsOfUseModal', () => {
   it('must have an valid title', () => {
     render(<ResendMailSuccessModal isOpen={true} onClose={() => {}} />);
 
-    const header = screen.queryByText(/^Reenvio de E-mail$/i);
+    const header = screen.queryByTestId('dialog-title');
 
     expect(header).toBeInTheDocument();
   });
@@ -30,7 +30,7 @@ describe('TermsOfUseModal', () => {
   it('must have an close button', () => {
     render(<ResendMailSuccessModal isOpen={true} onClose={() => {}} />);
 
-    const closeButton = screen.queryByText(/^Fechar$/i);
+    const closeButton = screen.queryByTestId(/^close-button$/i);
 
     expect(closeButton).toBeInTheDocument();
   });
@@ -39,7 +39,7 @@ describe('TermsOfUseModal', () => {
     const onClose = jest.fn();
     render(<ResendMailSuccessModal isOpen={true} onClose={onClose} />);
 
-    const closeButton = screen.getByText(/^Fechar$/i);
+    const closeButton = screen.getByTestId(/^close-button$/i);
 
     await act(async () => {
       await userEvent.click(closeButton);

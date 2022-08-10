@@ -28,7 +28,9 @@ describe('UserMailModal', () => {
 
     await waitAbsoluteLoader();
 
-    expect(screen.queryByText(/^Criar Conta de E-mail$/i)).toBeInTheDocument();
+    const title = screen.queryByTestId('modal-title');
+    expect(title).toBeInTheDocument();
+    expect(title?.innerHTML?.includes('createaccount')).toBeTruthy();
   });
 
   it('should have an update title if userMail is parsed as valid', async () => {
@@ -39,7 +41,9 @@ describe('UserMailModal', () => {
 
     await waitAbsoluteLoader();
 
-    expect(screen.queryByText(/^Editar Conta de E-mail$/i)).toBeInTheDocument();
+    const title = screen.queryByTestId('modal-title');
+    expect(title).toBeInTheDocument();
+    expect(title?.innerHTML?.includes('editaccount')).toBeTruthy();
   });
 
   it('should contains valid form inputs', async () => {
@@ -62,9 +66,7 @@ describe('UserMailModal', () => {
     const input = screen.getByTestId('account-user-input');
     expect(input).not.toBeDisabled();
 
-    expect(
-      screen.queryByText(/^Não é possível editar o nome do e-mail.$/i)
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText(/editaccount.noedit$/i)).not.toBeInTheDocument();
   });
 
   it('should the account user input must disabled and the helper text rendered if the userMail is not null', async () => {
@@ -78,9 +80,7 @@ describe('UserMailModal', () => {
     const input = screen.getByTestId('account-user-input');
     expect(input).toBeDisabled();
 
-    expect(
-      screen.queryByText(/^Não é possível editar o nome do e-mail.$/i)
-    ).toBeInTheDocument();
+    expect(screen.queryByText(/editaccount.noedit$/i)).toBeInTheDocument();
   });
 
   it('should show an alert in toast if the validate user mail name returns error', async () => {
@@ -98,8 +98,6 @@ describe('UserMailModal', () => {
 
     const { description } = await waitForAlertInScreen();
 
-    expect(description).toEqual(
-      'Esse nome de conta não está disponível, tente mudar um pouco.'
-    );
+    expect(description).toEqual('errors.usedaccount');
   });
 });

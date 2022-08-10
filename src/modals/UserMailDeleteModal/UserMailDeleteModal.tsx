@@ -7,6 +7,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import Button from '../../components/Common/Button';
 
 export interface UserMailDeleteModalProps {
@@ -21,6 +22,7 @@ const UserMailDeleteModal: FC<UserMailDeleteModalProps> = ({
   onConfirm,
 }) => {
   const cancelRef = useRef<any>(null);
+  const { t } = useTranslation();
 
   return (
     <AlertDialog
@@ -30,21 +32,32 @@ const UserMailDeleteModal: FC<UserMailDeleteModalProps> = ({
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Deletar Conta de E-mail
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+            data-testid="modal-title"
+          >
+            {t('modals.deleteaccount.title')}
           </AlertDialogHeader>
 
-          <AlertDialogBody>
-            Tem certeza que deseja deletar essa conta de e-mail? Você não poderá
-            desfazer essa ação.
-          </AlertDialogBody>
+          <AlertDialogBody>{t('modals.deleteaccount.body')}</AlertDialogBody>
 
           <AlertDialogFooter>
-            <Button variant="ghost" ref={cancelRef} onClick={onCancel}>
-              Cancelar
+            <Button
+              variant="ghost"
+              ref={cancelRef}
+              onClick={onCancel}
+              data-testid="cancel-button"
+            >
+              {t('modals.cancel')}
             </Button>
-            <Button variant="destroy" onClick={onConfirm} ml={3}>
-              Deletar
+            <Button
+              variant="destroy"
+              onClick={onConfirm}
+              ml={3}
+              data-testid="confirm-button"
+            >
+              {t('modals.deleteaccount.delete')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

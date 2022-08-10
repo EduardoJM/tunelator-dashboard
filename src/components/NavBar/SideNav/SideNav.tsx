@@ -22,6 +22,7 @@ import {
 import { GoMailRead } from 'react-icons/go';
 import { FaRegMoneyBillAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Avatar from '../../Avatar';
 import Button from '../../Common/Button';
 import { useAuth } from '../../../contexts/auth';
@@ -32,6 +33,7 @@ export interface SideNavProps {
 }
 
 const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const { userData, logout } = useAuth();
 
   const navigate = useNavigate();
@@ -131,19 +133,19 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
           <VStack width="100%">
             <Button variant="sidenavButton" onClick={handleGoToHome}>
               <MdHome size="20px" />
-              <Text ml="10px">Início</Text>
+              <Text ml="10px">{t('sidenav.home')}</Text>
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToMailAccounts}>
               <MdEmail size="20px" />
-              <Text ml="10px">Minhas Contas</Text>
+              <Text ml="10px">{t('sidenav.accounts')}</Text>
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToReceivedMails}>
               <GoMailRead size="20px" />
-              <Text ml="10px">E-mails Recebidos</Text>
+              <Text ml="10px">{t('sidenav.received')}</Text>
             </Button>
             <Button variant="sidenavButton" onClick={handleGoToPlans}>
               <FaRegMoneyBillAlt size="20px" />
-              <Text ml="10px">Planos e Assinatura</Text>
+              <Text ml="10px">{t('sidenav.plans')}</Text>
             </Button>
           </VStack>
         </DrawerBody>
@@ -153,16 +155,16 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
             <Divider />
             <Button variant="sidenavButton" onClick={handleGoToProfile}>
               <MdAccountCircle size="20px" />
-              <Text ml="10px">Editar Perfil</Text>
+              <Text ml="10px">{t('sidenav.profile')}</Text>
             </Button>
             <Button variant="sidenavButton" onClick={logout}>
               <MdLogout size="20px" />
-              <Text ml="10px">Sair</Text>
+              <Text ml="10px">{t('sidenav.logout')}</Text>
             </Button>
             <Divider />
             <Button variant="sidenavButton" onClick={onClose}>
               <MdArrowBack size="20px" />
-              <Text ml="10px">Voltar</Text>
+              <Text ml="10px">{t('sidenav.back')}</Text>
             </Button>
           </VStack>
         </DrawerFooter>

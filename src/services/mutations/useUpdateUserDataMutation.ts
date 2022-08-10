@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 import { object, string } from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { getErrorMessages } from '../../utils/errors';
 import { updateUserData } from '../api/auth';
@@ -14,6 +15,7 @@ interface SignupMutationProps {
 const useUpdateUserDataMutation = (setUserData: (user: User) => void) => {
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
+  const { t } = useTranslation();
 
   return useMutation<unknown, unknown, SignupMutationProps>(
     async ({ first_name, last_name }) => {
@@ -21,8 +23,8 @@ const useUpdateUserDataMutation = (setUserData: (user: User) => void) => {
 
       try {
         const userUpdateSchema = object({
-          first_name: string().required('Insira um nome válido.'),
-          last_name: string().required('Insira um sobrenome válido.'),
+          first_name: string().required(t('errors.wrongname')),
+          last_name: string().required(t('errors.wronglastname')),
         });
 
         const validatedData = userUpdateSchema.validateSync({
@@ -38,8 +40,8 @@ const useUpdateUserDataMutation = (setUserData: (user: User) => void) => {
         setUserData(response);
 
         toast({
-          title: 'Sucesso',
-          description: 'Dados atualizados com sucesso!',
+          title: t('userupdate.success'),
+          description: t('userupdate.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

@@ -2,6 +2,7 @@ import { useMutation } from 'react-query';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { object, string, boolean } from 'yup';
+import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { getErrorMessages } from '../../utils/errors';
 import api from '../api/axios';
@@ -21,6 +22,7 @@ const useSignupMutation = (setUserData: (user: User) => void) => {
   const { pushLoading, popLoading } = useLoading();
   const toast = useToast();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return useMutation<unknown, unknown, SignupMutationProps>(
     async ({
@@ -36,14 +38,14 @@ const useSignupMutation = (setUserData: (user: User) => void) => {
       try {
         const signupSchema = object({
           email: string()
-            .email('Insira um e-mail válido.')
-            .required('Insira um e-mail válido.'),
-          password: string().required('Insira sua senha.'),
-          first_name: string().required('Insira um nome válido.'),
-          last_name: string().required('Insira um sobrenome válido.'),
+            .email(t('errors.wrongemail'))
+            .required(t('errors.wrongemail')),
+          password: string().required(t('errors.wrongpassword')),
+          first_name: string().required(t('errors.wrongname')),
+          last_name: string().required(t('errors.wronglastname')),
           accept_terms: boolean()
-            .required('Você precisa concordar com os termos de uso.')
-            .isTrue('Você precisa concordar com os termos de uso.'),
+            .required(t('errors.wrongterms'))
+            .isTrue(t('errors.wrongterms')),
         });
 
         const validatedData = signupSchema.validateSync({
@@ -72,8 +74,8 @@ const useSignupMutation = (setUserData: (user: User) => void) => {
           sessionStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
         }
         toast({
-          title: 'Sucesso',
-          description: 'Login efetuado com sucesso!',
+          title: t('login.success'),
+          description: t('login.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

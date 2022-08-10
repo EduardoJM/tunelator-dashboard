@@ -32,8 +32,8 @@ describe('TermsOfUseModal', () => {
       <TermsOfUseModal isOpen={true} onCancel={() => {}} onConfirm={() => {}} />
     );
 
-    const cancelButton = screen.queryByText(/^Cancelar$/i);
-    const acceptTermsButton = screen.queryByText(/^Aceitar os Termos$/i);
+    const cancelButton = screen.queryByTestId('cancel-button');
+    const acceptTermsButton = screen.queryByTestId('confirm-button');
 
     expect(cancelButton).toBeInTheDocument();
     expect(cancelButton?.tagName.toUpperCase()).toEqual('BUTTON');
@@ -46,7 +46,7 @@ describe('TermsOfUseModal', () => {
       <TermsOfUseModal isOpen={true} onCancel={() => {}} onConfirm={() => {}} />
     );
 
-    const header = screen.queryByText(/^Termos de Uso$/i);
+    const header = screen.queryByTestId('modal-title');
 
     expect(header).toBeInTheDocument();
   });
@@ -58,7 +58,7 @@ describe('TermsOfUseModal', () => {
       <TermsOfUseModal isOpen={true} onCancel={onCancel} onConfirm={() => {}} />
     );
 
-    const cancelButton = screen.getByText(/^Cancelar$/i);
+    const cancelButton = screen.getByTestId('cancel-button');
 
     await act(async () => {
       await userEvent.click(cancelButton);
@@ -78,7 +78,7 @@ describe('TermsOfUseModal', () => {
       />
     );
 
-    const acceptTermsButton = screen.getByText(/^Aceitar os Termos$/i);
+    const acceptTermsButton = screen.getByTestId('confirm-button');
 
     await act(async () => {
       await userEvent.click(acceptTermsButton);

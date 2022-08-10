@@ -33,7 +33,7 @@ describe('CurrentPlanBox', () => {
   it('must have an my plan text, plan name and description', () => {
     render(<CurrentPlanBox plan={plan} onGoToCustomerPortalClick={() => {}} />);
 
-    const myPlan = screen.queryByText(/^meu plano$/i);
+    const myPlan = screen.queryByTestId('plan-box-title');
     const name = screen.queryByText(/^my plan$/i);
     const description = screen.queryByText(/^the description$/i);
 

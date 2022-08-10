@@ -1,0 +1,107 @@
+{
+  "translation": {
+    "plansItem": {
+      "select": "Selecionar",
+      "monthPeriod": "/mês"
+    },
+    "currentPlanBox": {
+      "manage": "Gerenciar",
+      "monthPeriod": "/mês",
+      "title": "Meu Plano"
+    },
+    "loaders": {
+      "text": "Carregando..."
+    },
+    "creatingMailBox": {
+      "text": "Criando sua Conta"
+    },
+    "noAccountsBox": {
+      "description": "Nenhuma conta para ser mostrada.",
+      "createNew": "Criar Primeira Conta"
+    },
+    "noReceivedMailsBox": {
+      "description": "Nenhum e-mail para ser mostrado."
+    },
+    "format": {
+      "dateSeparator": " às "
+    },
+    "navbar": {
+      "home": "Início",
+      "accounts": "Minhas Contas",
+      "received": "E-mails Recebidos",
+      "plans": "Planos e Assinatura",
+      "profile": "Editar Perfil",
+      "logout": "Sair"
+    },
+    "sidenav": {
+      "home": "Início",
+      "accounts": "Minhas Contas",
+      "received": "E-mails Recebidos",
+      "plans": "Planos e Assinatura",
+      "profile": "Editar Perfil",
+      "logout": "Sair",
+      "back": "Voltar"
+    },
+    "modals": {
+      "close": "Fechar",
+      "cancel": "Cancelar",
+      "delete": "Deletar",
+      "save": "Salvar",
+      "resend": {
+        "title": "Reenvio de E-mail",
+        "body": "Em alguns segundos seu e-mail será enviado novamente. Como apenas fazemos o redirecionamento de e-mails, por favor, verifique sua Caixa de Spam também."
+      },
+      "terms": {
+        "title": "Termos de Uso",
+        "accept": "Aceitar os Termos"
+      },
+      "deleteaccount": {
+        "title": "Deletar Conta de E-mail",
+        "body": "Tem certeza que deseja deletar essa conta de e-mail? Você não poderá desfazer essa ação."
+      },
+      "createaccount": {
+        "title": "Criar Conta de E-mail",
+        "accountid": "Identificador da Conta",
+        "accountname": "Nome da conta",
+        "redirecttome": "Redirecionar para o meu e-mail",
+        "redirectto": "Redirecionar para",
+        "enabled": "Habilitado?"
+      },
+      "editaccount": {
+        "title": "Editar Conta de E-mail",
+        "noedit": "Não é possível editar o nome do e-mail."
+      }
+    },
+    "errors": {
+      "title": "Oopps!",
+      "default": "Não foi possível completar a operação.",
+      "usedaccount": "Esse nome de conta não está disponível, tente mudar um pouco.",
+      "wrongname": "Insira um nome válido.",
+      "wronglastname": "Insira um sobrenome válido.",
+      "wrongemail": "Insira um e-mail válido.",
+      "wrongpassword": "Insira sua senha.",
+      "wrongchangepassword": "Preencha e confirme a sua nova senha!",
+      "wrongterms": "Você precisa concordar com os termos de uso."
+    },
+    "fields": {
+      "email": "E-mail",
+      "password": "Senha"
+    },
+    "login": {
+      "success": "Sucesso",
+      "message": "Login efetuado com sucesso!"
+    },
+    "reset": {
+      "success": "Sucesso",
+      "message": "Senha alterada com sucesso! Faça login para continuar..."
+    },
+    "recovery": {
+      "success": "Sucesso",
+      "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
+    },
+    "userupdate": {
+      "success": "Sucesso",
+      "message": "Dados atualizados com sucesso!"
+    }
+  }
+}
