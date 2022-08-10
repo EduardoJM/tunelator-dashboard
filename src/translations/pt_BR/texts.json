@@ -60,7 +60,7 @@
         "body": "Tem certeza que deseja deletar essa conta de e-mail? Você não poderá desfazer essa ação."
       },
       "createaccount": {
-        "title": "Create acount",
+        "title": "Criar Conta de E-mail",
         "accountid": "Identificador da Conta",
         "accountname": "Nome da conta",
         "redirecttome": "Redirecionar para o meu e-mail",
@@ -68,7 +68,7 @@
         "enabled": "Habilitado?"
       },
       "editaccount": {
-        "title": "Edit",
+        "title": "Editar Conta de E-mail",
         "noedit": "Não é possível editar o nome do e-mail."
       }
     },
