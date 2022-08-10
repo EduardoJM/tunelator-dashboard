@@ -46,6 +46,7 @@
       "close": "Fechar",
       "cancel": "Cancelar",
       "delete": "Deletar",
+      "save": "Salvar",
       "resend": {
         "title": "Reenvio de E-mail",
         "body": "Em alguns segundos seu e-mail será enviado novamente. Como apenas fazemos o redirecionamento de e-mails, por favor, verifique sua Caixa de Spam também."
@@ -57,6 +58,20 @@
       "deleteaccount": {
         "title": "Deletar Conta de E-mail",
         "body": "Tem certeza que deseja deletar essa conta de e-mail? Você não poderá desfazer essa ação."
+      },
+      "createaccount": {
+        "title": "Create acount",
+        "accountid": "Identificador da Conta",
+        "accountname": "Nome da conta",
+        "redirecttome": "Redirecionar para o meu e-mail",
+        "redirectto": "Redirecionar para",
+        "enabled": "Habilitado?",
+        "errortitle": "Oopps!",
+        "errordesc": "Esse nome de conta não está disponível, tente mudar um pouco."
+      },
+      "editaccount": {
+        "title": "Edit",
+        "noedit": "Não é possível editar o nome do e-mail."
       }
     }
   }

@@ -6,7 +6,7 @@ import { server } from './mocks/server';
 import '@testing-library/jest-dom';
 
 beforeAll(() => {
-  setupTranslations();
+  setupTranslations(true);
 
   server.listen();
 
