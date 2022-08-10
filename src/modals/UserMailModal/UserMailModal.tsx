@@ -14,10 +14,7 @@ import {
   AlertDialogFooter,
 } from '@chakra-ui/react';
 import { useFormik } from 'formik';
-import { Button, LoadingIndicatorBox } from '../../components';
-import Input from '../../components/Forms/Input';
-import InputMailUser from '../../components/Forms/InputMailUser';
-import Checkbox from '../../components/Checkbox';
+import { Button, Input, InputMailUser, Checkbox } from '../../components';
 import { usePlan } from '../../contexts/plan';
 import { UserMail } from '../../entities/UserMail';
 import { validateUserMailAccount } from '../../services/api/mailAccounts';

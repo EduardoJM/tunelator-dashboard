@@ -11,9 +11,7 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
-import { Input, PasswordInput } from '../../../components/Forms';
-import Button from '../../../components/Common/Button';
-import Checkbox from '../../../components/Checkbox';
+import { Button, Input, PasswordInput, Checkbox } from '../../../components';
 import { TermsOfUseModal } from '../../../modals';
 
 const SignupBox: FC = () => {
