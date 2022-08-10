@@ -44,9 +44,14 @@
     },
     "modals": {
       "close": "Fechar",
+      "cancel": "Cancelar",
       "resend": {
         "title": "Reenvio de E-mail",
         "body": "Em alguns segundos seu e-mail será enviado novamente. Como apenas fazemos o redirecionamento de e-mails, por favor, verifique sua Caixa de Spam também."
+      },
+      "terms": {
+        "title": "Termos de Uso",
+        "accept": "Aceitar os Termos"
       }
     }
   }

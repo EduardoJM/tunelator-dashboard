@@ -7,6 +7,7 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import Button from '../../components/Common/Button';
 
 export interface TermsOfUseModalProps {
@@ -21,6 +22,7 @@ const TermsOfUseModal: FC<TermsOfUseModalProps> = ({
   onConfirm,
 }) => {
   const cancelRef = useRef<any>(null);
+  const { t } = useTranslation();
 
   return (
     <AlertDialog
@@ -30,8 +32,12 @@ const TermsOfUseModal: FC<TermsOfUseModalProps> = ({
     >
       <AlertDialogOverlay>
         <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Termos de Uso
+          <AlertDialogHeader
+            fontSize="lg"
+            fontWeight="bold"
+            data-testid="modal-title"
+          >
+            {t('modals.terms.title')}
           </AlertDialogHeader>
 
           <AlertDialogBody>ALOAHHHHHH</AlertDialogBody>
@@ -43,7 +49,7 @@ const TermsOfUseModal: FC<TermsOfUseModalProps> = ({
               onClick={onCancel}
               data-testid="cancel-button"
             >
-              Cancelar
+              {t('modals.cancel')}
             </Button>
             <Button
               variant="primary"
@@ -51,7 +57,7 @@ const TermsOfUseModal: FC<TermsOfUseModalProps> = ({
               ml={3}
               data-testid="confirm-button"
             >
-              Aceitar os Termos
+              {t('modals.terms.accept')}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
