@@ -9,6 +9,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useFormik } from 'formik';
 import { useAuth } from '../../../contexts/auth';
 import { Button, Input, PasswordInput, Checkbox } from '../../../components';
@@ -16,6 +17,7 @@ import { TermsOfUseModal } from '../../../modals';
 
 const SignupBox: FC = () => {
   const auth = useAuth();
+  const { t } = useTranslation();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -75,43 +77,40 @@ const SignupBox: FC = () => {
         <form name="signup-form" onSubmit={formik.handleSubmit}>
           <VStack>
             <Heading width="100%" color="foreground.default" as="h1" size="2xl">
-              Criar Conta
+              {t('signup.title')}
             </Heading>
 
             <Box pb="20px">
-              <Text>
-                A um passo de não precisar mais se descadastrar inúmeras vezes
-                da mesma lista de e-mail.
-              </Text>
+              <Text>{t('signup.subtitle')}</Text>
             </Box>
 
             <Input
               id="email"
-              label="E-mail"
+              label={t('signup.email')}
+              placeholder={t('signup.emailPlaceholder')}
               data-testid="email-field"
-              placeholder="exemplo@exemplo.com.br"
               value={formik.values.email}
               onChange={formik.handleChange}
             />
             <Input
               id="first_name"
-              label="Seu nome"
+              label={t('signup.firstname')}
               data-testid="first-name-field"
               value={formik.values.first_name}
               onChange={formik.handleChange}
             />
             <Input
               id="last_name"
-              label="Seu sobrenome"
+              label={t('signup.lastname')}
               data-testid="last-name-field"
               value={formik.values.last_name}
               onChange={formik.handleChange}
             />
             <PasswordInput
               id="password"
-              label="Senha"
+              label={t('signup.password')}
+              placeholder={t('signup.passwordPlaceholder')}
               data-testid="password-field"
-              placeholder="Digite sua senha"
               value={formik.values.password}
               onChange={formik.handleChange}
             />
@@ -123,9 +122,9 @@ const SignupBox: FC = () => {
                 onChange={handleTermsCheckboxChange}
                 data-testid="terms-field"
               >
-                Li e aceito os{' '}
+                {t('signup.terms')}
                 <Text as="span" color="brand.500" fontWeight="bold">
-                  Termos de Uso
+                  {t('signup.termsOfUse')}
                 </Text>
               </Checkbox>
             </Flex>
@@ -137,7 +136,7 @@ const SignupBox: FC = () => {
                 isChecked={formik.values.remember}
                 onChange={formik.handleChange}
               >
-                Mantenha-me logado
+                {t('signup.remember')}
               </Checkbox>
             </Flex>
 
@@ -147,7 +146,7 @@ const SignupBox: FC = () => {
               type="submit"
               data-testid="submit-button"
             >
-              Criar Conta
+              {t('signup.signup')}
             </Button>
 
             <Box width="100" textAlign="center" py="10px">
@@ -156,8 +155,9 @@ const SignupBox: FC = () => {
                 to="/auth"
                 color="brand.500"
                 fontWeight="bold"
+                data-testid="login-link"
               >
-                Já tenho uma conta
+                {t('signup.login')}
               </Link>
             </Box>
           </VStack>

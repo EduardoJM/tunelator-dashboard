@@ -172,6 +172,48 @@
       "recovery": "Esqueceu sua senha?",
       "login": "Entrar",
       "signup": "Criar minha conta"
+    },
+    "notFound": {
+      "title": "404",
+      "subtitle": "Ooops! Essa página não foi encontrada."
+    },
+    "signup": {
+      "title": "Criar Conta",
+      "subtitle": "A um passo de não precisar mais se descadastrar inúmeras vezes da mesma lista de e-mail.",
+      "email": "E-mail",
+      "emailPlaceholder": "exemplo@exemplo.com.br",
+      "firstname": "Seu nome",
+      "lastname": "Seu sobrenome",
+      "password": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "terms": "Li e aceito os ",
+      "termsOfUse": "Termos de Uso",
+      "remember": "Mantenha-me logado",
+      "signup": "Criar Conta",
+      "login": "Já tenho uma conta"
+    },
+    "recoveryReset": {
+      "expired": {
+        "title": "Esse link expirou...",
+        "subtitle": "Esse link expirou ou não é válido. Para recuperar a sua senha você precisa pedir um novo link.",
+        "recovery": "Recuperar Senha"
+      },
+      "valid": {
+        "title": "Redefinir Senha",
+        "subtitle": "Preencha e confirme uma nova senha para a sua conta.",
+        "password": "Sua Senha",
+        "passwordPlaceholder": "Digite sua nova senha",
+        "confirmation": "Confirme sua Senha",
+        "confirmationPlaceholder": "Confirme sua nova senha",
+        "submit": "Redefinir Senha"
+      }
+    },
+    "recovery": {
+      "title": "Recuperar Senha",
+      "subtitle": "Envie um e-mail para recuperar a sua senha de acesso ao Tunelator para continuar cuidando da sua caixa de e-mails.",
+      "email": "E-mail",
+      "emailPlaceholder": "exemplo@exemplo.com.br",
+      "reset": "Resetar Senha"
     }
   }
 }

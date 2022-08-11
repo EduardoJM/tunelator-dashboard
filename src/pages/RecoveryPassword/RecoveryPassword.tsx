@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Flex, Box, VStack, Text, Heading } from '@chakra-ui/react';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { Input, Button } from '../../components';
 import { useSendRecoveryMailMutation } from '../../services/mutations';
 
@@ -12,6 +13,7 @@ const RecoveryPassword: FC = () => {
     },
     onSubmit: ({ email }) => sendRecoveryMailMutation.mutate({ email }),
   });
+  const { t } = useTranslation();
 
   return (
     <Flex minHeight="100vh" width="100%">
@@ -38,20 +40,17 @@ const RecoveryPassword: FC = () => {
                   as="h1"
                   size="2xl"
                 >
-                  Recuperar Senha
+                  {t('recovery.title')}
                 </Heading>
 
                 <Box pb="20px">
-                  <Text>
-                    Envie um e-mail para recuperar a sua senha de acesso ao
-                    Tunelator para continuar cuidando da sua caixa de e-mails.
-                  </Text>
+                  <Text>{t('recovery.subtitle')}</Text>
                 </Box>
 
                 <Input
                   id="email"
-                  label="E-mail"
-                  placeholder="exemplo@exemplo.com.br"
+                  label={t('recovery.email')}
+                  placeholder={t('recovery.emailPlaceholder')}
                   data-testid="email-field"
                   value={formik.values.email}
                   onChange={formik.handleChange}
@@ -63,7 +62,7 @@ const RecoveryPassword: FC = () => {
                     data-testid="submit-button"
                     variant="primaryRounded"
                   >
-                    Resetar Senha
+                    {t('recovery.reset')}
                   </Button>
                 </Flex>
               </VStack>

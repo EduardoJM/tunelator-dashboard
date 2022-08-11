@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import { Flex, Heading } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 
 const NotFound: FC = () => {
+  const { t } = useTranslation();
+
   return (
     <Flex
       width="100%"
@@ -17,10 +20,10 @@ const NotFound: FC = () => {
       justifyContent="center"
     >
       <Heading as="h1" size="3xl" textAlign="center">
-        404
+        {t('notFound.title')}
       </Heading>
       <Heading as="h2" size="lg" textAlign="center">
-        Ooops! Essa página não foi encontrada.
+        {t('notFound.subtitle')}
       </Heading>
     </Flex>
   );
