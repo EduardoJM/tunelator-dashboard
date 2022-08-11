@@ -87,21 +87,23 @@
       "email": "E-mail",
       "password": "Senha"
     },
-    "login": {
-      "success": "Sucesso",
-      "message": "Login efetuado com sucesso!"
-    },
-    "reset": {
-      "success": "Sucesso",
-      "message": "Senha alterada com sucesso! Faça login para continuar..."
-    },
-    "recovery": {
-      "success": "Sucesso",
-      "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
-    },
-    "userupdate": {
-      "success": "Sucesso",
-      "message": "Dados atualizados com sucesso!"
+    "alerts": {
+      "login": {
+        "success": "Sucesso",
+        "message": "Login efetuado com sucesso!"
+      },
+      "reset": {
+        "success": "Sucesso",
+        "message": "Senha alterada com sucesso! Faça login para continuar..."
+      },
+      "recovery": {
+        "success": "Sucesso",
+        "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
+      },
+      "userupdate": {
+        "success": "Sucesso",
+        "message": "Dados atualizados com sucesso!"
+      }
     },
     "checkout": {
       "success": {
@@ -160,6 +162,16 @@
         "unknown": "Desconhecido",
         "all": "Ver Todas as Informações"
       }
+    },
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Gerenciar seus e-mails de redirecionamentos e acesso simplificado para e-mails.",
+      "email": "E-mail",
+      "password": "Senha",
+      "remember": "Mantenha-me logado",
+      "recovery": "Esqueceu sua senha?",
+      "login": "Entrar",
+      "signup": "Criar minha conta"
     }
   }
 }

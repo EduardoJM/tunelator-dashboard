@@ -74,8 +74,8 @@ const useSignupMutation = (setUserData: (user: User) => void) => {
           sessionStorage.setItem('@TUNELATOR_REFRESH', response.refresh);
         }
         toast({
-          title: t('login.success'),
-          description: t('login.message'),
+          title: t('alerts.login.success'),
+          description: t('alerts.login.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

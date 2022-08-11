@@ -40,8 +40,8 @@ const useUpdateUserDataMutation = (setUserData: (user: User) => void) => {
         setUserData(response);
 
         toast({
-          title: t('userupdate.success'),
-          description: t('userupdate.message'),
+          title: t('alerts.userupdate.success'),
+          description: t('alerts.userupdate.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

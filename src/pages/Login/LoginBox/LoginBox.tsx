@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../contexts/auth';
 import { Input, PasswordInput, Checkbox, Button } from '../../../components';
 
@@ -27,6 +28,7 @@ const LoginBox: FC = () => {
       auth.login({ email, password, remember, from });
     },
   });
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -38,19 +40,16 @@ const LoginBox: FC = () => {
       <form name="login-form" onSubmit={formik.handleSubmit}>
         <VStack>
           <Heading width="100%" color="foreground.default" as="h1" size="2xl">
-            Entrar
+            {t('login.title')}
           </Heading>
 
           <Box pb="20px">
-            <Text>
-              Gerenciar seus e-mails de redirecionamentos e acesso simplificado
-              para e-mails.
-            </Text>
+            <Text>{t('login.subtitle')}</Text>
           </Box>
 
           <Input
             id="email"
-            label="E-mail"
+            label={t('login.email')}
             placeholder="exemplo@exemplo.com.br"
             data-testid="email-field"
             value={formik.values.email}
@@ -58,7 +57,7 @@ const LoginBox: FC = () => {
           />
           <PasswordInput
             id="password"
-            label="Senha"
+            label={t('login.password')}
             data-testid="password-field"
             placeholder="Digite sua senha"
             value={formik.values.password}
@@ -79,10 +78,10 @@ const LoginBox: FC = () => {
               isChecked={formik.values.remember}
               onChange={formik.handleChange}
             >
-              Mantenha-me logado
+              {t('login.remember')}
             </Checkbox>
             <Spacer />
-            <Text textAlign="right">Esqueceu sua senha?</Text>
+            <Text textAlign="right">{t('login.recovery')}</Text>
           </Flex>
 
           <Button
@@ -91,7 +90,7 @@ const LoginBox: FC = () => {
             type="submit"
             data-testid="submit-button"
           >
-            Entrar
+            {t('login.login')}
           </Button>
 
           <Box width="100" textAlign="center" py="10px">
@@ -100,8 +99,9 @@ const LoginBox: FC = () => {
               to="/signup"
               color="brand.500"
               fontWeight="bold"
+              data-testid="signup-link"
             >
-              Criar minha conta
+              {t('login.signup')}
             </Link>
           </Box>
         </VStack>

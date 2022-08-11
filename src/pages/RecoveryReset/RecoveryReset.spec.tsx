@@ -84,7 +84,7 @@ describe('RecoveryReset', () => {
 
   it('should call the api, show an success message and redirect to home path when changes are made', async () => {
     const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 200, {});
-    const expectedDescription = 'reset.message';
+    const expectedDescription = 'alerts.reset.message';
 
     render(<RecoveryReset />);
 

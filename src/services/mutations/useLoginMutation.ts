@@ -59,8 +59,8 @@ const useLoginMutation = (setUserData: (user: User) => void) => {
         }
 
         toast({
-          title: t('login.success'),
-          description: t('login.message'),
+          title: t('alerts.login.success'),
+          description: t('alerts.login.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,
