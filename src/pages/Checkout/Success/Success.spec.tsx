@@ -11,8 +11,8 @@ describe('Success', () => {
   it('must contains the two buttons, to home and to plans, in the page', () => {
     render(<Success />);
 
-    const homeButton = screen.getByText(/^Início$/i);
-    const plansButton = screen.getByText(/^Planos e Assinatura$/i);
+    const homeButton = screen.getByTestId('home-button');
+    const plansButton = screen.getByTestId('plans-button');
 
     expect(homeButton).toBeInTheDocument();
     expect(homeButton.tagName.toUpperCase()).toEqual('BUTTON');
@@ -23,10 +23,8 @@ describe('Success', () => {
   it('must contain informations about payment on the page', () => {
     render(<Success />);
 
-    const heading = screen.getByText(/^Pagamento efetuado$/i);
-    const body = screen.getByText(
-      /^Você pode conferir se o seu pagamento já foi processado em Planos e Assinaturas, bem como pode conferir isso no nosso painel.$/i
-    );
+    const heading = screen.getByText(/^checkout\.success\.title$/i);
+    const body = screen.getByText(/^checkout\.success\.body$/i);
 
     expect(heading).toBeInTheDocument();
     expect(body).toBeInTheDocument();
@@ -35,7 +33,7 @@ describe('Success', () => {
   it('click on the home button must navigate to home', async () => {
     render(<Success />);
 
-    const homeButton = screen.getByText(/^Início$/i);
+    const homeButton = screen.getByTestId('home-button');
 
     window.history.replaceState({}, '', '/any-route');
 
@@ -51,7 +49,7 @@ describe('Success', () => {
   it('click on the plans button must navigate to plans', async () => {
     render(<Success />);
 
-    const plansButton = screen.getByText(/^Planos e Assinatura$/i);
+    const plansButton = screen.getByTestId('plans-button');
 
     window.history.replaceState({}, '', '/any-route');
 

@@ -102,6 +102,30 @@
     "userupdate": {
       "success": "Sucesso",
       "message": "Dados atualizados com sucesso!"
+    },
+    "checkout": {
+      "success": {
+        "title": "Pagamento efetuado",
+        "body": "Você pode conferir se o seu pagamento já foi processado em Planos e Assinaturas, bem como pode conferir isso no nosso painel.",
+        "home": "Início",
+        "plans": "Planos e Assinatura"
+      },
+      "error": {
+        "title": "Houve um erro ao tentar te encaminhar para o processamento de pagamento...",
+        "body": "Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.",
+        "plans": "Planos e Assinatura"
+      },
+      "canceled": {
+        "title": "Não desista da sua privacidade...",
+        "body": "Vimos que sua seção no carrinho de compras foi cancelada, gostariamos de saber se você precisa de ajuda para se decidir? Fale com o nosso suporte...",
+        "support": "Falar com o Suporte",
+        "plans": "Planos e Assinatura"
+      },
+      "alreadypaid": {
+        "title": "Você já possui uma assinatura paga...",
+        "body": "Atualmente só é possível alterar o plano da assinatura cancelando a assinatura e assinando uma nova. Estamos trabalhando para melhorar isso, porém, por enquanto, você pode ir na página de Planos e Assinaturas, em Gerenciar, e cancelar a atual e assinar uma nova.",
+        "plans": "Planos e Assinatura"
+      }
     }
   }
 }

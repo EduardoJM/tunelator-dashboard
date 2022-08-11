@@ -2,10 +2,12 @@ import { FC } from 'react';
 import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { FaRegSadTear } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components';
 
 const Canceled: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const Canceled: FC = () => {
           flexDir="column"
         >
           <Heading as="h1" size="xl" color="brand.500">
-            Não desista da sua privacidade...
+            {t('checkout.canceled.title')}
           </Heading>
           <Heading
             as="h2"
@@ -36,9 +38,7 @@ const Canceled: FC = () => {
             color="brand.500"
             fontWeight="normal"
           >
-            Vimos que sua seção no carrinho de compras foi cancelada,
-            gostariamos de saber se você precisa de ajuda para se decidir? Fale
-            com o nosso suporte...
+            {t('checkout.canceled.body')}
           </Heading>
         </Flex>
         <Flex
@@ -57,11 +57,19 @@ const Canceled: FC = () => {
         pb="60px"
         gap="10px"
       >
-        <Button onClick={handleGoToSupport} variant="primaryRounded">
-          Falar com o Suporte
+        <Button
+          onClick={handleGoToSupport}
+          variant="primaryRounded"
+          data-testid="support-button"
+        >
+          {t('checkout.canceled.support')}
         </Button>
-        <Button onClick={handleGoToPlans} variant="primaryRounded">
-          Planos e Assinatura
+        <Button
+          onClick={handleGoToPlans}
+          variant="primaryRounded"
+          data-testid="plans-button"
+        >
+          {t('checkout.canceled.plans')}
         </Button>
       </Flex>
     </Flex>

@@ -2,10 +2,12 @@ import { FC } from 'react';
 import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { GiMoneyStack } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components';
 
 const Error: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -23,8 +25,7 @@ const Error: FC = () => {
           flexDir="column"
         >
           <Heading as="h1" size="xl" color="brand.500">
-            Houve um erro ao tentar te encaminhar para o processamento de
-            pagamento...
+            {t('checkout.error.title')}
           </Heading>
           <Heading
             as="h2"
@@ -33,8 +34,7 @@ const Error: FC = () => {
             color="brand.500"
             fontWeight="normal"
           >
-            Tente novamente mais tarde e caso o erro persista, entre em contato
-            com o suporte.
+            {t('checkout.error.body')}
           </Heading>
         </Flex>
         <Flex
@@ -47,8 +47,12 @@ const Error: FC = () => {
         </Flex>
       </Flex>
       <Flex alignItems="center" justifyContent="center" pt="20px" pb="60px">
-        <Button onClick={handleGoToPlans} variant="primaryRounded">
-          Planos e Assinatura
+        <Button
+          onClick={handleGoToPlans}
+          variant="primaryRounded"
+          data-testid="plans-button"
+        >
+          {t('checkout.error.plans')}
         </Button>
       </Flex>
     </Flex>
