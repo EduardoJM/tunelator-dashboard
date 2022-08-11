@@ -126,6 +126,19 @@
         "body": "Atualmente só é possível alterar o plano da assinatura cancelando a assinatura e assinando uma nova. Estamos trabalhando para melhorar isso, porém, por enquanto, você pode ir na página de Planos e Assinaturas, em Gerenciar, e cancelar a atual e assinar uma nova.",
         "plans": "Planos e Assinatura"
       }
+    },
+    "customer": {
+      "error": {
+        "title": "Houve um erro ao tentar te encaminhar para o portal do cliente na Stripe...",
+        "body": "Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.",
+        "plans": "Planos e Assinatura"
+      },
+      "profile": {
+        "title": "Dados Pessoais",
+        "firstname": "Nome",
+        "lastname": "Sobrenome",
+        "save": "Salvar"
+      }
     }
   }
 }

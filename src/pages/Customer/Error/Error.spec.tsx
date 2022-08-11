@@ -11,7 +11,7 @@ describe('Success', () => {
   it('must contains one button to plans in the page', () => {
     render(<Error />);
 
-    const plansButton = screen.getByText(/^Planos e Assinatura$/i);
+    const plansButton = screen.getByTestId('plans-button');
 
     expect(plansButton).toBeInTheDocument();
     expect(plansButton.tagName.toUpperCase()).toEqual('BUTTON');
@@ -20,12 +20,8 @@ describe('Success', () => {
   it('must contain informations about payment error on the page', () => {
     render(<Error />);
 
-    const heading = screen.getByText(
-      /^Houve um erro ao tentar te encaminhar para o portal do cliente na Stripe...$/i
-    );
-    const body = screen.getByText(
-      /^Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.$/i
-    );
+    const heading = screen.getByText(/^customer\.error\.title$/i);
+    const body = screen.getByText(/^customer\.error\.body$/i);
 
     expect(heading).toBeInTheDocument();
     expect(body).toBeInTheDocument();
@@ -34,7 +30,7 @@ describe('Success', () => {
   it('click on the plans button must navigate to plans', async () => {
     render(<Error />);
 
-    const plansButton = screen.getByText(/^Planos e Assinatura$/i);
+    const plansButton = screen.getByTestId('plans-button');
 
     window.history.replaceState({}, '', '/any-route');
 
