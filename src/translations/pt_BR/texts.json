@@ -139,6 +139,27 @@
         "lastname": "Sobrenome",
         "save": "Salvar"
       }
+    },
+    "home": {
+      "title": "Bem-vindo!",
+      "accounts": {
+        "title": "Minhas contas de e-mail",
+        "account": "Conta",
+        "email": "E-mail",
+        "created": "Criado em",
+        "updated": "Atualizado em",
+        "enabled": "Ativo",
+        "all": "Ver Tudo"
+      },
+      "received": {
+        "title": "Últimos e-mails recebidos",
+        "from": "De",
+        "to": "Para",
+        "subject": "Assunto",
+        "date": "Data",
+        "unknown": "Desconhecido",
+        "all": "Ver Todas as Informações"
+      }
     }
   }
 }

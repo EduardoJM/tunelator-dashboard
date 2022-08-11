@@ -11,14 +11,20 @@ import {
   Flex,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
-import { DateTime, Ellipsis } from '../../../components';
-import { useLatestReceivedMails } from '../../../services/queries';
-import Button from '../../../components/Common/Button';
-import NoReceivedMailsBox from '../../../components/Placeholders/NoReceivedMailsBox';
+import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  LoadingIndicatorBox,
+  DateTime,
+  Ellipsis,
+  NoReceivedMailsBox,
+} from '@/components';
+import { useLatestReceivedMails } from '@/services/queries';
+import { headerBorders } from './styles';
 
 const LatestReceivedMails: FC = () => {
-  const { data, error, isLoading } = useLatestReceivedMails();
+  const { data, isLoading } = useLatestReceivedMails();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -30,7 +36,7 @@ const LatestReceivedMails: FC = () => {
   return (
     <>
       <Heading as="h2" size="md" mb="40px" fontWeight="bold">
-        Últimos e-mails recebidos
+        {t('home.received.title')}
       </Heading>
 
       {isLoading ? (
@@ -41,34 +47,10 @@ const LatestReceivedMails: FC = () => {
             <Table size="sm">
               <Thead>
                 <Tr>
-                  <Th
-                    borderColor="brand.500"
-                    borderBottomWidth="2px"
-                    bgColor="gray.100"
-                  >
-                    De
-                  </Th>
-                  <Th
-                    borderColor="brand.500"
-                    borderBottomWidth="2px"
-                    bgColor="gray.100"
-                  >
-                    Para
-                  </Th>
-                  <Th
-                    borderColor="brand.500"
-                    borderBottomWidth="2px"
-                    bgColor="gray.100"
-                  >
-                    Assunto
-                  </Th>
-                  <Th
-                    borderColor="brand.500"
-                    borderBottomWidth="2px"
-                    bgColor="gray.100"
-                  >
-                    Data
-                  </Th>
+                  <Th {...headerBorders}>{t('home.received.from')}</Th>
+                  <Th {...headerBorders}>{t('home.received.to')}</Th>
+                  <Th {...headerBorders}>{t('home.received.subject')}</Th>
+                  <Th {...headerBorders}>{t('home.received.date')}</Th>
                 </Tr>
               </Thead>
               <Tbody>
@@ -83,7 +65,7 @@ const LatestReceivedMails: FC = () => {
                   <Tr data-testid="latest-mail-row" key={receivedMail.id}>
                     <Td>
                       <Ellipsis characteres={25}>
-                        {receivedMail.origin_mail || 'Desconhecido'}
+                        {receivedMail.origin_mail || t('home.received.unknown')}
                       </Ellipsis>
                     </Td>
                     <Td>
@@ -93,7 +75,7 @@ const LatestReceivedMails: FC = () => {
                     </Td>
                     <Td>
                       <Ellipsis characteres={40}>
-                        {receivedMail.subject || 'Desconhecido'}
+                        {receivedMail.subject || t('home.received.unknown')}
                       </Ellipsis>
                     </Td>
                     <Td>
@@ -107,8 +89,12 @@ const LatestReceivedMails: FC = () => {
         </>
       )}
       <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
-        <Button variant="primary" onClick={handleGoToReceivedMails}>
-          Ver Todas as Informações
+        <Button
+          variant="primary"
+          onClick={handleGoToReceivedMails}
+          data-testid="all-button"
+        >
+          {t('home.received.all')}
         </Button>
       </Flex>
     </>

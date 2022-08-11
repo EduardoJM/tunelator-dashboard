@@ -1,33 +1,11 @@
-import {
-  screen,
-  render,
-  act,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { screen, render, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { FC } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
-import { server } from '../../../mocks/server';
+import { server } from '@/mocks/server';
+import { wrapper } from '@/mocks/contexts/wrapper';
+import { waitLoaders } from '@/test/utils/loaders';
+import config from '@/config';
 import LatestReceivedMails from './LatestReceivedMails';
-import config from '../../../config';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>{children}</BrowserRouter>
-  </QueryClientProvider>
-);
 
 describe('LatestReceivedMails', () => {
   it('should render at least five mails if five mails exists for user and not render loading indicator', async () => {
@@ -40,19 +18,23 @@ describe('LatestReceivedMails', () => {
     });
   });
 
-  it('should page contains an button to see all informations', () => {
+  it('should page contains an button to see all informations', async () => {
     render(<LatestReceivedMails />, { wrapper });
 
-    const button = screen.queryByText(/^Ver Todas as Informações$/i);
+    const button = screen.queryByTestId('all-button');
 
     expect(button).not.toBeNull();
     expect(button?.tagName.toUpperCase()).toEqual('BUTTON');
+
+    await waitLoaders();
   });
 
-  it('should page have an heading', () => {
+  it('should page have an heading', async () => {
     render(<LatestReceivedMails />, { wrapper });
 
     expect(screen.queryByRole('heading')).toBeInTheDocument();
+
+    await waitLoaders();
   });
 
   it('should render an message indicating no received mails exists if nothing received mails are found', async () => {
@@ -85,19 +67,20 @@ describe('LatestReceivedMails', () => {
     expect(screen.queryByTestId('loading-indicator')).toBeInTheDocument();
     expect(screen.queryAllByTestId('latest-mail-row')).toHaveLength(0);
 
-    await waitForElementToBeRemoved(screen.queryByTestId('loading-indicator'));
+    await waitLoaders();
 
-    expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
     expect(screen.queryAllByTestId('latest-mail-row')).toHaveLength(5);
   });
 
   it('should redirect to the received mails page when click in the more informations button', async () => {
     render(<LatestReceivedMails />, { wrapper });
 
+    await waitLoaders();
+
     window.history.replaceState({}, '', '/any-route');
     expect(window.location.pathname).toEqual('/any-route');
 
-    const button = screen.getByText(/^Ver Todas as Informações$/i);
+    const button = screen.getByTestId('all-button');
 
     await act(async () => {
       await userEvent.click(button);

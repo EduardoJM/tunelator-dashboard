@@ -46,7 +46,7 @@ describe('LatestMailAccounts', () => {
   it('should page contains an button to see all informations', () => {
     render(<LatestMailAccounts />, { wrapper });
 
-    const button = screen.queryByText(/^Ver Tudo$/i);
+    const button = screen.queryByTestId('all-button');
 
     expect(button).not.toBeNull();
     expect(button?.tagName.toUpperCase()).toEqual('BUTTON');
@@ -100,7 +100,7 @@ describe('LatestMailAccounts', () => {
     window.history.replaceState({}, '', '/any-route');
     expect(window.location.pathname).toEqual('/any-route');
 
-    const button = screen.getByText(/^Ver Tudo$/i);
+    const button = screen.getByTestId('all-button');
 
     await act(async () => {
       await userEvent.click(button);
