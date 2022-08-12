@@ -241,6 +241,17 @@
       },
       "title": "Assinar um plano",
       "continue": "Continuar"
+    },
+    "mailAccounts": {
+      "title": "Minhas Contas de E-mail",
+      "create": "Criar Nova",
+      "noAccounts": "Ops, suas contas disponíveis acabaram! Você poder ver se algum dos nossos planos lhe atende melhor ou entrar em contato com o suporte.",
+      "createdAtLabel": "Criado em",
+      "updatedAtLabel": "Última Atualização",
+      "enabled": "Habilitado?",
+      "delete": "Deletar Conta",
+      "noDeletePermission": "Você só pode deletar essa conta depois de {{ days }} dia(s).",
+      "edit": "Editar"
     }
   }
 }

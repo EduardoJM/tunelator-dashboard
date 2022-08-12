@@ -16,6 +16,7 @@ import {
 import { useQueryClient } from 'react-query';
 import * as CSS from 'csstype';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import LoadingIndicatorBox from '@/components/Placeholders/LoadingIndicatorBox';
 import Button from '@/components/Common/Button';
 import { useMailAccountsPaginated } from '@/services/queries';
@@ -41,6 +42,8 @@ const MailAccounts: FC = () => {
   const queryClient = useQueryClient();
 
   const { plan } = usePlan();
+
+  const { t } = useTranslation();
 
   const currentPage = useMemo(() => {
     if (!pageNumber) {
@@ -137,7 +140,7 @@ const MailAccounts: FC = () => {
     <>
       <Flex alignItems="center" justifyContent="space-between">
         <Heading as="h1" size="lg" my="50px" fontWeight="bold">
-          Minhas Contas de E-mail
+          {t('mailAccounts.title')}
         </Heading>
 
         {plan?.canCreateNewAccount() ? (
@@ -146,12 +149,12 @@ const MailAccounts: FC = () => {
             data-testid="create-new-account-button"
             onClick={handleCreateUserMail}
           >
-            Criar Nova
+            {t('mailAccounts.create')}
           </Button>
         ) : (
           <Tooltip
             hasArrow
-            label="Ops, suas contas disponíveis acabaram! Você poder ver se algum dos nossos planos lhe atende melhor ou entrar em contato com o suporte."
+            label={t('mailAccounts.noAccounts')}
             bg="brand.100"
             color="white"
             shouldWrapChildren
@@ -161,7 +164,7 @@ const MailAccounts: FC = () => {
               data-testid="create-new-account-button"
               isDisabled={true}
             >
-              Criar Nova
+              {t('mailAccounts.create')}
             </Button>
           </Tooltip>
         )}
@@ -216,12 +219,16 @@ const MailAccounts: FC = () => {
                 )}
                 <Divider />
                 <Box width="100%">
-                  <Text fontWeight="bold">Criado em</Text>
+                  <Text fontWeight="bold">
+                    {t('mailAccounts.createdAtLabel')}
+                  </Text>
                   <DateTime value={userMail.created_at} />
                 </Box>
                 <Divider />
                 <Box width="100%">
-                  <Text fontWeight="bold">Última Atualização</Text>
+                  <Text fontWeight="bold">
+                    {t('mailAccounts.updatedAtLabel')}
+                  </Text>
                   <DateTime value={userMail.updated_at} />
                 </Box>
                 <Divider />
@@ -235,7 +242,7 @@ const MailAccounts: FC = () => {
                 >
                   <FormControl flex="1" display="flex" alignItems="center">
                     <FormLabel htmlFor={`email-${userMail.id}-enabled`} mb="0">
-                      Habilitado?
+                      {t('mailAccounts.enabled')}
                     </FormLabel>
                     <Switch
                       id={`email-${userMail.id}-enabled`}
@@ -250,12 +257,14 @@ const MailAccounts: FC = () => {
                       onClick={() => handleCallDeleteUserMail(userMail)}
                       variant="destroy"
                     >
-                      Deletar Conta
+                      {t('mailAccounts.delete')}
                     </Button>
                   ) : (
                     <Tooltip
                       hasArrow
-                      label={`Você só pode deletar essa conta depois de ${plan?.days_until_user_can_delete_account} dia(s).`}
+                      label={t('mailAccounts.noDeletePermission', {
+                        days: plan?.days_until_user_can_delete_account,
+                      })}
                       bg="brand.100"
                       color="white"
                       shouldWrapChildren
@@ -266,7 +275,7 @@ const MailAccounts: FC = () => {
                         mr="10px"
                         isDisabled={true}
                       >
-                        Deletar Conta
+                        {t('mailAccounts.delete')}
                       </Button>
                     </Tooltip>
                   )}
@@ -275,7 +284,7 @@ const MailAccounts: FC = () => {
                     variant="primary"
                     onClick={() => handleEditUserMail(userMail)}
                   >
-                    Editar
+                    {t('mailAccounts.edit')}
                   </Button>
                 </Flex>
               </VStack>
