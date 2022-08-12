@@ -2,10 +2,12 @@ import { FC } from 'react';
 import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { BiHappyHeartEyes } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components';
 
 const Success: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const Success: FC = () => {
           flexDir="column"
         >
           <Heading as="h1" size="xl" color="brand.500">
-            Pagamento efetuado
+            {t('checkout.success.title')}
           </Heading>
           <Heading
             as="h2"
@@ -36,8 +38,7 @@ const Success: FC = () => {
             color="brand.500"
             fontWeight="normal"
           >
-            Você pode conferir se o seu pagamento já foi processado em Planos e
-            Assinaturas, bem como pode conferir isso no nosso painel.
+            {t('checkout.success.body')}
           </Heading>
         </Flex>
         <Flex
@@ -56,11 +57,19 @@ const Success: FC = () => {
         pb="60px"
         gap="10px"
       >
-        <Button onClick={handleGoToHome} variant="primaryRounded">
-          Início
+        <Button
+          onClick={handleGoToHome}
+          variant="primaryRounded"
+          data-testid="home-button"
+        >
+          {t('checkout.success.home')}
         </Button>
-        <Button onClick={handleGoToPlans} variant="primaryRounded">
-          Planos e Assinatura
+        <Button
+          onClick={handleGoToPlans}
+          variant="primaryRounded"
+          data-testid="plans-button"
+        >
+          {t('checkout.success.plans')}
         </Button>
       </Flex>
     </Flex>

@@ -4,13 +4,13 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
-import { LoadingProvider } from '../../../contexts/loading';
-import { AuthContextData, AuthProvider, useAuth } from '../../../contexts/auth';
-import { server } from '../../../mocks/server';
-import userFactory from '../../../mocks/factories/user';
-import config from '../../../config';
-import Profile from './Profile';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
+import { LoadingProvider } from '@/contexts/loading';
+import { AuthContextData, AuthProvider, useAuth } from '@/contexts/auth';
+import { server } from '@/mocks/server';
+import userFactory from '@/mocks/factories/user';
+import config from '@/config';
+import Profile from './Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: {

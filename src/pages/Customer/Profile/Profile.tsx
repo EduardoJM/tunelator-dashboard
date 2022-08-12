@@ -2,6 +2,7 @@ import { FC, useEffect, useMemo } from 'react';
 import { Box, Heading, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import * as CSS from 'csstype';
+import { useTranslation } from 'react-i18next';
 import { Button, Input, LoadingIndicatorBox } from '../../../components';
 import { useAuth } from '../../../contexts/auth';
 import { useAuthenticatedUser } from '../../../services/queries';
@@ -27,6 +28,7 @@ const Profile: FC = () => {
     }
     return `${data.first_name} ${data.last_name}`;
   }, [data]);
+  const { t } = useTranslation();
 
   const flexDirection = useBreakpointValue<CSS.Property.FlexDirection>({
     base: 'column',
@@ -57,14 +59,14 @@ const Profile: FC = () => {
             borderRadius="5px"
           >
             <Heading as="h2" size="md" mb="15px">
-              Dados Pessoais
+              {t('customer.profile.title')}
             </Heading>
 
             <form name="profile-data" onSubmit={formik.handleSubmit}>
               <Flex gap="10px" mb="20px" flexDir={flexDirection}>
                 <Input
                   type="text"
-                  label="Nome"
+                  label={t('customer.profile.firstname')}
                   id="first_name"
                   data-testid="first-name-field"
                   value={formik.values.first_name}
@@ -72,7 +74,7 @@ const Profile: FC = () => {
                 />
                 <Input
                   type="text"
-                  label="Sobrenome"
+                  label={t('customer.profile.lastname')}
                   id="last_name"
                   data-testid="last-name-field"
                   value={formik.values.last_name}
@@ -86,7 +88,7 @@ const Profile: FC = () => {
                   type="submit"
                   data-testid="submit-button"
                 >
-                  Salvar
+                  {t('customer.profile.save')}
                 </Button>
               </Flex>
             </form>

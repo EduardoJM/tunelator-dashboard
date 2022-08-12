@@ -36,8 +36,8 @@ const useResetPasswordMutation = (id: string) => {
         await resetPassword(id, password1);
 
         toast({
-          title: t('reset.success'),
-          description: t('reset.message'),
+          title: t('alerts.reset.success'),
+          description: t('alerts.reset.message'),
           status: 'success',
           duration: 5000,
           isClosable: true,

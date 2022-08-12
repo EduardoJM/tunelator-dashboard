@@ -60,13 +60,13 @@ describe('Login', () => {
   it('should contain an link to signup', () => {
     render(<LoginBox />, { wrapper });
 
-    expect(screen.queryByText(/^Criar minha conta$/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('signup-link')).toBeInTheDocument();
   });
 
   it('should click on the link to signup move to the signup page', async () => {
     render(<LoginBox />, { wrapper });
 
-    const link = screen.getByText(/^Criar minha conta$/i);
+    const link = screen.getByTestId('signup-link');
 
     window.history.replaceState({}, '', '/any-route');
     expect(window.location.pathname).toEqual('/any-route');

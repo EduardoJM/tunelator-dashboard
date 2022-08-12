@@ -28,8 +28,8 @@ describe('RecoveryReset', () => {
 
     await waitAbsoluteLoader();
 
-    const expiredText = screen.queryByText(/^Esse link expirou...$/i);
-    const button = screen.queryByText(/Recuperar Senha/i);
+    const expiredText = screen.queryByText(/^recoveryReset\.expired\.title$/i);
+    const button = screen.queryByTestId('recovery-button');
 
     expect(expiredText).toBeInTheDocument();
     expect(button).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe('RecoveryReset', () => {
 
     await waitAbsoluteLoader();
 
-    const button = screen.getByText(/Recuperar Senha/i);
+    const button = screen.getByTestId('recovery-button');
 
     await act(async () => {
       await userEvent.click(button);
@@ -84,7 +84,7 @@ describe('RecoveryReset', () => {
 
   it('should call the api, show an success message and redirect to home path when changes are made', async () => {
     const apiCallback = mockOnce('put', '/auth/recovery/:id/reset/', 200, {});
-    const expectedDescription = 'reset.message';
+    const expectedDescription = 'alerts.reset.message';
 
     render(<RecoveryReset />);
 

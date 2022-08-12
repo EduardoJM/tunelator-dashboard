@@ -20,8 +20,8 @@ const useSendRecoveryMailMutation = () => {
       await sendRecoveryEmail(email);
 
       toast({
-        title: t('recovery.success'),
-        description: t('recovery.message'),
+        title: t('alerts.recovery.success'),
+        description: t('alerts.recovery.message'),
         status: 'success',
         duration: 5000,
         isClosable: true,

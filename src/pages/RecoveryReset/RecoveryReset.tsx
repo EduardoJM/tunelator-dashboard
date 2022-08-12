@@ -11,6 +11,7 @@ import {
 import { useParams, useNavigate } from 'react-router';
 import { GiBackwardTime } from 'react-icons/gi';
 import { useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { isSessionValid } from '../../services/api/recovery';
 import { Button, PasswordInput } from '../../components';
@@ -22,6 +23,7 @@ const RecoveryReset: FC = () => {
   const { pushLoading, popLoading } = useLoading();
   const [valid, setValid] = useState(true);
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+  const { t } = useTranslation();
 
   const resetPasswordMutation = useResetPasswordMutation(id || '');
 
@@ -69,7 +71,7 @@ const RecoveryReset: FC = () => {
                   flexDir="column"
                 >
                   <Heading as="h1" size="xl" color="brand.500">
-                    Esse link expirou...
+                    {t('recoveryReset.expired.title')}
                   </Heading>
                   <Heading
                     as="h2"
@@ -78,8 +80,7 @@ const RecoveryReset: FC = () => {
                     color="brand.500"
                     fontWeight="normal"
                   >
-                    Esse link expirou ou não é válido. Para recuperar a sua
-                    senha você precisa pedir um novo link.
+                    {t('recoveryReset.expired.subtitle')}
                   </Heading>
 
                   <Flex
@@ -91,8 +92,9 @@ const RecoveryReset: FC = () => {
                     <Button
                       onClick={handleGoToPasswordRecovery}
                       variant="primaryRounded"
+                      data-testid="recovery-button"
                     >
-                      Recuperar Senha
+                      {t('recoveryReset.expired.recovery')}
                     </Button>
                   </Flex>
                 </Flex>
@@ -137,29 +139,27 @@ const RecoveryReset: FC = () => {
                   as="h1"
                   size="2xl"
                 >
-                  Redefinir Senha
+                  {t('recoveryReset.valid.title')}
                 </Heading>
 
                 <Box pb="20px">
-                  <Text>
-                    Preencha e confirme uma nova senha para a sua conta.
-                  </Text>
+                  <Text>{t('recoveryReset.valid.subtitle')}</Text>
                 </Box>
 
                 <PasswordInput
                   id="password1"
-                  label="Sua Senha"
+                  label={t('recoveryReset.valid.password')}
                   data-testid="password1-field"
-                  placeholder="Digite sua nova senha"
+                  placeholder={t('recoveryReset.valid.passwordPlaceholder')}
                   value={formik.values.password1}
                   onChange={formik.handleChange}
                 />
 
                 <PasswordInput
                   id="password2"
-                  label="Confirme sua Senha"
+                  label={t('recoveryReset.valid.confirmation')}
                   data-testid="password2-field"
-                  placeholder="Confirme sua nova senha"
+                  placeholder={t('recoveryReset.valid.confirmationPlaceholder')}
                   value={formik.values.password2}
                   onChange={formik.handleChange}
                 />
@@ -170,7 +170,7 @@ const RecoveryReset: FC = () => {
                   type="submit"
                   data-testid="submit-button"
                 >
-                  Redefinir Senha
+                  {t('recoveryReset.valid.submit')}
                 </Button>
               </VStack>
             </form>

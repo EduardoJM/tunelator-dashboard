@@ -26,7 +26,7 @@ describe('Home', () => {
   it('should contains an welcome message', () => {
     render(<Home />, { wrapper });
 
-    expect(screen.queryByText(/^Bem-vindo!$/i)).toBeInTheDocument();
+    expect(screen.queryByText(/^home\.title$/i)).toBeInTheDocument();
   });
 
   it('should contains the latest mail accounts and latest received mails heading', () => {

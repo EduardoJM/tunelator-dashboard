@@ -12,18 +12,24 @@ import {
   FormControl,
   Switch,
 } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { DateTime, Ellipsis } from '../../../components';
-import Button from '../../../components/Common/Button';
-import NoAccountsBox from '../../../components/Placeholders/NoAccountsBox';
-import LoadingIndicatorBox from '../../../components/Placeholders/LoadingIndicatorBox';
-import { UserMail } from '../../../entities/UserMail';
-import { useSetMailAccountRedirectEnabledMutation } from '../../../services/mutations';
-import { useLatestMailAccounts } from '../../../services/queries';
+import {
+  DateTime,
+  Ellipsis,
+  Button,
+  NoAccountsBox,
+  LoadingIndicatorBox,
+} from '@/components';
+import { UserMail } from '@/entities/UserMail';
+import { useSetMailAccountRedirectEnabledMutation } from '@/services/mutations';
+import { useLatestMailAccounts } from '@/services/queries';
+import { headerBorders } from './styles';
 
 const LatestMailAccounts: FC = () => {
   const navigate = useNavigate();
-  const { data, error, isLoading } = useLatestMailAccounts();
+  const { data, isLoading } = useLatestMailAccounts();
+  const { t } = useTranslation();
 
   const setMailAccountRedirectEnabledMutation =
     useSetMailAccountRedirectEnabledMutation();
@@ -48,7 +54,7 @@ const LatestMailAccounts: FC = () => {
   return (
     <>
       <Heading as="h2" size="md" mb="40px" fontWeight="bold">
-        Minhas contas de e-mail
+        {t('home.accounts.title')}
       </Heading>
       {isLoading ? (
         <LoadingIndicatorBox />
@@ -57,41 +63,11 @@ const LatestMailAccounts: FC = () => {
           <Table size="sm">
             <Thead>
               <Tr>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Conta
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  E-mail
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Criado em
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Atualizado em
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Ativo
-                </Th>
+                <Th {...headerBorders}>{t('home.accounts.account')}</Th>
+                <Th {...headerBorders}>{t('home.accounts.email')}</Th>
+                <Th {...headerBorders}>{t('home.accounts.created')}</Th>
+                <Th {...headerBorders}>{t('home.accounts.updated')}</Th>
+                <Th {...headerBorders}>{t('home.accounts.enabled')}</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -134,8 +110,12 @@ const LatestMailAccounts: FC = () => {
         </TableContainer>
       )}
       <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
-        <Button variant="primary" onClick={handleGoToMailsAccountsPage}>
-          Ver Tudo
+        <Button
+          variant="primary"
+          onClick={handleGoToMailsAccountsPage}
+          data-testid="all-button"
+        >
+          {t('home.accounts.all')}
         </Button>
       </Flex>
     </>

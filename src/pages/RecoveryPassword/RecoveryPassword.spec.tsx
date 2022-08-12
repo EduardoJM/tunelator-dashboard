@@ -61,6 +61,6 @@ describe('RecoveryPassword', () => {
 
     const { description } = await waitForAlertInScreen();
 
-    expect(description).toEqual('recovery.message');
+    expect(description).toEqual('alerts.recovery.message');
   });
 });

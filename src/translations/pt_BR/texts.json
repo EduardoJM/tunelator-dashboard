@@ -87,21 +87,171 @@
       "email": "E-mail",
       "password": "Senha"
     },
-    "login": {
-      "success": "Sucesso",
-      "message": "Login efetuado com sucesso!"
+    "alerts": {
+      "login": {
+        "success": "Sucesso",
+        "message": "Login efetuado com sucesso!"
+      },
+      "reset": {
+        "success": "Sucesso",
+        "message": "Senha alterada com sucesso! Faça login para continuar..."
+      },
+      "recovery": {
+        "success": "Sucesso",
+        "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
+      },
+      "userupdate": {
+        "success": "Sucesso",
+        "message": "Dados atualizados com sucesso!"
+      }
     },
-    "reset": {
-      "success": "Sucesso",
-      "message": "Senha alterada com sucesso! Faça login para continuar..."
+    "checkout": {
+      "success": {
+        "title": "Pagamento efetuado",
+        "body": "Você pode conferir se o seu pagamento já foi processado em Planos e Assinaturas, bem como pode conferir isso no nosso painel.",
+        "home": "Início",
+        "plans": "Planos e Assinatura"
+      },
+      "error": {
+        "title": "Houve um erro ao tentar te encaminhar para o processamento de pagamento...",
+        "body": "Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.",
+        "plans": "Planos e Assinatura"
+      },
+      "canceled": {
+        "title": "Não desista da sua privacidade...",
+        "body": "Vimos que sua seção no carrinho de compras foi cancelada, gostariamos de saber se você precisa de ajuda para se decidir? Fale com o nosso suporte...",
+        "support": "Falar com o Suporte",
+        "plans": "Planos e Assinatura"
+      },
+      "alreadypaid": {
+        "title": "Você já possui uma assinatura paga...",
+        "body": "Atualmente só é possível alterar o plano da assinatura cancelando a assinatura e assinando uma nova. Estamos trabalhando para melhorar isso, porém, por enquanto, você pode ir na página de Planos e Assinaturas, em Gerenciar, e cancelar a atual e assinar uma nova.",
+        "plans": "Planos e Assinatura"
+      }
+    },
+    "customer": {
+      "error": {
+        "title": "Houve um erro ao tentar te encaminhar para o portal do cliente na Stripe...",
+        "body": "Tente novamente mais tarde e caso o erro persista, entre em contato com o suporte.",
+        "plans": "Planos e Assinatura"
+      },
+      "profile": {
+        "title": "Dados Pessoais",
+        "firstname": "Nome",
+        "lastname": "Sobrenome",
+        "save": "Salvar"
+      }
+    },
+    "home": {
+      "title": "Bem-vindo!",
+      "accounts": {
+        "title": "Minhas contas de e-mail",
+        "account": "Conta",
+        "email": "E-mail",
+        "created": "Criado em",
+        "updated": "Atualizado em",
+        "enabled": "Ativo",
+        "all": "Ver Tudo"
+      },
+      "received": {
+        "title": "Últimos e-mails recebidos",
+        "from": "De",
+        "to": "Para",
+        "subject": "Assunto",
+        "date": "Data",
+        "unknown": "Desconhecido",
+        "all": "Ver Todas as Informações"
+      }
+    },
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Gerenciar seus e-mails de redirecionamentos e acesso simplificado para e-mails.",
+      "email": "E-mail",
+      "password": "Senha",
+      "remember": "Mantenha-me logado",
+      "recovery": "Esqueceu sua senha?",
+      "login": "Entrar",
+      "signup": "Criar minha conta"
+    },
+    "notFound": {
+      "title": "404",
+      "subtitle": "Ooops! Essa página não foi encontrada."
+    },
+    "signup": {
+      "title": "Criar Conta",
+      "subtitle": "A um passo de não precisar mais se descadastrar inúmeras vezes da mesma lista de e-mail.",
+      "email": "E-mail",
+      "emailPlaceholder": "exemplo@exemplo.com.br",
+      "firstname": "Seu nome",
+      "lastname": "Seu sobrenome",
+      "password": "Senha",
+      "passwordPlaceholder": "Digite sua senha",
+      "terms": "Li e aceito os ",
+      "termsOfUse": "Termos de Uso",
+      "remember": "Mantenha-me logado",
+      "signup": "Criar Conta",
+      "login": "Já tenho uma conta"
+    },
+    "recoveryReset": {
+      "expired": {
+        "title": "Esse link expirou...",
+        "subtitle": "Esse link expirou ou não é válido. Para recuperar a sua senha você precisa pedir um novo link.",
+        "recovery": "Recuperar Senha"
+      },
+      "valid": {
+        "title": "Redefinir Senha",
+        "subtitle": "Preencha e confirme uma nova senha para a sua conta.",
+        "password": "Sua Senha",
+        "passwordPlaceholder": "Digite sua nova senha",
+        "confirmation": "Confirme sua Senha",
+        "confirmationPlaceholder": "Confirme sua nova senha",
+        "submit": "Redefinir Senha"
+      }
     },
     "recovery": {
-      "success": "Sucesso",
-      "message": "Se o e-mail estiver associado a uma conta ao Tunelator, um e-mail será enviado para resetar a senha!"
+      "title": "Recuperar Senha",
+      "subtitle": "Envie um e-mail para recuperar a sua senha de acesso ao Tunelator para continuar cuidando da sua caixa de e-mails.",
+      "email": "E-mail",
+      "emailPlaceholder": "exemplo@exemplo.com.br",
+      "reset": "Resetar Senha"
     },
-    "userupdate": {
-      "success": "Sucesso",
-      "message": "Dados atualizados com sucesso!"
+    "receivedMails": {
+      "title": "E-mails Recebidos",
+      "alert": "Mantemos um histórico dos e-mails recebidos nos últimos 30 dias. Nessa página você consegue visualizar o histórico de redirecionamentos e executar algumas ações, como, por exemplo, reenviar algum dos e-mails.",
+      "from": "De",
+      "to": "Para",
+      "subject": "Assunto",
+      "date": "Data",
+      "unknown": "Desconhecido",
+      "subjectLabel": "Assunto: ",
+      "fromLabel": "Enviado De: ",
+      "toLabel": "Enviado Para: ",
+      "deliveredLabel": "Reenviado: ",
+      "deliveredToLabel": "Reenviado Para: ",
+      "deliveredDateLabel": "Data do Último Reenvio: ",
+      "yesDelivered": "Sim",
+      "noDelivered": "Não",
+      "resend": "Reenviar"
+    },
+    "plans": {
+      "alreadypaid": {
+        "title": "Outros Planos",
+        "subtitle": "Atualmente, para poder mudar o plano da sua assinatura você precisa cancelar a sua assinatura atual e fazer uma nova. Estamos trabalhando para melhorar essa experiência, porém, atualmente você pode acessar o portal do cliente para gerenciar a sua assinatura:",
+        "manage": "Portal do Cliente"
+      },
+      "title": "Assinar um plano",
+      "continue": "Continuar"
+    },
+    "mailAccounts": {
+      "title": "Minhas Contas de E-mail",
+      "create": "Criar Nova",
+      "noAccounts": "Ops, suas contas disponíveis acabaram! Você poder ver se algum dos nossos planos lhe atende melhor ou entrar em contato com o suporte.",
+      "createdAtLabel": "Criado em",
+      "updatedAtLabel": "Última Atualização",
+      "enabled": "Habilitado?",
+      "delete": "Deletar Conta",
+      "noDeletePermission": "Você só pode deletar essa conta depois de {{ days }} dia(s).",
+      "edit": "Editar"
     }
   }
 }

@@ -2,10 +2,12 @@ import { FC } from 'react';
 import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components';
 
 const AlreadyPaid: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const AlreadyPaid: FC = () => {
           flexDir="column"
         >
           <Heading as="h1" size="xl" color="brand.500">
-            Você já possui uma assinatura paga...
+            {t('checkout.alreadypaid.title')}
           </Heading>
           <Heading
             as="h2"
@@ -32,10 +34,7 @@ const AlreadyPaid: FC = () => {
             color="brand.500"
             fontWeight="normal"
           >
-            Atualmente só é possível alterar o plano da assinatura cancelando a
-            assinatura e assinando uma nova. Estamos trabalhando para melhorar
-            isso, porém, por enquanto, você pode ir na página de Planos e
-            Assinaturas, em Gerenciar, e cancelar a atual e assinar uma nova.
+            {t('checkout.alreadypaid.body')}
           </Heading>
         </Flex>
         <Flex
@@ -48,8 +47,12 @@ const AlreadyPaid: FC = () => {
         </Flex>
       </Flex>
       <Flex alignItems="center" justifyContent="center" pt="20px" pb="60px">
-        <Button onClick={handleGoToPlans} variant="primaryRounded">
-          Planos e Assinatura
+        <Button
+          onClick={handleGoToPlans}
+          variant="primaryRounded"
+          data-testid="plans-button"
+        >
+          {t('checkout.alreadypaid.plans')}
         </Button>
       </Flex>
     </Flex>
