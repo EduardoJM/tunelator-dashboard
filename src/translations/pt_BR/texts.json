@@ -214,6 +214,24 @@
       "email": "E-mail",
       "emailPlaceholder": "exemplo@exemplo.com.br",
       "reset": "Resetar Senha"
+    },
+    "receivedMails": {
+      "title": "E-mails Recebidos",
+      "alert": "Mantemos um histórico dos e-mails recebidos nos últimos 30 dias. Nessa página você consegue visualizar o histórico de redirecionamentos e executar algumas ações, como, por exemplo, reenviar algum dos e-mails.",
+      "from": "De",
+      "to": "Para",
+      "subject": "Assunto",
+      "date": "Data",
+      "unknown": "Desconhecido",
+      "subjectLabel": "Assunto: ",
+      "fromLabel": "Enviado De: ",
+      "toLabel": "Enviado Para: ",
+      "deliveredLabel": "Reenviado: ",
+      "deliveredToLabel": "Reenviado Para: ",
+      "deliveredDateLabel": "Data do Último Reenvio: ",
+      "yesDelivered": "Sim",
+      "noDelivered": "Não",
+      "resend": "Reenviar"
     }
   }
 }

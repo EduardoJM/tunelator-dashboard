@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../contexts/auth';
 import {
   Button,
@@ -31,9 +32,11 @@ import {
 import { ResendMailSuccessModal } from '../../modals';
 import { useReceivedMailsPaginated } from '../../services/queries';
 import { useResendReceivedMailMutation } from '../../services/mutations';
+import { headerBorders } from './styles';
 
 const ReceivedMails: FC = () => {
   const { userData } = useAuth();
+  const { t } = useTranslation();
 
   const navigate = useNavigate();
 
@@ -50,7 +53,7 @@ const ReceivedMails: FC = () => {
     return num;
   }, [pageNumber]);
 
-  const { data, error, isLoading } = useReceivedMailsPaginated(currentPage);
+  const { data, isLoading } = useReceivedMailsPaginated(currentPage);
 
   const resendModal = useDisclosure();
 
@@ -78,14 +81,12 @@ const ReceivedMails: FC = () => {
   return (
     <>
       <Heading as="h1" size="lg" my="50px" fontWeight="bold">
-        E-mails Recebidos
+        {t('receivedMails.title')}
       </Heading>
 
       <Alert status="info" variant="top-accent" mb="50px">
         <AlertIcon />
-        Mantemos um histórico dos e-mails recebidos nos últimos 30 dias. Nessa
-        página você consegue visualizar o histórico de redirecionamentos e
-        executar algumas ações, como, por exemplo, reenviar algum dos e-mails.
+        {t('receivedMails.alert')}
       </Alert>
 
       {isLoading ? (
@@ -95,39 +96,11 @@ const ReceivedMails: FC = () => {
           <Table size="sm">
             <Thead>
               <Tr>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  De
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Para
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Assunto
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                >
-                  Data
-                </Th>
-                <Th
-                  borderColor="brand.500"
-                  borderBottomWidth="2px"
-                  bgColor="gray.100"
-                />
+                <Th {...headerBorders}>{t('receivedMails.from')}</Th>
+                <Th {...headerBorders}>{t('receivedMails.to')}</Th>
+                <Th {...headerBorders}>{t('receivedMails.subject')}</Th>
+                <Th {...headerBorders}>{t('receivedMails.date')}</Th>
+                <Th {...headerBorders} />
               </Tr>
             </Thead>
             <Tbody>
@@ -143,7 +116,7 @@ const ReceivedMails: FC = () => {
                   <Tr>
                     <Td border="none">
                       <Ellipsis characteres={22}>
-                        {receivedMail.origin_mail || 'Desconhecido'}
+                        {receivedMail.origin_mail || t('receivedMails.unknown')}
                       </Ellipsis>
                     </Td>
                     <Td border="none">
@@ -153,7 +126,7 @@ const ReceivedMails: FC = () => {
                     </Td>
                     <Td border="none">
                       <Ellipsis characteres={30}>
-                        {receivedMail.subject || 'Desconhecido'}
+                        {receivedMail.subject || t('receivedMails.unknown')}
                       </Ellipsis>
                     </Td>
                     <Td border="none">
@@ -183,19 +156,19 @@ const ReceivedMails: FC = () => {
                           <VStack width="100%">
                             <Box width="100%">
                               <Text as="span" fontWeight="bold">
-                                Assunto:{' '}
+                                {t('receivedMails.subjectLabel')}
                               </Text>
                               <Text as="span">{receivedMail.subject}</Text>
                             </Box>
                             <Box width="100%">
                               <Text as="span" fontWeight="bold">
-                                Enviado De:{' '}
+                                {t('receivedMails.fromLabel')}
                               </Text>
                               <Text as="span">{receivedMail.origin_mail}</Text>
                             </Box>
                             <Box width="100%">
                               <Text as="span" fontWeight="bold">
-                                Enviado Para:{' '}
+                                {t('receivedMails.toLabel')}
                               </Text>
                               <Text as="span">{receivedMail.mail.mail}</Text>
                             </Box>
@@ -203,13 +176,15 @@ const ReceivedMails: FC = () => {
                               <>
                                 <Box width="100%">
                                   <Text as="span" fontWeight="bold">
-                                    Reenviado:{' '}
+                                    {t('receivedMails.deliveredLabel')}
                                   </Text>
-                                  <Text as="span">Sim</Text>
+                                  <Text as="span">
+                                    {t('receivedMails.yesDelivered')}
+                                  </Text>
                                 </Box>
                                 <Box width="100%">
                                   <Text as="span" fontWeight="bold">
-                                    Reenviado Para:{' '}
+                                    {t('receivedMails.deliveredToLabel')}
                                   </Text>
                                   {!!receivedMail.mail.redirect_to ? (
                                     <Text as="span">
@@ -224,7 +199,7 @@ const ReceivedMails: FC = () => {
                                 {receivedMail.delivered_date && (
                                   <Box width="100%">
                                     <Text as="span" fontWeight="bold">
-                                      Data do Último Reenvio:{' '}
+                                      {t('receivedMails.deliveredDateLabel')}
                                     </Text>
                                     <Text as="span">
                                       <DateTime
@@ -237,9 +212,11 @@ const ReceivedMails: FC = () => {
                             ) : (
                               <Box width="100%">
                                 <Text as="span" fontWeight="bold">
-                                  Reenviado:{' '}
+                                  {t('receivedMails.deliveredLabel')}
                                 </Text>
-                                <Text as="span">Não</Text>
+                                <Text as="span">
+                                  {t('receivedMails.noDelivered')}
+                                </Text>
                               </Box>
                             )}
                             <Flex
@@ -254,7 +231,7 @@ const ReceivedMails: FC = () => {
                                   handleResendMail(receivedMail.id)
                                 }
                               >
-                                Reenviar
+                                {t('receivedMails.resend')}
                               </Button>
                             </Flex>
                           </VStack>
