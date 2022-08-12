@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
 import { Button } from '../../components';
 import { PlansGrid } from '@/features';
@@ -19,6 +20,8 @@ const Plans: FC = () => {
 
   const goToCustomerPortalMutation = useGoToCustomerPortalMutation();
   const goToCheckoutMutation = useGoToCheckoutMutation();
+
+  const { t } = useTranslation();
 
   const handleSelectPlan = (id: number) => {
     setActivePlan(id);
@@ -53,7 +56,7 @@ const Plans: FC = () => {
                 my="50px"
                 textAlign="center"
               >
-                Assinar um plano
+                {t('plans.title')}
               </Heading>
               <PlansGrid
                 plans={data || []}
@@ -68,7 +71,7 @@ const Plans: FC = () => {
                   isDisabled={!activePlan}
                   onClick={handleContinue}
                 >
-                  Continuar
+                  {t('plans.continue')}
                 </Button>
               </Flex>
             </>

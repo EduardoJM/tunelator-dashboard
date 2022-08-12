@@ -232,6 +232,15 @@
       "yesDelivered": "Sim",
       "noDelivered": "Não",
       "resend": "Reenviar"
+    },
+    "plans": {
+      "alreadypaid": {
+        "title": "Outros Planos",
+        "subtitle": "Atualmente, para poder mudar o plano da sua assinatura você precisa cancelar a sua assinatura atual e fazer uma nova. Estamos trabalhando para melhorar essa experiência, porém, atualmente você pode acessar o portal do cliente para gerenciar a sua assinatura:",
+        "manage": "Portal do Cliente"
+      },
+      "title": "Assinar um plano",
+      "continue": "Continuar"
     }
   }
 }

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '../../../components';
 
 export interface AlreadyPaidSection {
@@ -9,6 +10,8 @@ export interface AlreadyPaidSection {
 const AlreadyPaidSection: FC<AlreadyPaidSection> = ({
   onGoToCustomerPortal,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box
       width="100%"
@@ -22,14 +25,11 @@ const AlreadyPaidSection: FC<AlreadyPaidSection> = ({
       _hover={{ backgroundColor: '#EFEFEF' }}
     >
       <Heading as="h2" size="lg" color="brand.500" mb="30px">
-        Outros Planos
+        {t('plans.alreadypaid.title')}
       </Heading>
 
       <Text as="p" data-testid="description" fontSize="lg">
-        Atualmente, para poder mudar o plano da sua assinatura você precisa
-        cancelar a sua assinatura atual e fazer uma nova. Estamos trabalhando
-        para melhorar essa experiência, porém, atualmente você pode acessar o
-        portal do cliente para gerenciar a sua assinatura:
+        {t('plans.alreadypaid.subtitle')}
       </Text>
       <Flex mt="30px" width="100%" alignItems="center" justifyContent="center">
         <Button
@@ -37,7 +37,7 @@ const AlreadyPaidSection: FC<AlreadyPaidSection> = ({
           variant="primaryRounded"
           onClick={onGoToCustomerPortal}
         >
-          Portal do Cliente
+          {t('plans.alreadypaid.manage')}
         </Button>
       </Flex>
     </Box>

@@ -112,7 +112,7 @@ describe('Plans', () => {
       expect(screen.queryAllByTestId('loading-indicator')).toHaveLength(0);
     });
 
-    expect(screen.queryByText(/^Assinar um plano$/i)).toBeInTheDocument();
+    expect(screen.queryByText(/^plans\.title$/i)).toBeInTheDocument();
     expect(screen.queryAllByTestId('plan-item')).toHaveLength(plans.length);
     expect(screen.queryByTestId('go-to-checkout-button')).toBeInTheDocument();
   });
