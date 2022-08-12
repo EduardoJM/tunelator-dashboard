@@ -9,6 +9,12 @@ export interface Error {
 export const fieldsMapping = {
   email: i18n.t('fields.email'),
   password: i18n.t('fields.password'),
+  first_name: i18n.t('fields.first_name'),
+  last_name: i18n.t('fields.last_name'),
+  name: i18n.t('fields.name'),
+  mail_user: i18n.t('fields.mail_user'),
+  redirect_enabled: i18n.t('fields.redirect_enabled'),
+  redirect_to: i18n.t('fields.redirect_to'),
 };
 
 export function getErrorMessages(err: any): Error[] {
