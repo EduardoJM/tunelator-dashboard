@@ -1,10 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import { server, mockOnce } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import config from '@/config';
 import LoginBox from './LoginBox';
 
 describe('Login', () => {
