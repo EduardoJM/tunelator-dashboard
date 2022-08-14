@@ -10,6 +10,7 @@ import { mockOnce } from '@/mocks/server';
 import accountFactory from '@/mocks/factories/account';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import { waitLoaders } from '@/test/utils/loaders';
+import { waitForAlertInScreen } from '@/test/utils/alerts';
 import LatestMailAccounts from './LatestMailAccounts';
 
 describe('LatestMailAccounts', () => {
@@ -168,10 +169,7 @@ describe('LatestMailAccounts', () => {
       await userEvent.click(checkbox || new Element());
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
-
-    expect(screen.queryByText(/^custom error message$/i)).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('custom error message');
   });
 });

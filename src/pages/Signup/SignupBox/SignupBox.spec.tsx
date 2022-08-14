@@ -316,13 +316,8 @@ describe('SignupBox', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.queryByText(/^custom signup error message$/i)
-    ).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('custom signup error message');
   });
 
   it('should click on the signup button and got validation error must show as toast', async () => {

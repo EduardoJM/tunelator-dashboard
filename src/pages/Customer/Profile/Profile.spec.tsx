@@ -166,11 +166,8 @@ describe('Profile', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
-
-    expect(screen.queryByText(/^custom error\.$/i)).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('custom error.');
 
     await waitLoaders();
   });
