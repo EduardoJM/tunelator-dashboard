@@ -1,10 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import config from '@/config';
 import RecoveryPassword from './RecoveryPassword';
 
 describe('RecoveryPassword', () => {
@@ -17,13 +15,7 @@ describe('RecoveryPassword', () => {
   });
 
   it('type the e-mail and click on the send button must call the api and show an alert in the screen', async () => {
-    const apiCallback = jest.fn();
-    server.use(
-      rest.post(`${config.apiUrl}/auth/recovery/`, (req, res, ctx) => {
-        apiCallback();
-        return res(ctx.status(200));
-      })
-    );
+    const apiCallback = mockOnce('post', '/auth/recovery/', 200, {});
 
     render(<RecoveryPassword />, { wrapper });
 

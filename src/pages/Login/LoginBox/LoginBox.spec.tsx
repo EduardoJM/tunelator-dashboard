@@ -1,10 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import config from '@/config';
 import LoginBox from './LoginBox';
 
 describe('Login', () => {
@@ -157,16 +155,9 @@ describe('Login', () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
 
-    server.use(
-      rest.post(`${config.apiUrl}/auth/token/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(401),
-          ctx.json({
-            detail: 'custom login error message',
-          })
-        );
-      })
-    );
+    mockOnce('post', '/auth/token/', 401, {
+      detail: 'custom login error message',
+    });
 
     render(<LoginBox />, { wrapper });
 

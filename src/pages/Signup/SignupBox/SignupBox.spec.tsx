@@ -1,10 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import config from '@/config';
 import SignupBox from './SignupBox';
 
 describe('SignupBox', () => {
@@ -274,16 +272,9 @@ describe('SignupBox', () => {
     window.localStorage.clear();
     window.sessionStorage.clear();
 
-    server.use(
-      rest.post(`${config.apiUrl}/auth/create/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(400),
-          ctx.json({
-            email: 'custom signup error message',
-          })
-        );
-      })
-    );
+    mockOnce('post', '/auth/create/', 400, {
+      email: 'custom signup error message',
+    });
 
     render(<SignupBox />, { wrapper });
 

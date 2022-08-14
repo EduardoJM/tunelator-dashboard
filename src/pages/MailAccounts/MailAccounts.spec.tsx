@@ -1,11 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { rest } from 'msw';
-import { activePlan } from '../../mocks/fixtures';
-import { server } from '../../mocks/server';
-import { PlanType } from '../../entities/Plan';
-import { waitLoaders } from '@/test/utils/loaders';
+import { activePlan } from '@/mocks/fixtures';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import config from '../../config';
+import { mockOnce } from '@/mocks/server';
+import { waitLoaders } from '@/test/utils/loaders';
+import { PlanType } from '@/entities/Plan';
 import MailAccounts from './MailAccounts';
 
 describe('MailAccounts', () => {
@@ -32,16 +30,12 @@ describe('MailAccounts', () => {
   });
 
   it('if the plan has no more accounts free, create account button should rendered disabled', async () => {
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       free_accounts: 0,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
+
     render(<MailAccounts />, { wrapper });
 
     await waitLoaders();

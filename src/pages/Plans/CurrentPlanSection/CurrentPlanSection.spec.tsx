@@ -1,11 +1,9 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import { activePlan } from '@/mocks/fixtures';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { PlanType } from '@/entities/Plan';
-import config from '@/config';
 import CurrentPlanSection from './CurrentPlanSection';
 
 describe('CurrentPlanSection', () => {
@@ -38,15 +36,10 @@ describe('CurrentPlanSection', () => {
   });
 
   it('should not render the manage button if the plan is free', async () => {
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<CurrentPlanSection onGoToCustomerPortal={() => {}} />, { wrapper });
 
@@ -59,15 +52,10 @@ describe('CurrentPlanSection', () => {
   });
 
   it('should render the manage button if the plan is not free', async () => {
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Paid,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<CurrentPlanSection onGoToCustomerPortal={() => {}} />, { wrapper });
 
@@ -80,15 +68,10 @@ describe('CurrentPlanSection', () => {
   });
 
   it('should call onGoToCustomerPortal when click on the the manage button', async () => {
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Paid,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     const onGoToCustomerPortal = jest.fn();
     render(<CurrentPlanSection onGoToCustomerPortal={onGoToCustomerPortal} />, {

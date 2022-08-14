@@ -2,15 +2,13 @@ import { FC } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
 import { BrowserRouter } from 'react-router-dom';
-import { rest } from 'msw';
 import { AuthProvider } from './auth';
 import { PlanProvider, usePlan } from './plan';
 import { LoadingProvider } from './loading';
-import { server } from '../mocks/server';
-import { activePlan } from '../mocks/fixtures';
-import accountFactory from '../mocks/factories/account';
-import { ActivePlan } from '../entities/Plan';
-import config from '../config';
+import { mockOnce } from '@/mocks/server';
+import { activePlan } from '@/mocks/fixtures';
+import accountFactory from '@/mocks/factories/account';
+import { ActivePlan } from '@/entities/Plan';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -58,11 +56,7 @@ describe('contexts/plan', () => {
   it('should plan contains the informations gots from the api', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(activePlan));
-      })
-    );
+    mockOnce('get', '/plans/active/', 200, activePlan);
 
     const { result, waitFor } = renderHook(() => usePlan(), {
       wrapper,

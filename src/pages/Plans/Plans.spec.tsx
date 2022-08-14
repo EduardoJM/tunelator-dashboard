@@ -1,11 +1,9 @@
 import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import { activePlan, plans } from '@/mocks/fixtures';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { PlanType } from '@/entities/Plan';
-import config from '@/config';
 import Plans from './Plans';
 
 describe('Plans', () => {
@@ -18,15 +16,10 @@ describe('Plans', () => {
   it('should show the already-paid message when the plan is non-free', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Paid,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<Plans />, { wrapper });
 
@@ -40,24 +33,11 @@ describe('Plans', () => {
   it('should show an loading indicator when is fetching the plans from the api', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const apiCallback = jest.fn();
-
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      }),
-      rest.get(`${config.apiUrl}/plans`, async (req, res, ctx) => {
-        await waitFor(() => {
-          expect(apiCallback).toHaveBeenCalledTimes(1);
-        });
-        return res(ctx.status(200), ctx.json(plans));
-      })
-    );
+    });
+    mockOnce('get', '/plans', 200, plans);
 
     render(<Plans />, { wrapper });
 
@@ -70,15 +50,10 @@ describe('Plans', () => {
   it('should show an plans grid when the plan is free', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<Plans />, { wrapper });
 
@@ -94,15 +69,10 @@ describe('Plans', () => {
   it('should the go to checkout button initial state must be disabled', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<Plans />, { wrapper });
 
@@ -117,15 +87,10 @@ describe('Plans', () => {
   it('should enable the go to checkout button when we click on select on an plan item', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      })
-    );
+    });
 
     render(<Plans />, { wrapper });
 
@@ -149,21 +114,14 @@ describe('Plans', () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
     const checkout_id = '12345666456';
-    const apiCallback = jest.fn();
 
-    const myActivePlan = {
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Free,
-    };
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      }),
-      rest.post(`${config.apiUrl}/payments/checkout/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(201), ctx.json({ checkout_id }));
-      })
-    );
+    });
+    const apiCallback = mockOnce('post', '/payments/checkout/', 201, {
+      checkout_id,
+    });
 
     render(<Plans />, { wrapper });
     await waitFor(() => {
@@ -198,22 +156,15 @@ describe('Plans', () => {
   it('should call the api when click on the customer portal button', async () => {
     window.sessionStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
 
-    const myActivePlan = {
+    const manager_id = '1234656565';
+
+    mockOnce('get', '/plans/active/', 200, {
       ...activePlan,
       plan_type: PlanType.Paid,
-    };
-    const manager_id = '1234656565';
-    const apiCallback = jest.fn();
-
-    server.use(
-      rest.get(`${config.apiUrl}/plans/active/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(myActivePlan));
-      }),
-      rest.post(`${config.apiUrl}/payments/manage/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(201), ctx.json({ manager_id }));
-      })
-    );
+    });
+    const apiCallback = mockOnce('post', '/payments/manage/', 201, {
+      manager_id,
+    });
 
     render(<Plans />, { wrapper });
 
