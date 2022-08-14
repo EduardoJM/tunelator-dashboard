@@ -1,10 +1,8 @@
 import { screen, render, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import { waitLoaders } from '@/test/utils/loaders';
-import config from '@/config';
 import LatestReceivedMails from './LatestReceivedMails';
 
 describe('LatestReceivedMails', () => {
@@ -38,19 +36,12 @@ describe('LatestReceivedMails', () => {
   });
 
   it('should render an message indicating no received mails exists if nothing received mails are found', async () => {
-    server.use(
-      rest.get(`${config.apiUrl}/mails/received/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(200),
-          ctx.json({
-            count: 0,
-            next: 'string | null',
-            previous: 'string | null',
-            results: [],
-          })
-        );
-      })
-    );
+    mockOnce('get', '/mails/received/', 200, {
+      count: 0,
+      next: 'string | null',
+      previous: 'string | null',
+      results: [],
+    });
 
     render(<LatestReceivedMails />, { wrapper });
 
