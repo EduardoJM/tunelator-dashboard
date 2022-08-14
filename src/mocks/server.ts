@@ -5,7 +5,7 @@ import { handlers } from './handlers';
 
 export const server = setupServer(...handlers);
 
-export type MockMethod = 'get' | 'post' | 'put' | 'delete';
+export type MockMethod = 'get' | 'post' | 'put' | 'delete' | 'patch';
 
 export function mockOnce(
   method: MockMethod,

@@ -1,24 +1,18 @@
 import { FC } from 'react';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
 import { waitLoaders } from '@/test/utils/loaders';
 import { AuthContextData, useAuth } from '@/contexts/auth';
-import { server } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import userFactory from '@/mocks/factories/user';
-import config from '@/config';
 import Profile from './Profile';
 
 describe('Profile', () => {
   it('should contains the complete name as first header when the user has first and last name', async () => {
     const user = userFactory();
-    server.use(
-      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    mockOnce('get', '/auth/user/', 200, user);
 
     render(<Profile />, { wrapper });
 
@@ -31,11 +25,7 @@ describe('Profile', () => {
 
   it('should contains the first name as first header if the user has first name and not have last name', async () => {
     const user = userFactory({ last_name: '' });
-    server.use(
-      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    mockOnce('get', '/auth/user/', 200, user);
 
     render(<Profile />, { wrapper });
 
@@ -48,11 +38,7 @@ describe('Profile', () => {
 
   it('should contains the e-mail as first header if the user has no first no last name', async () => {
     const user = userFactory({ first_name: '', last_name: '' });
-    server.use(
-      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    mockOnce('get', '/auth/user/', 200, user);
 
     render(<Profile />, { wrapper });
 
@@ -84,11 +70,7 @@ describe('Profile', () => {
 
   it('should the initial values of the first_name and the last_name must be get from the api', async () => {
     const user = userFactory();
-    server.use(
-      rest.get(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    mockOnce('get', '/auth/user/', 200, user);
 
     render(<Profile />, { wrapper });
 
@@ -101,14 +83,8 @@ describe('Profile', () => {
   });
 
   it('should save the user data to the api when click on the submit button', async () => {
-    const apiCallback = jest.fn();
     const user = userFactory();
-    server.use(
-      rest.patch(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        apiCallback();
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    const apiCallback = mockOnce('patch', '/auth/user/', 200, user);
 
     render(<Profile />, { wrapper });
 
@@ -136,11 +112,7 @@ describe('Profile', () => {
 
   it('should update the context data when save the user data to the api', async () => {
     const user = userFactory();
-    server.use(
-      rest.patch(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(ctx.status(200), ctx.json(user));
-      })
-    );
+    mockOnce('patch', '/auth/user/', 200, user);
 
     let authState: AuthContextData;
     const MyComponent: FC = () => {
@@ -175,16 +147,7 @@ describe('Profile', () => {
   });
 
   it('should show error informations in a toast when api return error', async () => {
-    server.use(
-      rest.patch(`${config.apiUrl}/auth/user/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(400),
-          ctx.json({
-            detail: 'custom error.',
-          })
-        );
-      })
-    );
+    mockOnce('patch', '/auth/user/', 400, { detail: 'custom error.' });
 
     render(<Profile />, { wrapper });
 
