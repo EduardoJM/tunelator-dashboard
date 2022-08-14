@@ -1,26 +1,6 @@
 import { screen, render, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { FC } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { LoadingProvider } from '../../contexts/loading';
+import { wrapper } from '@/mocks/contexts/wrapper';
 import Home from './Home';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <LoadingProvider>{children}</LoadingProvider>
-    </BrowserRouter>
-  </QueryClientProvider>
-);
 
 describe('Home', () => {
   it('should contains an welcome message', () => {

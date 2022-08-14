@@ -1,31 +1,11 @@
-import { FC } from 'react';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { rest } from 'msw';
+import { wrapper } from '@/mocks/contexts/wrapper';
+import { server } from '@/mocks/server';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
+import config from '@/config';
 import RecoveryPassword from './RecoveryPassword';
-import { LoadingProvider } from '../../contexts/loading';
-import { server } from '../../mocks/server';
-import config from '../../config';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>{children}</BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
-);
 
 describe('RecoveryPassword', () => {
   it('should contains an form, an e-mail input and a submit button', () => {

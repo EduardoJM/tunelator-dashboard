@@ -8,13 +8,12 @@ import { waitAbsoluteLoader } from '@/test/utils/loaders';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
 import RecoveryReset from './RecoveryReset';
 
-const wrapper: FC = ({ children }) => (
+const render = createRenderer(({ children }) => (
   <Routes>
     <Route path="/" element={<></>} />
     <Route path="/:id" element={<>{children}</>} />
   </Routes>
-);
-const render = createRenderer(wrapper);
+));
 
 describe('RecoveryReset', () => {
   beforeEach(() => {
