@@ -16,7 +16,7 @@ export function mockOnce(
   const callback = jest.fn();
   server.use(
     rest[method](`${config.apiUrl}${path}`, (req, res, ctx) => {
-      callback();
+      callback(req.body);
       return res.once(ctx.status(status), ctx.json(json));
     })
   );

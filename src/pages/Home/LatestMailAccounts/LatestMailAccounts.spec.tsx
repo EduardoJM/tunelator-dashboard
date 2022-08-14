@@ -7,7 +7,8 @@ import {
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
-import { server } from '@/mocks/server';
+import { server, mockOnce } from '@/mocks/server';
+import accountFactory from '@/mocks/factories/account';
 import { wrapper } from '@/mocks/contexts/wrapper';
 import { waitLoaders, waitAbsoluteLoader } from '@/test/utils/loaders';
 import config from '@/config';
@@ -46,19 +47,12 @@ describe('LatestMailAccounts', () => {
   });
 
   it('should render an message indicating no received mails exists if nothing received mails are found', async () => {
-    server.use(
-      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(200),
-          ctx.json({
-            count: 0,
-            next: 'string | null',
-            previous: 'string | null',
-            results: [],
-          })
-        );
-      })
-    );
+    mockOnce('get', '/mails/accounts/', 200, {
+      count: 0,
+      next: 'string | null',
+      previous: 'string | null',
+      results: [],
+    });
 
     render(<LatestMailAccounts />, { wrapper });
 
@@ -103,42 +97,14 @@ describe('LatestMailAccounts', () => {
   });
 
   it('should have an toggle button in all items of the table', async () => {
-    server.use(
-      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(200),
-          ctx.json({
-            count: 2,
-            next: 'string | null',
-            previous: 'string | null',
-            results: [
-              {
-                id: 1,
-                created_at: '2022-04-22T10:24:45',
-                mail_user: 'example',
-                mail: 'example@example.com.br',
-                name: 'Account Name',
-                plan_enabled: true,
-                redirect_enabled: false,
-                redirect_to: 'example@example.com',
-                updated_at: '2022-04-22T10:24:45',
-              },
-              {
-                id: 2,
-                created_at: '2022-04-22T10:24:45',
-                mail_user: 'example',
-                mail: 'example@example.com.br',
-                name: 'Account Name',
-                plan_enabled: true,
-                redirect_enabled: true,
-                redirect_to: 'example@example.com',
-                updated_at: '2022-04-22T10:24:45',
-              },
-            ],
-          })
-        );
-      })
-    );
+    mockOnce('get', '/mails/accounts/', 200, {
+      count: 2,
+      next: 'string | null',
+      previous: 'string | null',
+      results: Array.from({ length: 2 }).map((_, index) =>
+        accountFactory({ id: index + 1 })
+      ),
+    });
 
     render(<LatestMailAccounts />, { wrapper });
 
@@ -155,38 +121,13 @@ describe('LatestMailAccounts', () => {
   });
 
   it('should click on the toggle button must change the item redirect_enabled at api', async () => {
-    const apiCallback = jest.fn();
-
-    server.use(
-      rest.get(`${config.apiUrl}/mails/accounts/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(200),
-          ctx.json({
-            count: 2,
-            next: 'string | null',
-            previous: 'string | null',
-            results: [
-              {
-                id: 1,
-                created_at: '2022-04-22T10:24:45',
-                mail_user: 'example',
-                mail: 'example@example.com.br',
-                name: 'Account Name',
-                plan_enabled: true,
-                redirect_enabled: false,
-                redirect_to: 'example@example.com',
-                updated_at: '2022-04-22T10:24:45',
-              },
-            ],
-          })
-        );
-      }),
-      rest.patch(`${config.apiUrl}/mails/accounts/:id/`, (req, res, ctx) => {
-        apiCallback(req.body);
-
-        return res.once(ctx.status(200), ctx.json({}));
-      })
-    );
+    mockOnce('get', '/mails/accounts/', 200, {
+      count: 2,
+      next: 'string | null',
+      previous: 'string | null',
+      results: [accountFactory({ id: 1, redirect_enabled: false })],
+    });
+    const apiCallback = mockOnce('patch', '/mails/accounts/:id/', 200, {});
 
     render(<LatestMailAccounts />, { wrapper });
 
@@ -211,16 +152,9 @@ describe('LatestMailAccounts', () => {
   });
 
   it('should click on the toggle button and got error, this error goes to the screen as an toast', async () => {
-    server.use(
-      rest.patch(`${config.apiUrl}/mails/accounts/:id/`, (req, res, ctx) => {
-        return res.once(
-          ctx.status(400),
-          ctx.json({
-            detail: 'custom error message',
-          })
-        );
-      })
-    );
+    mockOnce('patch', '/mails/accounts/:id/', 400, {
+      detail: 'custom error message',
+    });
 
     render(<LatestMailAccounts />, { wrapper });
 
