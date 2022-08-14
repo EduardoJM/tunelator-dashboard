@@ -124,12 +124,7 @@ describe('Login', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
-
     const { description } = await waitForAlertInScreen();
-
     expect(description).toEqual('errors.wrongemail');
   });
 
@@ -172,12 +167,7 @@ describe('Login', () => {
       await userEvent.click(button);
     });
 
-    await waitFor(() => {
-      expect(screen.queryByRole('alert')).toBeInTheDocument();
-    });
-
-    expect(
-      screen.queryByText(/^custom login error message$/i)
-    ).toBeInTheDocument();
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('custom login error message');
   });
 });
