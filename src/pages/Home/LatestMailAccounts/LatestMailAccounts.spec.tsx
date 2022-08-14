@@ -6,12 +6,10 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { rest } from 'msw';
-import { server, mockOnce } from '@/mocks/server';
+import { mockOnce } from '@/mocks/server';
 import accountFactory from '@/mocks/factories/account';
 import { wrapper } from '@/mocks/contexts/wrapper';
-import { waitLoaders, waitAbsoluteLoader } from '@/test/utils/loaders';
-import config from '@/config';
+import { waitLoaders } from '@/test/utils/loaders';
 import LatestMailAccounts from './LatestMailAccounts';
 
 describe('LatestMailAccounts', () => {
@@ -22,7 +20,6 @@ describe('LatestMailAccounts', () => {
 
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(5);
-      //expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
       expect(screen.queryByTestId('no-accounts-box')).not.toBeInTheDocument();
     });
   });
@@ -60,7 +57,6 @@ describe('LatestMailAccounts', () => {
 
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(0);
-      //expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
       expect(screen.queryByTestId('no-accounts-box')).toBeInTheDocument();
     });
   });
