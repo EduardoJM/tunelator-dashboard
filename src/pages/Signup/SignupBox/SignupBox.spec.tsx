@@ -1,34 +1,11 @@
-import { FC } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import { LoadingProvider } from '../../../contexts/loading';
-import { AuthProvider } from '../../../contexts/auth';
+import { server } from '@/mocks/server';
+import { wrapper } from '@/mocks/contexts/wrapper';
+import config from '@/config';
 import SignupBox from './SignupBox';
-import { server } from '../../../mocks/server';
-import config from '../../../config';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <AuthProvider>{children}</AuthProvider>
-      </BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
-);
 
 describe('SignupBox', () => {
   it('should contain an form the fields', () => {

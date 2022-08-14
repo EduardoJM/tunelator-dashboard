@@ -1,35 +1,15 @@
 import { FC } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-import { LoadingProvider } from '@/contexts/loading';
-import { AuthContextData, AuthProvider, useAuth } from '@/contexts/auth';
+import { waitLoaders } from '@/test/utils/loaders';
+import { AuthContextData, useAuth } from '@/contexts/auth';
 import { server } from '@/mocks/server';
+import { wrapper } from '@/mocks/contexts/wrapper';
 import userFactory from '@/mocks/factories/user';
 import config from '@/config';
 import Profile from './Profile';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <AuthProvider>{children}</AuthProvider>
-      </BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
-);
 
 describe('Profile', () => {
   it('should contains the complete name as first header when the user has first and last name', async () => {
@@ -42,9 +22,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const heading = screen.queryByText(`${user.first_name} ${user.last_name}`);
     expect(heading).toBeInTheDocument();
@@ -61,9 +39,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const heading = screen.queryByText(`${user.first_name}`);
     expect(heading).toBeInTheDocument();
@@ -80,9 +56,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const heading = screen.queryByText(`${user.email}`);
     expect(heading).toBeInTheDocument();
@@ -94,17 +68,13 @@ describe('Profile', () => {
 
     expect(screen.queryByTestId('loading-indicator')).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
   });
 
   it('should contains an form for first_name and last_name with a submit button', async () => {
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     expect(screen.queryByRole('form')).toBeInTheDocument();
     expect(screen.queryByTestId('first-name-field')).toBeInTheDocument();
@@ -122,9 +92,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     expect(screen.queryByTestId('first-name-field')).toHaveValue(
       user.first_name
@@ -144,9 +112,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const first_name = screen.getByTestId('first-name-field');
     const last_name = screen.getByTestId('first-name-field');
@@ -160,10 +126,10 @@ describe('Profile', () => {
 
       await userEvent.click(button);
     });
+
+    await waitLoaders();
+
     await waitFor(() => {
-      expect(
-        screen.queryByTestId('absolute-loading-overlay')
-      ).not.toBeInTheDocument();
       expect(apiCallback).toHaveBeenCalledTimes(1);
     });
   });
@@ -185,9 +151,7 @@ describe('Profile', () => {
 
     render(<MyComponent />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const first_name = screen.getByTestId('first-name-field');
     const last_name = screen.getByTestId('first-name-field');
@@ -206,6 +170,8 @@ describe('Profile', () => {
       expect(authState.userData?.first_name).toEqual(user.first_name);
       expect(authState.userData?.last_name).toEqual(user.last_name);
     });
+
+    await waitLoaders();
   });
 
   it('should show error informations in a toast when api return error', async () => {
@@ -222,9 +188,7 @@ describe('Profile', () => {
 
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const first_name = screen.getByTestId('first-name-field');
     const last_name = screen.getByTestId('first-name-field');
@@ -244,14 +208,14 @@ describe('Profile', () => {
     });
 
     expect(screen.queryByText(/^custom error\.$/i)).toBeInTheDocument();
+
+    await waitLoaders();
   });
 
   it('should show error informations in a toast when gots validation error', async () => {
     render(<Profile />, { wrapper });
 
-    await waitFor(() => {
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
-    });
+    await waitLoaders();
 
     const first_name = screen.getByTestId('first-name-field');
     const last_name = screen.getByTestId('last-name-field');
@@ -267,5 +231,7 @@ describe('Profile', () => {
     const { description } = await waitForAlertInScreen();
 
     expect(description).toEqual('errors.wrongname');
+
+    await waitLoaders();
   });
 });

@@ -1,34 +1,11 @@
-import { FC } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
-import { LoadingProvider } from '../../../contexts/loading';
-import { AuthProvider } from '../../../contexts/auth';
-import LoginBox from './LoginBox';
-import { server } from '../../../mocks/server';
-import config from '../../../config';
+import { wrapper } from '@/mocks/contexts/wrapper';
+import { server } from '@/mocks/server';
 import { waitForAlertInScreen } from '@/test/utils/alerts';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <AuthProvider>{children}</AuthProvider>
-      </BrowserRouter>
-    </LoadingProvider>
-  </QueryClientProvider>
-);
+import config from '@/config';
+import LoginBox from './LoginBox';
 
 describe('Login', () => {
   it('should contain an form and e-mail, password and remember inputs and an submit', () => {

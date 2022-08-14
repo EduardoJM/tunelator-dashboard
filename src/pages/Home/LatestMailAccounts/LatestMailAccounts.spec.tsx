@@ -5,46 +5,31 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import userEvent from '@testing-library/user-event';
-import { FC } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { rest } from 'msw';
-import { server } from '../../../mocks/server';
+import { server } from '@/mocks/server';
+import { wrapper } from '@/mocks/contexts/wrapper';
+import { waitLoaders, waitAbsoluteLoader } from '@/test/utils/loaders';
+import config from '@/config';
 import LatestMailAccounts from './LatestMailAccounts';
-import config from '../../../config';
-import { LoadingProvider } from '../../../contexts/loading';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-      cacheTime: 0,
-    },
-  },
-});
-
-const wrapper: FC = ({ children }) => (
-  <QueryClientProvider client={queryClient}>
-    <BrowserRouter>
-      <LoadingProvider>{children}</LoadingProvider>
-    </BrowserRouter>
-  </QueryClientProvider>
-);
 
 describe('LatestMailAccounts', () => {
   it('should render at least five accounts if five accounts exists for user and not render loading indicator', async () => {
     render(<LatestMailAccounts />, { wrapper });
 
+    await waitLoaders();
+
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(5);
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
+      //expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
       expect(screen.queryByTestId('no-accounts-box')).not.toBeInTheDocument();
     });
   });
 
-  it('should page contains an button to see all informations', () => {
+  it('should page contains an button to see all informations', async () => {
     render(<LatestMailAccounts />, { wrapper });
+
+    await waitLoaders();
 
     const button = screen.queryByTestId('all-button');
 
@@ -52,8 +37,10 @@ describe('LatestMailAccounts', () => {
     expect(button?.tagName.toUpperCase()).toEqual('BUTTON');
   });
 
-  it('should page have an heading', () => {
+  it('should page have an heading', async () => {
     render(<LatestMailAccounts />, { wrapper });
+
+    await waitLoaders();
 
     expect(screen.queryByRole('heading')).toBeInTheDocument();
   });
@@ -75,9 +62,11 @@ describe('LatestMailAccounts', () => {
 
     render(<LatestMailAccounts />, { wrapper });
 
+    await waitLoaders();
+
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(0);
-      expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
+      //expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
       expect(screen.queryByTestId('no-accounts-box')).toBeInTheDocument();
     });
   });
@@ -92,10 +81,14 @@ describe('LatestMailAccounts', () => {
 
     expect(screen.queryByTestId('loading-indicator')).not.toBeInTheDocument();
     expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(5);
+
+    await waitLoaders();
   });
 
   it('should redirect to the mail accounts page when click in the more informations button', async () => {
     render(<LatestMailAccounts />, { wrapper });
+
+    await waitLoaders();
 
     window.history.replaceState({}, '', '/any-route');
     expect(window.location.pathname).toEqual('/any-route');
@@ -149,6 +142,8 @@ describe('LatestMailAccounts', () => {
 
     render(<LatestMailAccounts />, { wrapper });
 
+    await waitLoaders();
+
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(2);
     });
@@ -195,6 +190,8 @@ describe('LatestMailAccounts', () => {
 
     render(<LatestMailAccounts />, { wrapper });
 
+    await waitLoaders();
+
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(1);
     });
@@ -226,6 +223,8 @@ describe('LatestMailAccounts', () => {
     );
 
     render(<LatestMailAccounts />, { wrapper });
+
+    await waitLoaders();
 
     await waitFor(() => {
       expect(screen.queryAllByTestId('latest-accounts-row')).toHaveLength(5);
