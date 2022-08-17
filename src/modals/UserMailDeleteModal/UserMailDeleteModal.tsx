@@ -6,20 +6,24 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  Heading,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import Button from '../../components/Common/Button';
+import { UserMail } from '@/entities/UserMail';
 
 export interface UserMailDeleteModalProps {
   isOpen: boolean;
   onCancel: () => void;
   onConfirm: () => void;
+  account?: UserMail | null;
 }
 
 const UserMailDeleteModal: FC<UserMailDeleteModalProps> = ({
   isOpen,
   onCancel,
   onConfirm,
+  account,
 }) => {
   const cancelRef = useRef<any>(null);
   const { t } = useTranslation();
@@ -40,7 +44,18 @@ const UserMailDeleteModal: FC<UserMailDeleteModalProps> = ({
             {t('modals.deleteaccount.title')}
           </AlertDialogHeader>
 
-          <AlertDialogBody>{t('modals.deleteaccount.body')}</AlertDialogBody>
+          <AlertDialogBody>
+            <span>
+              {t(
+                !!account
+                  ? 'modals.deleteaccount.namedBody'
+                  : 'modals.deleteaccount.body'
+              )}
+            </span>
+            <Heading as="h5" size="md" textAlign="center" mt="4">
+              {account?.name}
+            </Heading>
+          </AlertDialogBody>
 
           <AlertDialogFooter>
             <Button

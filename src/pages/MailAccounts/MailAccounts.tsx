@@ -311,6 +311,7 @@ const MailAccounts: FC = () => {
         isOpen={deleteMailModal.isOpen}
         onCancel={deleteMailModal.onClose}
         onConfirm={handleConfirmDeleteUserMail}
+        account={deleteMailCurrent}
       />
     </>
   );

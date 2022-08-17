@@ -57,7 +57,9 @@
       },
       "deleteaccount": {
         "title": "Deletar Conta de E-mail",
-        "body": "Tem certeza que deseja deletar essa conta de e-mail? Você não poderá desfazer essa ação."
+        "body": "Tem certeza que deseja deletar essa conta de e-mail? Você não poderá desfazer essa ação.",
+        "namedBody": "Tem certeza que deseja deletar a seguinte conta de e-mail? Você não poderá desfazer essa ação.",
+        "delete": "Deletar"
       },
       "createaccount": {
         "title": "Criar Conta de E-mail",
