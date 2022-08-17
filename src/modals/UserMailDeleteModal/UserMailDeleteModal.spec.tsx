@@ -1,5 +1,6 @@
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import accountFactory from '@/mocks/factories/account';
 import UserMailDeleteModal from './UserMailDeleteModal';
 
 describe('UserMailDeleteModal', () => {
@@ -97,5 +98,20 @@ describe('UserMailDeleteModal', () => {
     });
 
     expect(onConfirm).toHaveBeenCalledTimes(1);
+  });
+
+  it('should shown the account name on the modal if account is parsed', async () => {
+    const account = accountFactory();
+    render(
+      <UserMailDeleteModal
+        isOpen={true}
+        onCancel={() => {}}
+        onConfirm={() => {}}
+        account={account}
+      />
+    );
+
+    const name = screen.queryByText(new RegExp(`^${account.name}$`));
+    expect(name).toBeInTheDocument();
   });
 });
