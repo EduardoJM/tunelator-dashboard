@@ -1,6 +1,7 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { mockOnce } from '@/mocks/server';
+import { accounts } from '@/mocks/fixtures';
 import { waitAbsoluteLoader, waitTableSkeleton } from '@/test/utils/loaders';
 import App from '@/App';
 
@@ -131,5 +132,52 @@ describe('Home', () => {
 
     expect(window.location.pathname).toEqual('/received');
     expect(table).not.toBeInTheDocument();
+  });
+
+  it('should render data of the latest five mail accounts on the table', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    const results = accounts.results.filter((_, index) => index < 5);
+    mockOnce('get', '/mails/accounts/', 200, { ...accounts, results });
+
+    render(<App />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    const table = screen.getByTestId('latest-mail-accounts');
+    const rows = table.querySelectorAll('tbody tr');
+
+    expect(rows).toHaveLength(results.length);
+
+    for (let i = 0; i < results.length; i += 1) {
+      const row = rows[i];
+      const account = results[i];
+
+      const columns = row.querySelectorAll('td');
+      expect(columns).toHaveLength(5);
+      expect(columns[0].textContent).toEqual(account.name);
+      expect(columns[1].textContent).toEqual(account.mail);
+      expect(columns[2]).not.toBeEmptyDOMElement();
+      expect(columns[3]).not.toBeEmptyDOMElement();
+
+      const checkbox = columns[4].querySelector('input[type=checkbox]');
+      expect(checkbox).toBeInTheDocument();
+    }
+  });
+
+  it('should render an placeholder if no latest mail accounts', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/mails/accounts/', 200, { ...accounts, results: [] });
+
+    render(<App />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    const box = screen.queryByTestId('no-accounts-box');
+
+    expect(box).toBeInTheDocument();
   });
 });
