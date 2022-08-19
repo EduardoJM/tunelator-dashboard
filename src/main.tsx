@@ -11,7 +11,13 @@ import { PlanProvider } from './contexts/plan';
 import { theme } from './config';
 import AppRoutes from './routes';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 setupTranslations();
 
