@@ -6,6 +6,12 @@ export const waitAbsoluteLoader = async () =>
     expect(absoluteLoading).not.toBeInTheDocument();
   });
 
+export const waitTableSkeleton = async () =>
+  waitFor(() => {
+    const tableSkeleton = screen.queryAllByTestId('table-skeleton');
+    expect(tableSkeleton).toHaveLength(0);
+  });
+
 export const waitDataFetchLoader = async () =>
   waitFor(() => {
     const loaderIndicators = screen.queryAllByTestId('loading-indicator');

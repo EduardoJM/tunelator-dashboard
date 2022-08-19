@@ -18,7 +18,7 @@ const LatestReceivedMails: FC = () => {
   const { t } = useTranslation();
 
   return (
-    <TableContainer>
+    <TableContainer data-testid="latest-received-mails">
       <Table size="sm">
         <Thead>
           <Tr>

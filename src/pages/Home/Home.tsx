@@ -35,7 +35,7 @@ const Home = () => {
         <Button
           variant="primary"
           onClick={handleGoToMailsAccountsPage}
-          data-testid="all-button"
+          data-testid="all-accounts-button"
         >
           {t('home.accounts.all')}
         </Button>
@@ -50,7 +50,7 @@ const Home = () => {
         <Button
           variant="primary"
           onClick={handleGoToReceivedMails}
-          data-testid="all-button"
+          data-testid="all-received-button"
         >
           {t('home.received.all')}
         </Button>

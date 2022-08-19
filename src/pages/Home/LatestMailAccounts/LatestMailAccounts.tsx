@@ -39,7 +39,7 @@ const LatestMailAccounts: FC = () => {
   };
 
   return (
-    <TableContainer>
+    <TableContainer data-testid="latest-mail-accounts">
       <Table size="sm">
         <Thead>
           <Tr>
