@@ -1,3 +1,1 @@
-import ReceivedMails from './ReceivedMails';
-
-export default ReceivedMails;
+export { default } from './ReceivedMails';
