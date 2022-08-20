@@ -195,6 +195,8 @@ describe('Home', () => {
     await waitAbsoluteLoader();
     await waitTableSkeleton();
 
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     const box = screen.getByTestId('no-accounts-box');
     const button = box.querySelector('button') as HTMLButtonElement;
 
