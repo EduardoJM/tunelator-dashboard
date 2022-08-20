@@ -1,7 +1,7 @@
 import { toast } from '@chakra-ui/react';
 import { screen, waitForElementToBeRemoved } from '@testing-library/react';
 import { setupTranslations } from '@/translations';
-import { server } from './mocks/server';
+import { server } from '@/__mocks__/server';
 
 import '@testing-library/jest-dom';
 

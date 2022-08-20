@@ -11,8 +11,9 @@ import {
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../../contexts/auth';
-import { Input, PasswordInput, Checkbox, Button } from '../../../components';
+import { useAuth } from '@/contexts/auth';
+import { Button } from '@/components/Common';
+import { Input, PasswordInput, Checkbox } from '@/components/Forms';
 
 const LoginBox: FC = () => {
   const auth = useAuth();

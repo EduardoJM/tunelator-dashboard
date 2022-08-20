@@ -12,7 +12,8 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { DateTime, Ellipsis, NoAccountsBox } from '@/components';
+import { DateTime, Ellipsis } from '@/components/ValueFormat';
+import { NoAccountsBox } from '@/components/Placeholders';
 import { UserMail } from '@/entities/UserMail';
 import { useSetMailAccountRedirectEnabledMutation } from '@/services/mutations';
 import { useLatestMailAccounts } from '@/services/queries';

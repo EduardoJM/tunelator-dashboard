@@ -1,4 +1,2 @@
-import Ellipsis from "./Ellipsis";
-export type { EllipsisProps } from "./Ellipsis";
-
-export default Ellipsis;
+export type { EllipsisProps } from './Ellipsis';
+export { default } from './Ellipsis';

@@ -17,7 +17,6 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import * as CSS from 'csstype';
-import Avatar from '../Avatar';
 import {
   MdArrowDropDown,
   MdMenu,
@@ -25,9 +24,9 @@ import {
   MdAccountCircle,
 } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
-import Button from '../Common/Button';
+import { Avatar, Button } from '@/components/Common';
 import SideNav from './SideNav';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '@/contexts/auth';
 
 const NavBar: FC = () => {
   const { t } = useTranslation();

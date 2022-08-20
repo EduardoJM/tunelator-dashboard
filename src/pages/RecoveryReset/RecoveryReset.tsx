@@ -14,7 +14,8 @@ import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { useLoading } from '../../contexts/loading';
 import { isSessionValid } from '../../services/api/recovery';
-import { Button, PasswordInput } from '../../components';
+import { Button } from '@/components/Common';
+import { PasswordInput } from '@/components/Forms';
 import { useResetPasswordMutation } from '../../services/mutations';
 
 const RecoveryReset: FC = () => {

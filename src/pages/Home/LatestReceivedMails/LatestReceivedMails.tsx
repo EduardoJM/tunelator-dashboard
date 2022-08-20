@@ -9,7 +9,8 @@ import {
   Th,
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { DateTime, Ellipsis, NoReceivedMailsBox } from '@/components';
+import { DateTime, Ellipsis } from '@/components/ValueFormat';
+import { NoReceivedMailsBox } from '@/components/Placeholders';
 import { useLatestReceivedMails } from '@/services/queries';
 import { headerBorders } from './styles';
 

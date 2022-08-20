@@ -2,7 +2,8 @@ import { FC } from 'react';
 import { Flex, Box, VStack, Text, Heading } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
-import { Input, Button } from '../../components';
+import { Button } from '@/components/Common';
+import { Input } from '@/components/Forms';
 import { useSendRecoveryMailMutation } from '../../services/mutations';
 
 const RecoveryPassword: FC = () => {

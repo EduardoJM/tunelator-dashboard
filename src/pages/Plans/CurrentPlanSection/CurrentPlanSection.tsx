@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box } from '@chakra-ui/react';
-import { LoadingIndicatorBox } from '@/components';
-import { CurrentPlanBox } from '@/features';
+import { LoadingIndicatorBox } from '@/components/Placeholders';
+import { CurrentPlanBox } from '@/components/Features';
 import { usePlan } from '../../../contexts/plan';
 
 interface CurrentPlanSectionProps {

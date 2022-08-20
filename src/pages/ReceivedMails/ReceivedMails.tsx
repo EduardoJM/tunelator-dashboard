@@ -1,7 +1,7 @@
 import { FC, Suspense } from 'react';
 import { Alert, AlertIcon, Heading } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { TableSkeleton } from '../../components';
+import { TableSkeleton } from '@/components/Skeletons';
 import ReceivedMailsTable from './ReceivedMailsTable';
 
 const ReceivedMails: FC = () => {

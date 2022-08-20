@@ -2,7 +2,8 @@ import { Suspense } from 'react';
 import { Heading, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { Button, TableSkeleton } from '@/components';
+import { Button } from '@/components/Common';
+import { TableSkeleton } from '@/components/Skeletons';
 import LatestMailAccounts from './LatestMailAccounts';
 import LatestReceivedMails from './LatestReceivedMails';
 

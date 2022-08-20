@@ -17,17 +17,13 @@ import {
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {
-  Button,
-  NoReceivedMailsBox,
-  Ellipsis,
-  DateTime,
-  Pagination,
-} from '@/components';
+import { Button, Pagination } from '@/components/Common';
+import { Ellipsis, DateTime } from '@/components/ValueFormat';
+import { NoReceivedMailsBox } from '@/components/Placeholders';
+import { ResendMailSuccessModal } from '@/components/Modals';
 import { useResendReceivedMailMutation } from '@/services/mutations';
 import { useReceivedMailsPaginated } from '@/services/queries';
 import { useAuth } from '@/contexts/auth';
-import { ResendMailSuccessModal } from '@/modals';
 import { headerBorders } from './styles';
 
 const ReceivedMailsTable = () => {

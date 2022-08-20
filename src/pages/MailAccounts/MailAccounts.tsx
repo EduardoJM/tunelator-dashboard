@@ -26,11 +26,11 @@ import {
 } from '@/services/mutations';
 import { usePlan } from '@/contexts/plan';
 import { UserMail } from '@/entities/UserMail';
-import UserMailModal from '@/modals/UserMailModal';
-import UserMailDeleteModal from '@/modals/UserMailDeleteModal';
-import { DateTime, Pagination } from '@/components';
+import { UserMailCreateModal, UserMailDeleteModal } from '@/components/Modals';
+import { Pagination } from '@/components/Common';
+import { DateTime } from '@/components/ValueFormat';
 import NoAccountsBox from '@/components/Placeholders/NoAccountsBox';
-import { WaitMailAccountDone } from '@/features';
+import { WaitMailAccountDone } from '@/components/Features';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -302,7 +302,7 @@ const MailAccounts: FC = () => {
 
       <Box mt="100px" />
 
-      <UserMailModal
+      <UserMailCreateModal
         isOpen={editMailModal.isOpen}
         onClose={editMailModal.onClose}
         userMail={editMailCurrent}

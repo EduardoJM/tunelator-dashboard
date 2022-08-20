@@ -1,9 +1,9 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { queryClient } from '@/mocks/contexts/queryClient';
-import { mockOnce } from '@/mocks/server';
-import { accounts, receivedMails } from '@/mocks/fixtures';
-import { waitAbsoluteLoader, waitTableSkeleton } from '@/test/utils/loaders';
+import { queryClient } from '@/__mocks__/queryClient';
+import { mockOnce } from '@/__mocks__/server';
+import { accounts, receivedMails } from '@/__mocks__/fixtures';
+import { waitAbsoluteLoader, waitTableSkeleton } from '@/utils/tests';
 import App from '@/App';
 
 describe('Home', () => {

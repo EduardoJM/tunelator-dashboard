@@ -1,17 +1,17 @@
 import { FC, useState } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import LoadingIndicatorBox from '../../components/Placeholders/LoadingIndicatorBox';
-import { Button } from '../../components';
-import { PlansGrid } from '@/features';
+import { LoadingIndicatorBox } from '@/components/Placeholders';
+import { Button } from '@/components/Common';
+import { PlansGrid } from '@/components/Features';
 import CurrentPlanSection from './CurrentPlanSection';
 import AlreadyPaidSection from './AlreadyPaidSection';
-import { usePlan } from '../../contexts/plan';
-import { useListPlans } from '../../services/queries';
+import { usePlan } from '@/contexts/plan';
+import { useListPlans } from '@/services/queries';
 import {
   useGoToCustomerPortalMutation,
   useGoToCheckoutMutation,
-} from '../../services/mutations';
+} from '@/services/mutations';
 
 const Plans: FC = () => {
   const { plan } = usePlan();

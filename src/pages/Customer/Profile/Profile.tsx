@@ -3,10 +3,12 @@ import { Box, Heading, Flex, useBreakpointValue } from '@chakra-ui/react';
 import { useFormik } from 'formik';
 import * as CSS from 'csstype';
 import { useTranslation } from 'react-i18next';
-import { Button, Input, LoadingIndicatorBox } from '../../../components';
-import { useAuth } from '../../../contexts/auth';
-import { useAuthenticatedUser } from '../../../services/queries';
-import { useUpdateUserDataMutation } from '../../../services/mutations';
+import { Button } from '@/components/Common';
+import { Input } from '@/components/Forms';
+import { LoadingIndicatorBox } from '@/components/Placeholders';
+import { useAuth } from '@/contexts/auth';
+import { useAuthenticatedUser } from '@/services/queries';
+import { useUpdateUserDataMutation } from '@/services/mutations';
 
 const Profile: FC = () => {
   const { setUserData } = useAuth();
