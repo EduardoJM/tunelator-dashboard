@@ -10,7 +10,7 @@ import {
 } from './fixtures';
 
 export const handlers = [
-  rest.get(`${config.apiUrl}/plans`, (req, res, ctx) => {
+  rest.get(`${config.apiUrl}/plans/`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(plans));
   }),
 

@@ -1,40 +1,18 @@
-import { FC, useState } from 'react';
-import { Box, Heading, Text, Flex } from '@chakra-ui/react';
+import { FC, Suspense, useState } from 'react';
+import { Heading } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { LoadingIndicatorBox } from '@/components/Placeholders';
-import { Button } from '@/components/Common';
-import { PlansGrid } from '@/components/Features';
+import { usePlan } from '@/contexts/plan';
+import { useGoToCustomerPortalMutation } from '@/services/mutations';
+import { PlansSekeleton } from '@/components/Skeletons';
 import CurrentPlanSection from './CurrentPlanSection';
 import AlreadyPaidSection from './AlreadyPaidSection';
-import { usePlan } from '@/contexts/plan';
-import { useListPlans } from '@/services/queries';
-import {
-  useGoToCustomerPortalMutation,
-  useGoToCheckoutMutation,
-} from '@/services/mutations';
+import PlansSection from './PlansSection';
 
 const Plans: FC = () => {
-  const { plan } = usePlan();
-  const { data, isLoading } = useListPlans();
-  const [activePlan, setActivePlan] = useState<number | null>(null);
-
   const goToCustomerPortalMutation = useGoToCustomerPortalMutation();
-  const goToCheckoutMutation = useGoToCheckoutMutation();
+  const { plan } = usePlan();
 
   const { t } = useTranslation();
-
-  const handleSelectPlan = (id: number) => {
-    setActivePlan(id);
-  };
-
-  const handleContinue = async () => {
-    const plan = data?.find(plan => plan.id === activePlan);
-    if (!plan) {
-      return;
-    }
-
-    goToCheckoutMutation.mutate({ id: plan.id });
-  };
 
   const handleGoToCustomerPortal = async () => {
     goToCustomerPortalMutation.mutate();
@@ -44,38 +22,20 @@ const Plans: FC = () => {
     <>
       <CurrentPlanSection onGoToCustomerPortal={handleGoToCustomerPortal} />
       {plan?.is_free ? (
-        <div>
-          {isLoading ? (
-            <LoadingIndicatorBox />
-          ) : (
-            <>
-              <Heading
-                as="h1"
-                size="xl"
-                color="brand.500"
-                my="50px"
-                textAlign="center"
-              >
-                {t('plans.title')}
-              </Heading>
-              <PlansGrid
-                plans={data || []}
-                selectedPlan={activePlan}
-                onSelectPlan={handleSelectPlan}
-              />
+        <div data-testid="QQQ-22">
+          <Heading
+            as="h1"
+            size="xl"
+            color="brand.500"
+            my="50px"
+            textAlign="center"
+          >
+            {t('plans.title')}
+          </Heading>
 
-              <Flex my="30px" alignItems="center" justifyContent="flex-end">
-                <Button
-                  variant="primary"
-                  data-testid="go-to-checkout-button"
-                  isDisabled={!activePlan}
-                  onClick={handleContinue}
-                >
-                  {t('plans.continue')}
-                </Button>
-              </Flex>
-            </>
-          )}
+          <Suspense fallback={<PlansSekeleton />}>
+            <PlansSection />
+          </Suspense>
         </div>
       ) : (
         <AlreadyPaidSection onGoToCustomerPortal={handleGoToCustomerPortal} />
