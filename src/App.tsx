@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { FC, Suspense } from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -10,31 +10,27 @@ import { PlanProvider } from './contexts/plan';
 import { theme } from './config';
 import AppRoutes from './routes';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      suspense: true,
-    },
-  },
-});
-
 setupTranslations();
 
-const App = () => (
+export interface AppProps {
+  queryClient: QueryClient;
+}
+
+const App: FC<AppProps> = ({ queryClient }) => (
   <ChakraProvider theme={theme}>
-    <LoadingProvider>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <PlanProvider>
-              <Suspense fallback={<AbsoluteLoadingIndicator />}>
+    <Suspense fallback={<AbsoluteLoadingIndicator />}>
+      <LoadingProvider>
+        <BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <AuthProvider>
+              <PlanProvider>
                 <AppRoutes />
-              </Suspense>
-            </PlanProvider>
-          </AuthProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </LoadingProvider>
+              </PlanProvider>
+            </AuthProvider>
+          </QueryClientProvider>
+        </BrowserRouter>
+      </LoadingProvider>
+    </Suspense>
   </ChakraProvider>
 );
 

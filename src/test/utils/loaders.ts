@@ -2,8 +2,8 @@ import { waitFor, screen } from '@testing-library/react';
 
 export const waitAbsoluteLoader = async () =>
   waitFor(() => {
-    const absoluteLoading = screen.queryByTestId('absolute-loading-overlay');
-    expect(absoluteLoading).not.toBeInTheDocument();
+    const absoluteLoading = screen.queryAllByTestId('absolute-loading-overlay');
+    expect(absoluteLoading).toHaveLength(0);
   });
 
 export const waitTableSkeleton = async () =>

@@ -1,7 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { queryClient } from '@/mocks/contexts/queryClient';
 import { mockOnce } from '@/mocks/server';
-import { accounts } from '@/mocks/fixtures';
+import { accounts, receivedMails } from '@/mocks/fixtures';
 import { waitAbsoluteLoader, waitTableSkeleton } from '@/test/utils/loaders';
 import App from '@/App';
 
@@ -14,7 +15,7 @@ describe('Home', () => {
   it('should redirect to login page if user is not authenticated', async () => {
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
 
@@ -27,7 +28,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
 
@@ -40,7 +41,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
@@ -58,7 +59,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
@@ -76,7 +77,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
@@ -92,7 +93,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
@@ -115,7 +116,7 @@ describe('Home', () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
@@ -140,10 +141,12 @@ describe('Home', () => {
     const results = accounts.results.filter((_, index) => index < 5);
     mockOnce('get', '/mails/accounts/', 200, { ...accounts, results });
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
 
     const table = screen.getByTestId('latest-mail-accounts');
     const rows = table.querySelectorAll('tbody tr');
@@ -171,13 +174,84 @@ describe('Home', () => {
     window.history.replaceState({}, '', '/');
     mockOnce('get', '/mails/accounts/', 200, { ...accounts, results: [] });
 
-    render(<App />);
+    render(<App queryClient={queryClient} />);
 
     await waitAbsoluteLoader();
     await waitTableSkeleton();
 
     const box = screen.queryByTestId('no-accounts-box');
+    expect(box).toBeInTheDocument();
+    const button = box?.querySelector('button');
+    expect(button).toBeInTheDocument();
+  });
 
+  it('should redirect to /mails and open create account modal if click on button on placeholder', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/mails/accounts/', 200, { ...accounts, results: [] });
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    const box = screen.getByTestId('no-accounts-box');
+    const button = box.querySelector('button') as HTMLButtonElement;
+
+    await act(async () => {
+      await userEvent.click(button);
+    });
+
+    await waitAbsoluteLoader();
+
+    expect(window.location.pathname).toEqual('/mails');
+
+    const modal = screen.queryByRole('alertdialog');
+    expect(modal).toBeInTheDocument();
+  });
+
+  it('should render data of the latest five received mails on the table', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    const results = receivedMails.results.filter((_, index) => index < 5);
+    mockOnce('get', '/mails/received/', 200, { ...receivedMails, results });
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    const table = screen.getByTestId('latest-received-mails');
+    const rows = table.querySelectorAll('tbody tr');
+
+    expect(rows).toHaveLength(results.length);
+
+    for (let i = 0; i < results.length; i += 1) {
+      const row = rows[i];
+      const received = results[i];
+
+      const columns = row.querySelectorAll('td');
+      expect(columns).toHaveLength(4);
+      expect(columns[0].textContent).toEqual(received.origin_mail);
+      expect(columns[1].textContent).toEqual(received.mail.mail);
+      expect(columns[2].textContent).toEqual(received.subject);
+      expect(columns[3]).not.toBeEmptyDOMElement();
+    }
+  });
+
+  it('should render an placeholder if no latest received mails', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/mails/received/', 200, { ...receivedMails, results: [] });
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    const box = screen.queryByTestId('no-received-mails');
     expect(box).toBeInTheDocument();
   });
 });
