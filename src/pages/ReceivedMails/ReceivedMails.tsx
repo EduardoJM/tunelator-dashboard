@@ -2,6 +2,7 @@ import { FC, Suspense } from 'react';
 import { Alert, AlertIcon, Heading } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { TableSkeleton } from '@/components/Skeletons';
+import { ReceivedMailsBoundary } from '@/components/ErrorBoundaries';
 import ReceivedMailsTable from './ReceivedMailsTable';
 
 const ReceivedMails: FC = () => {
@@ -19,7 +20,9 @@ const ReceivedMails: FC = () => {
       </Alert>
 
       <Suspense fallback={<TableSkeleton />}>
-        <ReceivedMailsTable />
+        <ReceivedMailsBoundary>
+          <ReceivedMailsTable />
+        </ReceivedMailsBoundary>
       </Suspense>
     </>
   );
