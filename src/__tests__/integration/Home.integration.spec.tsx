@@ -256,4 +256,36 @@ describe('Home', () => {
     const box = screen.queryByTestId('no-received-mails');
     expect(box).toBeInTheDocument();
   });
+
+  it('should render an error boundary if the mail accounts API gots an error', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/mails/accounts/', 400, {});
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    await waitFor(() => {
+      const boundary = screen.queryByTestId('mail-accounts-boundary');
+      expect(boundary).toBeInTheDocument();
+    });
+  });
+
+  it('should render an error boundary if the received mails API gots an error', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/mails/received/', 400, {});
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitTableSkeleton();
+
+    await waitFor(() => {
+      const boundary = screen.queryByTestId('received-mails-boundary');
+      expect(boundary).toBeInTheDocument();
+    });
+  });
 });

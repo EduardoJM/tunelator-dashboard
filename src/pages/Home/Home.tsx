@@ -4,6 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Common';
 import { TableSkeleton } from '@/components/Skeletons';
+import {
+  MailAccountsBoundary,
+  ReceivedMailsBoundary,
+} from '@/components/ErrorBoundaries';
 import LatestMailAccounts from './LatestMailAccounts';
 import LatestReceivedMails from './LatestReceivedMails';
 
@@ -30,7 +34,9 @@ const Home = () => {
         {t('home.accounts.title')}
       </Heading>
       <Suspense fallback={<TableSkeleton />}>
-        <LatestMailAccounts />
+        <MailAccountsBoundary>
+          <LatestMailAccounts />
+        </MailAccountsBoundary>
       </Suspense>
       <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
         <Button
@@ -45,7 +51,9 @@ const Home = () => {
         {t('home.received.title')}
       </Heading>
       <Suspense fallback={<TableSkeleton />}>
-        <LatestReceivedMails />
+        <ReceivedMailsBoundary>
+          <LatestReceivedMails />
+        </ReceivedMailsBoundary>
       </Suspense>
       <Flex alignItems="center" justifyContent="end" mt="30px" mb="100px">
         <Button
