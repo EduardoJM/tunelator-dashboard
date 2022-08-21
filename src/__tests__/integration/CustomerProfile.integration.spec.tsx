@@ -204,4 +204,21 @@ describe('Customer.Profile', () => {
 
     await waitAbsoluteLoader();
   });
+
+  it('should shows an error boundary if the api gots an error', async () => {
+    mockOnce('get', '/auth/user/', 400, {});
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      const boundary = screen.queryByTestId('profile-boundary');
+      expect(boundary).toBeInTheDocument();
+    });
+  });
 });

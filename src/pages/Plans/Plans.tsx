@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePlan } from '@/contexts/plan';
 import { useGoToCustomerPortalMutation } from '@/services/mutations';
 import { PlansSekeleton } from '@/components/Skeletons';
+import { PlansBoundary } from '@/components/ErrorBoundaries';
 import CurrentPlanSection from './CurrentPlanSection';
 import AlreadyPaidSection from './AlreadyPaidSection';
 import PlansSection from './PlansSection';
@@ -34,7 +35,9 @@ const Plans: FC = () => {
           </Heading>
 
           <Suspense fallback={<PlansSekeleton />}>
-            <PlansSection />
+            <PlansBoundary>
+              <PlansSection />
+            </PlansBoundary>
           </Suspense>
         </div>
       ) : (
