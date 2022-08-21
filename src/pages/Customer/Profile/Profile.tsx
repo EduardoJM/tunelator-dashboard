@@ -1,6 +1,7 @@
 import { FC, Suspense } from 'react';
 import { Box } from '@chakra-ui/react';
 import { ProfileFormSkeleton } from '@/components/Skeletons';
+import { ProfileBoundary } from '@/components/ErrorBoundaries';
 import ProfileForm from './ProfileForm';
 
 const Profile: FC = () => {
@@ -8,7 +9,9 @@ const Profile: FC = () => {
     <>
       <Box py="50px">
         <Suspense fallback={<ProfileFormSkeleton />}>
-          <ProfileForm />
+          <ProfileBoundary>
+            <ProfileForm />
+          </ProfileBoundary>
         </Suspense>
       </Box>
     </>
