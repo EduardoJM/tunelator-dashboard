@@ -1,25 +1,9 @@
-import { FC, useEffect, useMemo, useState } from 'react';
-import {
-  Heading,
-  Flex,
-  VStack,
-  Box,
-  Text,
-  Divider,
-  FormControl,
-  FormLabel,
-  Switch,
-  Tooltip,
-  useDisclosure,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { FC, Suspense, useEffect, useMemo, useState } from 'react';
+import { Heading, Flex, Box, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { useQueryClient } from 'react-query';
-import * as CSS from 'csstype';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import LoadingIndicatorBox from '@/components/Placeholders/LoadingIndicatorBox';
 import Button from '@/components/Common/Button';
-import { useMailAccountsPaginated } from '@/services/queries';
 import {
   useSetMailAccountRedirectEnabledMutation,
   useDeleteMailAccountMutation,
@@ -27,25 +11,15 @@ import {
 import { usePlan } from '@/contexts/plan';
 import { UserMail } from '@/entities/UserMail';
 import { UserMailCreateModal, UserMailDeleteModal } from '@/components/Modals';
-import { Pagination } from '@/components/Common';
-import { DateTime } from '@/components/ValueFormat';
-import NoAccountsBox from '@/components/Placeholders/NoAccountsBox';
-import { WaitMailAccountDone } from '@/components/Features';
+import { AccountsSkeleton } from '@/components/Skeletons';
 import MailAccountsList from './MailAccountsList';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
-
-  const navigate = useNavigate();
-
   const { state } = useLocation();
-
   const queryClient = useQueryClient();
-
   const { plan } = usePlan();
-
   const { t } = useTranslation();
-
   const currentPage = useMemo(() => {
     if (!pageNumber) {
       return 1;
@@ -146,12 +120,14 @@ const MailAccounts: FC = () => {
         )}
       </Flex>
 
-      <MailAccountsList
-        onCreateUserMail={handleCreateUserMail}
-        onEdit={handleEditUserMail}
-        onDelete={handleCallDeleteUserMail}
-        onToggleEnabledStatus={handleToggleEnabledStatus}
-      />
+      <Suspense fallback={<AccountsSkeleton />}>
+        <MailAccountsList
+          onCreateUserMail={handleCreateUserMail}
+          onEdit={handleEditUserMail}
+          onDelete={handleCallDeleteUserMail}
+          onToggleEnabledStatus={handleToggleEnabledStatus}
+        />
+      </Suspense>
 
       <Box mt="100px" />
 

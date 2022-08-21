@@ -60,6 +60,7 @@ const MailAccountCard: FC<MailAccountCardProps> = ({
       borderColor="gray.200"
       borderRadius="5px"
       p="20px"
+      mb="20px"
       _hover={{ backgroundColor: 'gray.50' }}
     >
       <VStack width="100%">

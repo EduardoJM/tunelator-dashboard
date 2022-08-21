@@ -16,7 +16,6 @@ export async function getMailAccountById(id: number): Promise<UserMail> {
 export async function getMailAccountsPaginated(
   page = 1
 ): Promise<UserMailPaginatedResponse> {
-  await new Promise(resolve => setTimeout(resolve, 2000));
   const response = await api.get<UserMailPaginatedResponse>(
     `/mails/accounts/?offset=${5 * (page - 1)}&limit=5`
   );
