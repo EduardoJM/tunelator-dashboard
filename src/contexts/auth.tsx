@@ -1,13 +1,11 @@
 import { FC, createContext, useState, useContext, useEffect } from 'react';
-import { User } from '../entities/User';
+import { User } from '@/entities/User';
 import {
   useLoginMutation,
   useSignupMutation,
   useLogoutMutation,
   useCheckLogin,
-} from '../services/mutations';
-import { refresh } from '@/services/api/auth';
-import api from '@/services/api/axios';
+} from '@/services/mutations';
 
 export interface LoginData {
   email: string;

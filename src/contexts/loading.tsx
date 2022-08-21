@@ -1,5 +1,5 @@
 import { FC, createContext, useContext, useState } from 'react';
-import AbsoluteLoadingIndicator from '../components/Placeholders/AbsoluteLoadingIndicator';
+import { AbsoluteLoadingIndicator } from '@/components/Placeholders';
 
 export interface LoadingContextData {
   isLoading: boolean;

@@ -1,6 +1,6 @@
 import { createContext, useContext, FC, useState, useEffect } from 'react';
-import { ActivePlan } from '../entities/Plan';
-import { getCurrentPlan } from '../services/api/plans';
+import { ActivePlan } from '@/entities/Plan';
+import { getCurrentPlan } from '@/services/api/plans';
 import { useAuth } from './auth';
 import { useLoading } from './loading';
 
@@ -32,7 +32,7 @@ export const PlanProvider: FC = ({ children }) => {
         setPlan(plan);
       } catch {
         setPlan(null);
-      } finally  {
+      } finally {
         popLoading();
       }
     }
