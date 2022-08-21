@@ -1,8 +1,8 @@
 import { screen, render } from '@testing-library/react';
-import AbsoluteLoadingIndicator from './AbsoluteLoadingIndicator';
+import { AbsoluteLoadingIndicator } from '@/components/Placeholders';
 
 describe('AbsoluteLoadingIndicator', () => {
-  it('must render a fixed positioned screen', () => {
+  it('should render a fixed positioned screen', () => {
     render(<AbsoluteLoadingIndicator />);
 
     const overlay = screen.queryByTestId('absolute-loading-overlay');
@@ -11,7 +11,7 @@ describe('AbsoluteLoadingIndicator', () => {
     expect(overlay).toHaveStyle('position: fixed');
   });
 
-  it('must render a svg', () => {
+  it('should render a svg', () => {
     render(<AbsoluteLoadingIndicator />);
 
     const svg = screen.queryByRole('img');
@@ -19,7 +19,7 @@ describe('AbsoluteLoadingIndicator', () => {
     expect(svg).toBeInTheDocument();
   });
 
-  it('must render a loading text', () => {
+  it('should render a loading text', () => {
     render(<AbsoluteLoadingIndicator />);
 
     const text = screen.queryByTestId('absolute-loading-text');
