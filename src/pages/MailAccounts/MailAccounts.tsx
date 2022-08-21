@@ -31,6 +31,7 @@ import { Pagination } from '@/components/Common';
 import { DateTime } from '@/components/ValueFormat';
 import NoAccountsBox from '@/components/Placeholders/NoAccountsBox';
 import { WaitMailAccountDone } from '@/components/Features';
+import MailAccountsList from './MailAccountsList';
 
 const MailAccounts: FC = () => {
   const { pageNumber } = useParams();
@@ -56,25 +57,12 @@ const MailAccounts: FC = () => {
     return num;
   }, [pageNumber]);
 
-  const { data, error, isLoading } = useMailAccountsPaginated(currentPage);
-
   const editMailModal = useDisclosure();
   const [editMailCurrent, setEditMailCurrent] = useState<UserMail | null>(null);
 
   const deleteMailModal = useDisclosure();
   const [deleteMailCurrent, setDeleteMailCurrent] =
     useState<UserMail | null>(null);
-
-  const accountCardActionsDirection =
-    useBreakpointValue<CSS.Property.FlexDirection>({
-      base: 'column',
-      md: 'row',
-    });
-
-  const accountCardActionsAlign = useBreakpointValue<CSS.Property.AlignItems>({
-    base: 'stretch',
-    md: 'center',
-  });
 
   const setMailAccountRedirectEnabledMutation =
     useSetMailAccountRedirectEnabledMutation();
@@ -96,11 +84,6 @@ const MailAccounts: FC = () => {
       id: mail.id,
       enabled: !mail.redirect_enabled,
     });
-  };
-
-  const handleNavigateToPage = (page: number) => {
-    navigate(`/mails/${page}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleEditUserMail = (userMail: UserMail) => {
@@ -126,13 +109,6 @@ const MailAccounts: FC = () => {
 
     deleteMailAccountMutation.mutate({ id: deleteMailCurrent.id });
 
-    queryClient.refetchQueries(['mails', currentPage]);
-  };
-
-  const handleRefreshPageAndLatest = () => {
-    queryClient.invalidateQueries(['mails']);
-    queryClient.invalidateQueries('latest-mails');
-    queryClient.refetchQueries('latest-mails');
     queryClient.refetchQueries(['mails', currentPage]);
   };
 
@@ -170,134 +146,11 @@ const MailAccounts: FC = () => {
         )}
       </Flex>
 
-      {isLoading ? (
-        <LoadingIndicatorBox />
-      ) : (
-        <VStack width="100%" spacing="25px">
-          {data?.results.length === 0 && (
-            <Flex
-              width="100%"
-              minHeight="400px"
-              alignItems="center"
-              mt="60px"
-              backgroundColor="#EFEFEF"
-              boxShadow="md"
-              borderRadius="10px"
-            >
-              <NoAccountsBox
-                createFirstButtonVisible
-                onCreateFirstClick={handleCreateUserMail}
-              />
-            </Flex>
-          )}
-          {data?.results.map(userMail => (
-            <Box
-              key={userMail.id}
-              data-testid="mail-account-card"
-              width="100%"
-              borderWidth="1px"
-              borderColor="gray.200"
-              borderRadius="5px"
-              p="20px"
-              _hover={{ backgroundColor: 'gray.50' }}
-            >
-              <VStack width="100%">
-                <Heading width="100%" as="h2" size="md" fontWeight="bold">
-                  {userMail.name}
-                </Heading>
-                {!!userMail.mail ? (
-                  <Box width="100%">
-                    <Text mb="10px">{userMail.mail}</Text>
-                  </Box>
-                ) : (
-                  <Box width="100%">
-                    <WaitMailAccountDone
-                      accountId={userMail.id}
-                      onAccountIsDone={handleRefreshPageAndLatest}
-                    />
-                  </Box>
-                )}
-                <Divider />
-                <Box width="100%">
-                  <Text fontWeight="bold">
-                    {t('mailAccounts.createdAtLabel')}
-                  </Text>
-                  <DateTime value={userMail.created_at} />
-                </Box>
-                <Divider />
-                <Box width="100%">
-                  <Text fontWeight="bold">
-                    {t('mailAccounts.updatedAtLabel')}
-                  </Text>
-                  <DateTime value={userMail.updated_at} />
-                </Box>
-                <Divider />
-                <Flex
-                  width="100%"
-                  flexDirection={accountCardActionsDirection}
-                  alignItems={accountCardActionsAlign}
-                  justifyContent="space-between"
-                  py="5px"
-                  gap="10px"
-                >
-                  <FormControl flex="1" display="flex" alignItems="center">
-                    <FormLabel htmlFor={`email-${userMail.id}-enabled`} mb="0">
-                      {t('mailAccounts.enabled')}
-                    </FormLabel>
-                    <Switch
-                      id={`email-${userMail.id}-enabled`}
-                      colorScheme="brand"
-                      defaultChecked={userMail.redirect_enabled}
-                      onChange={() => handleToggleEnabledStatus(userMail)}
-                    />
-                  </FormControl>
-
-                  {plan?.canDeleteUserMail(userMail) ? (
-                    <Button
-                      onClick={() => handleCallDeleteUserMail(userMail)}
-                      variant="destroy"
-                    >
-                      {t('mailAccounts.delete')}
-                    </Button>
-                  ) : (
-                    <Tooltip
-                      hasArrow
-                      label={t('mailAccounts.noDeletePermission', {
-                        days: plan?.days_until_user_can_delete_account,
-                      })}
-                      bg="brand.100"
-                      color="white"
-                      shouldWrapChildren
-                    >
-                      <Button
-                        w="100%"
-                        variant="destroy"
-                        mr="10px"
-                        isDisabled={true}
-                      >
-                        {t('mailAccounts.delete')}
-                      </Button>
-                    </Tooltip>
-                  )}
-
-                  <Button
-                    variant="primary"
-                    onClick={() => handleEditUserMail(userMail)}
-                  >
-                    {t('mailAccounts.edit')}
-                  </Button>
-                </Flex>
-              </VStack>
-            </Box>
-          ))}
-        </VStack>
-      )}
-
-      <Pagination
-        totalCount={data?.count || 0}
-        currentPage={currentPage}
-        onGoToPage={handleNavigateToPage}
-        itemsPerPage={5}
+      <MailAccountsList
+        onCreateUserMail={handleCreateUserMail}
+        onEdit={handleEditUserMail}
+        onDelete={handleCallDeleteUserMail}
+        onToggleEnabledStatus={handleToggleEnabledStatus}
       />
 
       <Box mt="100px" />
