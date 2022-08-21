@@ -3,7 +3,7 @@ import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { GiTakeMyMoney } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../components';
+import { Button } from '@/components/Common';
 
 const AlreadyPaid: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });

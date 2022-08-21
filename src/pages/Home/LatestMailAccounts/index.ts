@@ -1,3 +1,1 @@
-import LatestMailAccounts from "./LatestMailAccounts";
-
-export default LatestMailAccounts;
+export { default } from './LatestMailAccounts';

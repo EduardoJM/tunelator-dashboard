@@ -6,6 +6,8 @@ import {
   useLogoutMutation,
   useCheckLogin,
 } from '../services/mutations';
+import { refresh } from '@/services/api/auth';
+import api from '@/services/api/axios';
 
 export interface LoginData {
   email: string;

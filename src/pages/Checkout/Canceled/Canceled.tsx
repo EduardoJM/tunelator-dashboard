@@ -3,7 +3,7 @@ import { Flex, Heading, useBreakpointValue } from '@chakra-ui/react';
 import { FaRegSadTear } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../components';
+import { Button } from '@/components/Common';
 
 const Canceled: FC = () => {
   const boxWidth = useBreakpointValue({ base: '100%', md: '50%' });
@@ -13,10 +13,6 @@ const Canceled: FC = () => {
 
   const handleGoToPlans = () => {
     navigate('/plans');
-  };
-
-  const handleGoToSupport = () => {
-    navigate('/support');
   };
 
   return (
@@ -57,13 +53,6 @@ const Canceled: FC = () => {
         pb="60px"
         gap="10px"
       >
-        <Button
-          onClick={handleGoToSupport}
-          variant="primaryRounded"
-          data-testid="support-button"
-        >
-          {t('checkout.canceled.support')}
-        </Button>
         <Button
           onClick={handleGoToPlans}
           variant="primaryRounded"

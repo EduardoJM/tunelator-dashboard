@@ -1,3 +1,1 @@
-import LatestReceivedMails from './LatestReceivedMails';
-
-export default LatestReceivedMails;
+export { default } from './LatestReceivedMails';

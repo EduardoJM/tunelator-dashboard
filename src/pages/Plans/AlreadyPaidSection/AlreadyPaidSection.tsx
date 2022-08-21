@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, Heading, Text, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
-import { Button } from '../../../components';
+import { Button } from '@/components/Common';
 
 export interface AlreadyPaidSection {
   onGoToCustomerPortal: () => void;
