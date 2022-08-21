@@ -7,7 +7,7 @@ interface Props {
   t: (key: string) => string;
 }
 
-class MailAccountsBoundary extends Component<Props, {}> {
+class ReceivedMailsBoundary extends Component<Props, {}> {
   state = {
     error: null,
   };
@@ -32,15 +32,15 @@ class MailAccountsBoundary extends Component<Props, {}> {
         flexDirection="column"
         minH="200px"
         backgroundColor="#EEE"
-        data-testid="mail-accounts-boundary"
+        data-testid="received-mails-boundary"
       >
         <BiSad size="60px" />
         <Text mt="20px" fontSize="md" fontWeight="bold">
-          {t('boundaries.accounts')}
+          {t('boundaries.received')}
         </Text>
       </Flex>
     );
   }
 }
 
-export default withTranslation()(MailAccountsBoundary);
+export default withTranslation()(ReceivedMailsBoundary);
