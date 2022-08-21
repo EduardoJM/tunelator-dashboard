@@ -15,10 +15,6 @@ const Canceled: FC = () => {
     navigate('/plans');
   };
 
-  const handleGoToSupport = () => {
-    navigate('/support');
-  };
-
   return (
     <Flex h="100%" flexDir="column" alignItems="stretch">
       <Flex flex="1" alignItems="stretch" flexWrap="wrap-reverse">
@@ -57,13 +53,6 @@ const Canceled: FC = () => {
         pb="60px"
         gap="10px"
       >
-        <Button
-          onClick={handleGoToSupport}
-          variant="primaryRounded"
-          data-testid="support-button"
-        >
-          {t('checkout.canceled.support')}
-        </Button>
         <Button
           onClick={handleGoToPlans}
           variant="primaryRounded"
