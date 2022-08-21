@@ -250,4 +250,19 @@ describe('Plans', () => {
     expect(form).toBeInTheDocument();
     expect(form?.action).toMatch(manager_id);
   });
+
+  it('should render an error boundary if the api gots an error', async () => {
+    mockOnce('get', '/plans/', 400, {});
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      expect(screen.queryByTestId('plans-skeleton')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      const boundary = screen.queryByTestId('plans-boundary');
+      expect(boundary).toBeInTheDocument();
+    });
+  });
 });

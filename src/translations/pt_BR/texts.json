@@ -263,7 +263,8 @@
     },
     "boundaries": {
       "accounts": "Houve um erro ao carregar as suas contas de e-mail. Aguarde alguns instantes e tente recarregar a página.",
-      "received": "Houve um erro ao carregar os e-mails recebidos. Aguarde alguns instantes e Tente recarregar a página."
+      "received": "Houve um erro ao carregar os e-mails recebidos. Aguarde alguns instantes e tente recarregar a página.",
+      "plans": "Houve um erro ao carregar os planos. Aguarde alguns instantes e tente recarregar a página."
     }
   }
 }
