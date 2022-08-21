@@ -12,6 +12,7 @@ import { usePlan } from '@/contexts/plan';
 import { UserMail } from '@/entities/UserMail';
 import { UserMailCreateModal, UserMailDeleteModal } from '@/components/Modals';
 import { AccountsSkeleton } from '@/components/Skeletons';
+import { MailAccountsBoundary } from '@/components/ErrorBoundaries';
 import MailAccountsList from './MailAccountsList';
 
 const MailAccounts: FC = () => {
@@ -121,12 +122,14 @@ const MailAccounts: FC = () => {
       </Flex>
 
       <Suspense fallback={<AccountsSkeleton />}>
-        <MailAccountsList
-          onCreateUserMail={handleCreateUserMail}
-          onEdit={handleEditUserMail}
-          onDelete={handleCallDeleteUserMail}
-          onToggleEnabledStatus={handleToggleEnabledStatus}
-        />
+        <MailAccountsBoundary>
+          <MailAccountsList
+            onCreateUserMail={handleCreateUserMail}
+            onEdit={handleEditUserMail}
+            onDelete={handleCallDeleteUserMail}
+            onToggleEnabledStatus={handleToggleEnabledStatus}
+          />
+        </MailAccountsBoundary>
       </Suspense>
 
       <Box mt="100px" />
