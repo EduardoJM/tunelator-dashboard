@@ -260,6 +260,9 @@
       "delete": "Deletar Conta",
       "noDeletePermission": "Você só pode deletar essa conta depois de {{ days }} dia(s).",
       "edit": "Editar"
+    },
+    "boundaries": {
+      "accounts": "Houve um erro ao carregar as suas contas de e-mail. Tente recarregar a página."
     }
   }
 }
