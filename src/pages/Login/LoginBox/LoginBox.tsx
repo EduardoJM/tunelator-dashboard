@@ -82,7 +82,16 @@ const LoginBox: FC = () => {
               {t('login.remember')}
             </Checkbox>
             <Spacer />
-            <Text textAlign="right">{t('login.recovery')}</Text>
+            <Link
+              as={RouterLink}
+              to="/recovery"
+              color="brand.500"
+              fontWeight="bold"
+              textAlign="right"
+              data-testid="recovery-link"
+            >
+              {t('login.recovery')}
+            </Link>
           </Flex>
 
           <Button
