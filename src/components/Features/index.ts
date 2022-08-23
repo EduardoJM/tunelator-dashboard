@@ -13,3 +13,6 @@ export { default as CurrentPlanBox } from './CurrentPlanBox';
 export { default as RequireAuth } from './RequireAuth';
 
 export { default as RequireNoAuth } from './RequireNoAuth';
+
+export type { MailAccountCardProps } from './MailAccountCard';
+export { default as MailAccountCard } from './MailAccountCard';
