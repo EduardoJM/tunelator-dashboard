@@ -186,4 +186,25 @@ describe('Login', () => {
     const { description } = await waitForAlertInScreen();
     expect(description).toEqual('custom login error message');
   });
+
+  it('should have an recovery link in the login page', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const recoveryLink = screen.queryByTestId('recovery-link');
+    expect(recoveryLink).toBeInTheDocument();
+  });
+
+  it('should redirect to the recovery page when click into recovery link', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const recoveryLink = screen.getByTestId('recovery-link');
+
+    await act(async () => {
+      await userEvent.click(recoveryLink);
+    });
+
+    expect(window.location.pathname).toEqual('/recovery');
+  });
 });
