@@ -26,6 +26,19 @@ describe('MailAccounts', () => {
     expect(window.location.pathname).toEqual('/auth');
   });
 
+  it('should render an NavBar component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const navbar = screen.queryByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+
+    await waitFor(() => {
+      let skeleton = screen.queryByTestId('accounts-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+  });
+
   it('should display an account skeleton when accounts is loading', async () => {
     mockOnceWithDelay('get', '/mails/accounts/', 200, accounts, 500);
     render(<App queryClient={queryClient} />);
