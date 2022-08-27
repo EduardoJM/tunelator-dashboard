@@ -154,6 +154,55 @@ describe('NavBar', () => {
     expect(button).not.toBeInTheDocument();
   });
 
+  it('should contains an link to the home if width is large', async () => {
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    const navbar = screen.getByTestId('navbar');
+    const [link] = Array.from(navbar.querySelectorAll('a[href="/"]')).filter(
+      item => item.textContent == 'navbar.home'
+    );
+    expect(link).toBeVisible();
+  });
+
+  it('should not contains an link to the home if width is small', async () => {
+    setMediaWidth(767);
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    const navbar = screen.getByTestId('navbar');
+    const [link] = Array.from(navbar.querySelectorAll('a[href="/"]')).filter(
+      item => item.textContent == 'navbar.home'
+    );
+    expect(link).not.toBeVisible();
+  });
+
+  it('should redirect to / when click on the home link', async () => {
+    window.history.replaceState({}, '', '/received');
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    let button = screen.queryByTestId('all-accounts-button');
+    expect(button).not.toBeInTheDocument();
+
+    const navbar = screen.getByTestId('navbar');
+    const link = navbar.querySelector('a[href="/"]') as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(link);
+    });
+
+    await waitAbsoluteLoader();
+
+    button = screen.queryByTestId('all-accounts-button');
+    expect(window.location.pathname).toEqual('/');
+    expect(button).toBeInTheDocument();
+  });
+
   it('should have an toggle button if screen is small', async () => {
     setMediaWidth(765);
     render(<App queryClient={queryClient} />);
