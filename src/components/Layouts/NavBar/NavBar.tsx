@@ -68,6 +68,7 @@ const NavBar: FC = () => {
         flexDirection={navBarFlexDirection}
         alignItems="center"
         justifyContent="space-between"
+        data-testid="navbar"
         px={navBarPadding}
         style={{
           position: 'sticky',

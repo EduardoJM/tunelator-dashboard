@@ -91,7 +91,12 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   }
 
   return (
-    <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+    <Drawer
+      data-testid="sidenav"
+      isOpen={isOpen}
+      placement="left"
+      onClose={onClose}
+    >
       <DrawerOverlay />
       <DrawerContent>
         <DrawerHeader backgroundColor="brand.500">
