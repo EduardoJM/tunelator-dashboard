@@ -38,6 +38,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const displayUserName = useMemo(() => {
+    /* istanbul ignore if  */
     if (!userData) {
       return '';
     }
@@ -52,6 +53,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   }, [userData]);
 
   const displayUserEmail = useMemo(() => {
+    /* istanbul ignore if  */
     if (!userData) {
       return '';
     }
@@ -86,6 +88,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  /* istanbul ignore if  */
   if (!userData) {
     return null;
   }
