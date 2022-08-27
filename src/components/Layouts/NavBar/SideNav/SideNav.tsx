@@ -91,14 +91,9 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   }
 
   return (
-    <Drawer
-      data-testid="sidenav"
-      isOpen={isOpen}
-      placement="left"
-      onClose={onClose}
-    >
+    <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay />
-      <DrawerContent>
+      <DrawerContent data-testid="sidenav">
         <DrawerHeader backgroundColor="brand.500">
           <Flex>
             <Avatar user={userData} />

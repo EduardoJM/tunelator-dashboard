@@ -92,6 +92,7 @@ const NavBar: FC = () => {
           variant="fullGhost"
           display={drawerToggleDisplay}
           onClick={handleOpenDrawer}
+          data-testid="drawer-toggle"
         >
           <MdMenu size={24} />
         </Button>

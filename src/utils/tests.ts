@@ -1,4 +1,5 @@
 import { waitFor, screen } from '@testing-library/react';
+import mediaQuery from 'css-mediaquery';
 
 export const waitAbsoluteLoader = async (retries = 3) => {
   for (let i = 0; i < retries; i += 1) {
@@ -31,4 +32,12 @@ export const waitForAlertInScreen = async () => {
   const title = element.querySelector('.chakra-alert__title')?.textContent;
   const description = element.querySelector('.chakra-alert__desc')?.textContent;
   return { title, description };
+};
+
+export const setMediaWidth = (width: number) => {
+  (window as any).matchMedia = (query: any) => ({
+    matches: mediaQuery.match(query, { width }),
+    addListener: () => {},
+    removeListener: () => {},
+  });
 };
