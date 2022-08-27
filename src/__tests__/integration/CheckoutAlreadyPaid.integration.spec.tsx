@@ -23,6 +23,14 @@ describe('Checkout.AlreadyPaid', () => {
     expect(screen.queryByTestId('login-box')).toBeInTheDocument();
   });
 
+  it('should render an NavBar component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const navbar = screen.queryByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+  });
+
   it('should contains one button to plans in the page', async () => {
     render(<App queryClient={queryClient} />);
 

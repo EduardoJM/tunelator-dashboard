@@ -37,6 +37,20 @@ describe('Home', () => {
     });
   });
 
+  it('should render an NavBar component', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    await waitFor(() => {
+      const navbar = screen.queryByTestId('navbar');
+      expect(navbar).toBeInTheDocument();
+    });
+  });
+
   it('should load the lastest mail accounts with five itens', async () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');

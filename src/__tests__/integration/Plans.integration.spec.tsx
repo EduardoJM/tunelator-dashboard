@@ -28,6 +28,18 @@ describe('Plans', () => {
     expect(currentPlanSection).not.toBeInTheDocument();
   });
 
+  it('should render an NavBar component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const navbar = screen.queryByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('plans-skeleton')).not.toBeInTheDocument();
+    });
+  });
+
   it('should contains an CurrentPlanSection', async () => {
     render(<App queryClient={queryClient} />);
 

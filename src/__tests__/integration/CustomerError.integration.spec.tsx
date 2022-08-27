@@ -32,6 +32,14 @@ describe('Customer.Error', () => {
     expect(plansButton.tagName.toUpperCase()).toEqual('BUTTON');
   });
 
+  it('should render an NavBar component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const navbar = screen.queryByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+  });
+
   it('should contains informations about payment error on the page', async () => {
     render(<App queryClient={queryClient} />);
     await waitAbsoluteLoader();

@@ -40,6 +40,18 @@ describe('Customer.Profile', () => {
     expect(heading?.tagName.toUpperCase()).toEqual('H1');
   });
 
+  it('should render an NavBar component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    const navbar = screen.queryByTestId('navbar');
+    expect(navbar).toBeInTheDocument();
+  });
+
   it('should contains the first name as first header if the user has first name and not have last name', async () => {
     const user = userFactory({ last_name: '' });
     mockOnce('get', '/auth/user/', 200, user);

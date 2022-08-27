@@ -38,6 +38,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
 
   const displayUserName = useMemo(() => {
+    /* istanbul ignore if  */
     if (!userData) {
       return '';
     }
@@ -52,6 +53,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   }, [userData]);
 
   const displayUserEmail = useMemo(() => {
+    /* istanbul ignore if  */
     if (!userData) {
       return '';
     }
@@ -86,6 +88,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
     onClose();
   };
 
+  /* istanbul ignore if  */
   if (!userData) {
     return null;
   }
@@ -93,7 +96,7 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
   return (
     <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
       <DrawerOverlay />
-      <DrawerContent>
+      <DrawerContent data-testid="sidenav">
         <DrawerHeader backgroundColor="brand.500">
           <Flex>
             <Avatar user={userData} />
@@ -130,19 +133,35 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
 
         <DrawerBody>
           <VStack width="100%">
-            <Button variant="sidenavButton" onClick={handleGoToHome}>
+            <Button
+              variant="sidenavButton"
+              data-testid="home"
+              onClick={handleGoToHome}
+            >
               <MdHome size="20px" />
               <Text ml="10px">{t('sidenav.home')}</Text>
             </Button>
-            <Button variant="sidenavButton" onClick={handleGoToMailAccounts}>
+            <Button
+              variant="sidenavButton"
+              data-testid="accounts"
+              onClick={handleGoToMailAccounts}
+            >
               <MdEmail size="20px" />
               <Text ml="10px">{t('sidenav.accounts')}</Text>
             </Button>
-            <Button variant="sidenavButton" onClick={handleGoToReceivedMails}>
+            <Button
+              variant="sidenavButton"
+              data-testid="received"
+              onClick={handleGoToReceivedMails}
+            >
               <GoMailRead size="20px" />
               <Text ml="10px">{t('sidenav.received')}</Text>
             </Button>
-            <Button variant="sidenavButton" onClick={handleGoToPlans}>
+            <Button
+              variant="sidenavButton"
+              data-testid="plans"
+              onClick={handleGoToPlans}
+            >
               <FaRegMoneyBillAlt size="20px" />
               <Text ml="10px">{t('sidenav.plans')}</Text>
             </Button>
@@ -152,16 +171,28 @@ const SideNav: FC<SideNavProps> = ({ isOpen, onClose }) => {
         <DrawerFooter>
           <VStack width="100%">
             <Divider />
-            <Button variant="sidenavButton" onClick={handleGoToProfile}>
+            <Button
+              variant="sidenavButton"
+              data-testid="profile"
+              onClick={handleGoToProfile}
+            >
               <MdAccountCircle size="20px" />
               <Text ml="10px">{t('sidenav.profile')}</Text>
             </Button>
-            <Button variant="sidenavButton" onClick={logout}>
+            <Button
+              variant="sidenavButton"
+              data-testid="logout"
+              onClick={logout}
+            >
               <MdLogout size="20px" />
               <Text ml="10px">{t('sidenav.logout')}</Text>
             </Button>
             <Divider />
-            <Button variant="sidenavButton" onClick={onClose}>
+            <Button
+              variant="sidenavButton"
+              data-testid="back"
+              onClick={onClose}
+            >
               <MdArrowBack size="20px" />
               <Text ml="10px">{t('sidenav.back')}</Text>
             </Button>
