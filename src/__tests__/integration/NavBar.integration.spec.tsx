@@ -257,4 +257,117 @@ describe('NavBar', () => {
       expect(sidenav).toBeInTheDocument();
     });
   });
+
+  it('should renders an avatar if the size is large', async () => {
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    const navbar = screen.getByTestId('navbar');
+    const avatar = navbar.querySelector('[data-testid="avatar"]');
+    expect(avatar).toBeInTheDocument();
+    expect(avatar).toBeVisible();
+
+    const menu = screen.queryByRole('menu');
+    expect(menu).not.toBeInTheDocument();
+  });
+
+  it('should open the menu when click on the avatar in the NavBar', async () => {
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    const navbar = screen.getByTestId('navbar');
+    const avatar = navbar.querySelector(
+      '[data-testid="avatar"]'
+    ) as HTMLElement;
+    const button = avatar.closest('button') as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(button);
+    });
+
+    await waitFor(() => {
+      const menu = screen.queryByRole('menu');
+      expect(menu).toBeInTheDocument();
+    });
+  });
+
+  it('should redirect to the customer profile page when open the menu and click on the profile item', async () => {
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    let button = screen.queryByTestId('all-accounts-button');
+    expect(button).toBeInTheDocument();
+
+    const navbar = screen.getByTestId('navbar');
+    const avatar = navbar.querySelector(
+      '[data-testid="avatar"]'
+    ) as HTMLElement;
+    const avatarButton = avatar.closest('button') as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(avatarButton);
+    });
+
+    await waitFor(() => {
+      const menu = screen.queryByRole('menu');
+      expect(menu).toBeInTheDocument();
+    });
+
+    const menu = screen.getByRole('menu');
+    const menuitem = menu.querySelector(
+      '[data-testid="profile"]'
+    ) as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(menuitem);
+    });
+    await waitAbsoluteLoader();
+
+    button = screen.queryByTestId('all-accounts-button');
+    expect(window.location.pathname).toEqual('/customer/profile');
+    expect(button).not.toBeInTheDocument();
+  });
+
+  it('should performs an logout when open the menu and click on the logout item', async () => {
+    setMediaWidth(769);
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    let button = screen.queryByTestId('all-accounts-button');
+    expect(button).toBeInTheDocument();
+
+    const navbar = screen.getByTestId('navbar');
+    const avatar = navbar.querySelector(
+      '[data-testid="avatar"]'
+    ) as HTMLElement;
+    const avatarButton = avatar.closest('button') as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(avatarButton);
+    });
+
+    await waitFor(() => {
+      const menu = screen.queryByRole('menu');
+      expect(menu).toBeInTheDocument();
+    });
+
+    const menu = screen.getByRole('menu');
+    const menuitem = menu.querySelector(
+      '[data-testid="logout"]'
+    ) as HTMLElement;
+
+    await act(async () => {
+      await userEvent.click(menuitem);
+    });
+    await waitAbsoluteLoader();
+
+    expect(window.sessionStorage.getItem('@TUNELATOR_REFRESH')).toBeNull();
+    expect(window.localStorage.getItem('@TUNELATOR_REFRESH')).toBeNull();
+    expect(window.location.pathname).toEqual('/auth');
+  });
 });

@@ -54,6 +54,7 @@ const NavBar: FC = () => {
     sideNavState.onOpen();
   };
 
+  /* istanbul ignore if  */
   if (!userData) {
     return null;
   }
@@ -165,6 +166,7 @@ const NavBar: FC = () => {
             <MenuItem
               icon={<MdAccountCircle size="24px" />}
               onClick={handleGoToProfile}
+              data-testid="profile"
             >
               {t('navbar.profile')}
             </MenuItem>
@@ -172,6 +174,7 @@ const NavBar: FC = () => {
             <MenuItem
               icon={<MdLogout size="24px" />}
               onClick={handleLogoutClick}
+              data-testid="logout"
             >
               {t('navbar.logout')}
             </MenuItem>
