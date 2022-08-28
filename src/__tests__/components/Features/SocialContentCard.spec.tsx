@@ -57,4 +57,12 @@ describe('SocialContentCard', () => {
     expect(card).toHaveStyle('width: 30%');
     expect(card).toHaveStyle('height: 40%');
   });
+
+  it('should have width of 400px if width is not parsed', async () => {
+    const content = socialContentFactory();
+    render(<SocialContentCard content={content} height={300} />);
+
+    const card = screen.queryByTestId('social-content-card');
+    expect(card).toHaveStyle('width: 400px');
+  });
 });

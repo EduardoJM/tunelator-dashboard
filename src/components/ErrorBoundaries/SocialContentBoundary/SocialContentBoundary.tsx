@@ -32,7 +32,7 @@ class SocialContentBoundary extends Component<Props, {}> {
         flexDirection="column"
         minH="200px"
         backgroundColor="#EEE"
-        data-testid="received-mails-boundary"
+        data-testid="social-content-boundary"
       >
         <BiSad size="60px" />
         <Text mt="20px" fontSize="md" fontWeight="bold">

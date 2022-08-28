@@ -19,7 +19,7 @@ const SocialContents = () => {
             key={item.id}
             content={item}
             height={300}
-            width={width || 400}
+            width={width}
           />
         ))}
       </Flex>

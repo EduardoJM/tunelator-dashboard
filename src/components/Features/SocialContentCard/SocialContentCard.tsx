@@ -5,7 +5,7 @@ import { SocialContent } from '@/entities/SocialContent';
 export interface SocialContentCardProps {
   content: SocialContent;
   height: number | string;
-  width: number | string;
+  width?: number | string;
 }
 
 const SocialContentCard: FC<SocialContentCardProps> = ({
@@ -29,7 +29,7 @@ const SocialContentCard: FC<SocialContentCardProps> = ({
       bg="brand.500"
       color="#FFF"
       borderRadius={10}
-      w={width}
+      w={width || 400}
       h={height}
       style={style}
       data-testid="social-content-card"
