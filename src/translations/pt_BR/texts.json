@@ -148,6 +148,12 @@
         "firstname": "Nome",
         "lastname": "Sobrenome",
         "save": "Salvar"
+      },
+      "password": {
+        "title": "Alterar Sua Senha",
+        "password": "Senha",
+        "confirmation": "Confirme sua nova senha",
+        "change": "Alterar"
       }
     },
     "home": {

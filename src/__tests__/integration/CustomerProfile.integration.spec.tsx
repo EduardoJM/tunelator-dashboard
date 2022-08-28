@@ -108,7 +108,6 @@ describe('Customer.Profile', () => {
       expect(skeleton).not.toBeInTheDocument();
     });
 
-    expect(screen.queryByRole('form')).toBeInTheDocument();
     expect(screen.queryByTestId('first-name-field')).toBeInTheDocument();
     expect(screen.queryByTestId('last-name-field')).toBeInTheDocument();
     expect(screen.queryByTestId('submit-button')).toBeInTheDocument();
@@ -232,5 +231,99 @@ describe('Customer.Profile', () => {
       const boundary = screen.queryByTestId('profile-boundary');
       expect(boundary).toBeInTheDocument();
     });
+  });
+
+  it('should render an password and confirmation fields', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('password-field')).toBeInTheDocument();
+    expect(screen.queryByTestId('confirmation-field')).toBeInTheDocument();
+    expect(screen.queryByTestId('change-password-button')).toBeInTheDocument();
+  });
+
+  it('should call the patch user data when fill password and confirmation and click on the change button', async () => {
+    const user = userFactory();
+    const apiCallback = mockOnce('patch', '/auth/user/', 200, user);
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    const passwordField = screen.getByTestId('password-field');
+    const confirmationField = screen.getByTestId('confirmation-field');
+    const submitButton = screen.getByTestId('change-password-button');
+
+    await act(async () => {
+      await userEvent.type(passwordField, 'password');
+      await userEvent.type(confirmationField, 'password');
+      await userEvent.click(submitButton);
+    });
+
+    await waitAbsoluteLoader();
+
+    await waitFor(() => {
+      expect(apiCallback).toHaveBeenCalledTimes(1);
+      expect(apiCallback).toHaveBeenCalledWith({ password: 'password' });
+    });
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('alerts.userupdate.message');
+  });
+
+  it('should show an error if the password and confirmation are not equal', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    const passwordField = screen.getByTestId('password-field');
+    const confirmationField = screen.getByTestId('confirmation-field');
+    const submitButton = screen.getByTestId('change-password-button');
+
+    await act(async () => {
+      await userEvent.type(passwordField, 'password1');
+      await userEvent.type(confirmationField, 'password2');
+      await userEvent.click(submitButton);
+    });
+
+    await waitAbsoluteLoader();
+
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('errors.wrongchangepassword');
+  });
+
+  it('should show an error if the api return an error', async () => {
+    mockOnce('patch', '/auth/user/', 400, { detail: 'custom error' });
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    const passwordField = screen.getByTestId('password-field');
+    const confirmationField = screen.getByTestId('confirmation-field');
+    const submitButton = screen.getByTestId('change-password-button');
+
+    await act(async () => {
+      await userEvent.type(passwordField, 'password');
+      await userEvent.type(confirmationField, 'password');
+      await userEvent.click(submitButton);
+    });
+
+    await waitAbsoluteLoader();
+
+    const { description } = await waitForAlertInScreen();
+    expect(description).toEqual('custom error');
   });
 });
