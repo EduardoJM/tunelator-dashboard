@@ -4,10 +4,15 @@ import { SocialContent } from '@/entities/SocialContent';
 
 export interface SocialContentCardProps {
   content: SocialContent;
-  height: 300;
+  height: number | string;
+  width: number | string;
 }
 
-const SocialContentCard: FC<SocialContentCardProps> = ({ content, height }) => {
+const SocialContentCard: FC<SocialContentCardProps> = ({
+  content,
+  width,
+  height,
+}) => {
   const style = useMemo(() => {
     if (!content.image) {
       return {};
@@ -24,7 +29,7 @@ const SocialContentCard: FC<SocialContentCardProps> = ({ content, height }) => {
       bg="brand.500"
       color="#FFF"
       borderRadius={10}
-      w="100%"
+      w={width}
       h={height}
       style={style}
       data-testid="social-content-card"

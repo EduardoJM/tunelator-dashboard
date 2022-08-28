@@ -1,22 +1,28 @@
 import { Flex, useBreakpointValue } from '@chakra-ui/react';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { useLatestSocialContents } from '@/services/queries';
 import { SocialContentCard } from '@/components/Features';
-import 'swiper/css';
 
 const SocialContents = () => {
   const { data } = useLatestSocialContents();
-  const slidesPerView = useBreakpointValue({ base: 1.2, md: 1.7, lg: 2.5 });
+  const width = useBreakpointValue({
+    base: 'max(calc(100vw - 50px), 300px)',
+    sm: 300,
+    md: 400,
+    lg: 400,
+  });
 
   return (
-    <Flex mb="40px">
-      <Swiper spaceBetween={20} slidesPerView={slidesPerView}>
+    <Flex mb="40px" overflowX="auto" overflowY="hidden">
+      <Flex flexWrap="nowrap" gap="20px">
         {data?.map(item => (
-          <SwiperSlide key={item.id}>
-            <SocialContentCard content={item} height={300} />
-          </SwiperSlide>
+          <SocialContentCard
+            key={item.id}
+            content={item}
+            height={300}
+            width={width || 400}
+          />
         ))}
-      </Swiper>
+      </Flex>
     </Flex>
   );
 };

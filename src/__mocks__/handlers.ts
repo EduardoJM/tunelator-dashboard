@@ -7,6 +7,7 @@ import {
   login,
   plans,
   activePlan,
+  socialContent,
 } from './fixtures';
 
 export const handlers = [
@@ -73,5 +74,9 @@ export const handlers = [
 
   rest.get(`${config.apiUrl}/auth/recovery/:id/`, (req, res, ctx) => {
     return res(ctx.status(200));
+  }),
+
+  rest.get(`${config.apiUrl}/content/`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(socialContent));
   }),
 ];
