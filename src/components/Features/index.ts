@@ -16,3 +16,6 @@ export { default as RequireNoAuth } from './RequireNoAuth';
 
 export type { MailAccountCardProps } from './MailAccountCard';
 export { default as MailAccountCard } from './MailAccountCard';
+
+export type { SocialContentCardProps } from './SocialContentCard';
+export { default as SocialContentCard } from './SocialContentCard';

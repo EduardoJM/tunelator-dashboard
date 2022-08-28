@@ -4,5 +4,14 @@ import refresh from './refresh';
 import login from './login';
 import plans from './plans';
 import activePlan from './activePlan';
+import socialContent from './socialContent';
 
-export { accounts, receivedMails, refresh, login, plans, activePlan };
+export {
+  accounts,
+  receivedMails,
+  refresh,
+  login,
+  plans,
+  activePlan,
+  socialContent,
+};

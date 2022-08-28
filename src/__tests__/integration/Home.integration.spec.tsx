@@ -1,8 +1,8 @@
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { queryClient } from '@/__mocks__/queryClient';
-import { mockOnce } from '@/__mocks__/server';
-import { accounts, receivedMails } from '@/__mocks__/fixtures';
+import { mockOnce, mockOnceWithDelay } from '@/__mocks__/server';
+import { accounts, receivedMails, socialContent } from '@/__mocks__/fixtures';
 import { waitAbsoluteLoader, waitTableSkeleton } from '@/utils/tests';
 import App from '@/App';
 
@@ -301,5 +301,60 @@ describe('Home', () => {
       const boundary = screen.queryByTestId('received-mails-boundary');
       expect(boundary).toBeInTheDocument();
     });
+  });
+
+  it('should render an skeleton when loading social contents', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnceWithDelay('get', '/content/', 200, socialContent, 600);
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    expect(screen.queryByTestId('social-content-skeleton')).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('social-content-skeleton')
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('should render correctly social contents data', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/content/', 200, socialContent);
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('social-content-skeleton')
+      ).not.toBeInTheDocument();
+    });
+
+    const cards = screen.queryAllByTestId('social-content-card');
+    expect(cards).toHaveLength(socialContent.results.length);
+
+    for (let i = 0; i < cards.length; i += 1) {
+      const title = cards[i].querySelector('h2') as HTMLElement;
+      expect(title.textContent).toEqual(socialContent.results[i].title);
+    }
+  });
+
+  it('should render an error boundary if error loading social contents', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+    mockOnce('get', '/content/', 400, {});
+
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('social-content-skeleton')
+      ).not.toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('social-content-boundary')).toBeInTheDocument();
   });
 });

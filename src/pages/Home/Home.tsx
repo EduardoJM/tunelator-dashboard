@@ -3,13 +3,15 @@ import { Heading, Flex } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/Common';
-import { TableSkeleton } from '@/components/Skeletons';
+import { TableSkeleton, SocialContentSkeleton } from '@/components/Skeletons';
 import {
   MailAccountsBoundary,
   ReceivedMailsBoundary,
+  SocialContentBoundary,
 } from '@/components/ErrorBoundaries';
 import LatestMailAccounts from './LatestMailAccounts';
 import LatestReceivedMails from './LatestReceivedMails';
+import SocialContents from './SocialContents';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,6 +32,14 @@ const Home = () => {
       <Heading as="h1" size="xl" my="50px" fontWeight="bold">
         {t('home.title')}
       </Heading>
+      <Heading as="h2" size="md" mb="40px" fontWeight="bold">
+        {t('home.socialcontent.title')}
+      </Heading>
+      <Suspense fallback={<SocialContentSkeleton />}>
+        <SocialContentBoundary>
+          <SocialContents />
+        </SocialContentBoundary>
+      </Suspense>
       <Heading as="h2" size="md" mb="40px" fontWeight="bold">
         {t('home.accounts.title')}
       </Heading>
