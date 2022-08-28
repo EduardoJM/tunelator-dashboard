@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react';
-import { Box, Stack, Flex, Heading, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { SocialContent } from '@/entities/SocialContent';
 
 export interface SocialContentCardProps {
@@ -27,6 +27,7 @@ const SocialContentCard: FC<SocialContentCardProps> = ({ content, height }) => {
       w="100%"
       h={height}
       style={style}
+      data-testid="social-content-card"
     >
       <Box bgColor="rgba(0, 0, 0, 0.3)" w="100%" h="100%" borderRadius={10}>
         <Flex
