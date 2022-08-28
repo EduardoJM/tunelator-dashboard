@@ -53,6 +53,7 @@ const ProfileForm = () => {
         bgColor="#FEFEFE"
         _hover={{ bgColor: '#EFEFEF' }}
         p="10px"
+        shadow="md"
         borderRadius="5px"
       >
         <Heading as="h2" size="md" mb="15px">
