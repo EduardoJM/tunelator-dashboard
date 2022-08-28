@@ -6,7 +6,7 @@ describe('SocialContentCard', () => {
   it('should render the content type, title and description', () => {
     const content = socialContentFactory();
 
-    render(<SocialContentCard content={content} height={300} />);
+    render(<SocialContentCard content={content} width={300} height={300} />);
 
     const title = screen.queryByText(content.title);
     const type = screen.queryByText(content.type);
@@ -22,7 +22,7 @@ describe('SocialContentCard', () => {
       image: 'any',
     });
 
-    render(<SocialContentCard content={content} height={300} />);
+    render(<SocialContentCard content={content} width={300} height={300} />);
 
     const card = screen.queryByTestId('social-content-card');
     expect(card).toHaveStyle('background-image: url(any)');
@@ -31,10 +31,30 @@ describe('SocialContentCard', () => {
   it('should contains an link to the content', async () => {
     const content = socialContentFactory();
 
-    render(<SocialContentCard content={content} height={300} />);
+    render(<SocialContentCard content={content} width={300} height={300} />);
 
     const link = screen.queryByRole('link');
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', content.link);
+  });
+
+  it('should have specified width and height', async () => {
+    const content = socialContentFactory();
+    render(<SocialContentCard content={content} width={300} height={300} />);
+
+    const card = screen.queryByTestId('social-content-card');
+    expect(card).toHaveStyle('width: 300px');
+    expect(card).toHaveStyle('height: 300px');
+  });
+
+  it('should have specified width and height in percents', async () => {
+    const content = socialContentFactory();
+    render(
+      <SocialContentCard content={content} width={'30%'} height={'40%'} />
+    );
+
+    const card = screen.queryByTestId('social-content-card');
+    expect(card).toHaveStyle('width: 30%');
+    expect(card).toHaveStyle('height: 40%');
   });
 });
