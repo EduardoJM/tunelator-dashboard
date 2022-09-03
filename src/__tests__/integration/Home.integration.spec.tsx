@@ -51,6 +51,20 @@ describe('Home', () => {
     });
   });
 
+  it('should render an Footer component', async () => {
+    window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
+    window.history.replaceState({}, '', '/');
+
+    render(<App queryClient={queryClient} />);
+
+    await waitAbsoluteLoader();
+
+    await waitFor(() => {
+      const footer = screen.queryByTestId('footer');
+      expect(footer).toBeInTheDocument();
+    });
+  });
+
   it('should load the lastest mail accounts with five itens', async () => {
     window.localStorage.setItem('@TUNELATOR_REFRESH', 'TOKEN');
     window.history.replaceState({}, '', '/');
