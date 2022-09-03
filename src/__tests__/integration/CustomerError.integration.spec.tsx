@@ -40,6 +40,14 @@ describe('Customer.Error', () => {
     expect(navbar).toBeInTheDocument();
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
   it('should contains informations about payment error on the page', async () => {
     render(<App queryClient={queryClient} />);
     await waitAbsoluteLoader();

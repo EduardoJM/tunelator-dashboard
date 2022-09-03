@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { Flex, Box, Container } from '@chakra-ui/react';
 import { Outlet } from 'react-router-dom';
 import { RequireAuth } from '@/components/Features';
+import Footer from '../Footer';
 import NavBar from '../NavBar';
 
 const Dashboard: FC = () => {
@@ -16,7 +17,7 @@ const Dashboard: FC = () => {
           </Container>
         </Flex>
 
-        <Box height="200px" backgroundColor="brand.500"></Box>
+        <Footer />
       </Flex>
     </RequireAuth>
   );

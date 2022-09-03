@@ -40,6 +40,18 @@ describe('Plans', () => {
     });
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(screen.queryByTestId('plans-skeleton')).not.toBeInTheDocument();
+    });
+  });
+
   it('should contains an CurrentPlanSection', async () => {
     render(<App queryClient={queryClient} />);
 

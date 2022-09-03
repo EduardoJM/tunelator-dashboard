@@ -31,6 +31,14 @@ describe('Checkout.Canceled', () => {
     expect(navbar).toBeInTheDocument();
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
   it('should contains two buttons, one to plans and one to support, in the page', async () => {
     render(<App queryClient={queryClient} />);
 

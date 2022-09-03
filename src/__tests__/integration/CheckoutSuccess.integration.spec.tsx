@@ -43,6 +43,14 @@ describe('Checkout.Success', () => {
     expect(navbar).toBeInTheDocument();
   });
 
+  it('should render an footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
   it('must contain informations about payment on the page', async () => {
     render(<App queryClient={queryClient} />);
     await waitAbsoluteLoader();

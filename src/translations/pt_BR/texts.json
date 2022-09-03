@@ -42,6 +42,18 @@
       "logout": "Sair",
       "back": "Voltar"
     },
+    "footer": {
+      "copyrights": "Copyright © 2022 Tunelator. Todos os direitos reservados.",
+      "title": "TUNELATOR",
+      "subtitle": "Redirecionando e-mails para ajudar você a cuidar da sua caixa de e-mails com foco na sua privacidade.",
+      "links": "Links",
+      "accounts": "Minhas Contas",
+      "received": "E-mails Recebidos",
+      "plans": "Planos e Assinatura",
+      "profile": "Meu Perfil",
+      "help": "Ajuda",
+      "howWorks": "Como funciona?"
+    },
     "modals": {
       "close": "Fechar",
       "cancel": "Cancelar",

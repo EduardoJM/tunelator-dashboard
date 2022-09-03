@@ -52,6 +52,18 @@ describe('Customer.Profile', () => {
     expect(navbar).toBeInTheDocument();
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+    await waitFor(() => {
+      const skeleton = screen.queryByTestId('profile-form-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
   it('should contains the first name as first header if the user has first name and not have last name', async () => {
     const user = userFactory({ last_name: '' });
     mockOnce('get', '/auth/user/', 200, user);

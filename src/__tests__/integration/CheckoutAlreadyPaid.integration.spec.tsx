@@ -31,6 +31,14 @@ describe('Checkout.AlreadyPaid', () => {
     expect(navbar).toBeInTheDocument();
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+  });
+
   it('should contains one button to plans in the page', async () => {
     render(<App queryClient={queryClient} />);
 

@@ -39,6 +39,19 @@ describe('MailAccounts', () => {
     });
   });
 
+  it('should render an Footer component', async () => {
+    render(<App queryClient={queryClient} />);
+    await waitAbsoluteLoader();
+
+    const footer = screen.queryByTestId('footer');
+    expect(footer).toBeInTheDocument();
+
+    await waitFor(() => {
+      let skeleton = screen.queryByTestId('accounts-skeleton');
+      expect(skeleton).not.toBeInTheDocument();
+    });
+  });
+
   it('should display an account skeleton when accounts is loading', async () => {
     mockOnceWithDelay('get', '/mails/accounts/', 200, accounts, 500);
     render(<App queryClient={queryClient} />);
