@@ -3,18 +3,6 @@
 </h1>
 
 <p align="center">
-    <a href="#">
-        <img src=".github/badges/badge-lines.svg" />
-    </a>
-    <a href="#">
-        <img src=".github/badges/badge-functions.svg" />
-    </a>
-    <a href="#">
-        <img src=".github/badges/badge-branches.svg" />
-    </a>
-    <a href="#">
-        <img src=".github/badges/badge-statements.svg" />
-    </a>
     <a href="https://github.com/facebook/jest">
         <img src="https://img.shields.io/badge/tested_with-jest-99424f.svg" alt="Tested with Jest">
     </a>
