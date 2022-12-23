@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/EduardoJM/tunelator-dashboard/main/images/cover.png" alt="Redirecionando e-mails para ajudar você a cuidar da sua caixa de e-mails com foco na sua privacidade" />
+    <img src="https://raw.githubusercontent.com/EduardoJM/tunelator-dashboard/main/.github/images/cover.png" alt="Redirecionando e-mails para ajudar você a cuidar da sua caixa de e-mails com foco na sua privacidade" />
 </p>
 
 ---
