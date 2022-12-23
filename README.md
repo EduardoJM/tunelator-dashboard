@@ -3,6 +3,12 @@
 </h1>
 
 <p align="center">
+    <img src="https://raw.githubusercontent.com/EduardoJM/tunelator-dashboard/main/images/cover.png" alt="Redirecionando e-mails para ajudar você a cuidar da sua caixa de e-mails com foco na sua privacidade" />
+</p>
+
+---
+
+<p align="center">
     <a href="https://github.com/EduardoJM/tunelator-dashboard/actions/workflows/test.yml">
         <img src="https://github.com/EduardoJM/tunelator-dashboard/actions/workflows/test.yml/badge.svg" alt="GitHub Actions status">
     </a>
